@@ -391,6 +391,15 @@ body { background:var(--branco); font-family:'DM Sans',sans-serif; color:#1a1a1a
     <button class="nav-tab" onclick="showPage('dialogues',this)">💬 Diálogos</button>
     <button class="nav-tab" onclick="showPage('grammar',this)">📖 Gramática</button>
     <button class="nav-tab" onclick="showPage('chat',this)">🤖 Chat IA</button>
+    <div class="user-badge" id="user-badge" style="display:none">
+      <div class="user-avatar" id="user-avatar" onclick="toggleUserMenu()">?</div>
+      <span id="sync-indicator" class="sync-indicator"></span>
+      <div class="user-menu" id="user-menu">
+        <div class="user-menu-email" id="user-menu-email"></div>
+        <button class="user-menu-item" onclick="syncNow()">🔄 Sincronizar agora</button>
+        <button class="user-menu-item danger" onclick="authSignOut()">🚪 Sair</button>
+      </div>
+    </div>
   </div>
 </div>
 
