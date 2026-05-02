@@ -1,0 +1,2523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italiano para Viagem 🇮🇹</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --verde: #1a4a2e;
+  --verde-light: #2d6e45;
+  --branco: #f7f2ea;
+  --vermelho: #b83232;
+  --ouro: #b8922a;
+  --cinza: #7a7060;
+  --cinza-light: #e8e2d8;
+  --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.13);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--branco); font-family:'DM Sans',sans-serif; color:#1a1a1a; min-height:100vh; overflow-x:hidden; }
+
+/* NAV */
+.nav { background:var(--verde); position:sticky; top:0; z-index:100; }
+.flag-stripe { display:flex; height:3px; }
+.flag-stripe div { flex:1; }
+.s1{background:#009246;} .s2{background:#fff;} .s3{background:#ce2b37;}
+.nav-inner { display:flex; align-items:center; padding:0 0.6rem; gap:0; overflow-x:auto; scrollbar-width:none; }
+.nav-inner::-webkit-scrollbar { display:none; }
+.nav-brand { font-family:'Playfair Display',serif; color:var(--branco); font-size:0.95rem; font-weight:700; padding:0.85rem 0.8rem 0.85rem 0.2rem; white-space:nowrap; border-right:1px solid rgba(255,255,255,0.15); margin-right:0.4rem; flex-shrink:0; }
+.nav-tab { background:none; border:none; color:rgba(245,240,232,0.6); font-family:'DM Sans',sans-serif; font-size:0.75rem; padding:0.85rem 0.6rem; cursor:pointer; white-space:nowrap; border-bottom:2px solid transparent; transition:all 0.2s; font-weight:500; }
+.nav-tab.active { color:var(--branco); border-bottom-color:var(--ouro); }
+.nav-tab:hover { color:var(--branco); }
+
+.page { display:none; min-height:calc(100vh - 52px); }
+.page.active { display:block; }
+
+/* ===== VOCABULARY ===== */
+.vocab-controls { padding:0.7rem; display:flex; flex-direction:column; gap:0.5rem; background:white; border-bottom:1px solid var(--cinza-light); position:sticky; top:52px; z-index:50; }
+.search-wrap { position:relative; }
+.search-wrap input { width:100%; padding:0.6rem 2.5rem 0.6rem 2.1rem; border:1.5px solid var(--cinza-light); border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.85rem; outline:none; transition:border-color 0.2s; background:#fafafa; }
+.search-wrap input:focus { border-color:var(--verde); background:white; }
+.search-wrap::before { content:'🔍'; position:absolute; left:0.6rem; top:50%; transform:translateY(-50%); font-size:0.78rem; }
+.search-clear { position:absolute; right:0.6rem; top:50%; transform:translateY(-50%); background:none; border:none; font-size:0.85rem; cursor:pointer; color:var(--cinza); display:none; }
+.search-clear.show { display:block; }
+.cats { display:flex; gap:0.3rem; overflow-x:auto; padding-bottom:0.1rem; scrollbar-width:none; }
+.cats::-webkit-scrollbar { display:none; }
+.cat-btn { white-space:nowrap; padding:0.28rem 0.7rem; border-radius:20px; border:1.5px solid var(--cinza-light); background:white; font-family:'DM Sans',sans-serif; font-size:0.73rem; cursor:pointer; transition:all 0.15s; color:#555; font-weight:500; }
+.cat-btn.active,.cat-btn:hover { background:var(--verde); border-color:var(--verde); color:white; }
+.count-bar { padding:0.35rem 0.7rem; font-size:0.7rem; color:var(--cinza); font-weight:500; background:var(--branco); display:flex; align-items:center; justify-content:space-between; }
+.fav-toggle-btn { font-size:0.7rem; color:var(--ouro); background:none; border:1px solid var(--ouro); border-radius:12px; padding:0.15rem 0.5rem; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; }
+.fav-toggle-btn.active { background:var(--ouro); color:white; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; padding:0 0.6rem 5rem; }
+.card { background:white; border-radius:12px; padding:0.8rem; box-shadow:var(--shadow); border:1.5px solid transparent; transition:all 0.2s; position:relative; }
+.card.favorited { border-color:#f0c040; }
+.card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.3rem; }
+.card-header-left { display:flex; gap:0.3rem; align-items:center; }
+.cat-tag { font-size:0.57rem; padding:0.1rem 0.35rem; border-radius:4px; font-weight:600; background:#f0f0ee; color:#666; text-transform:uppercase; letter-spacing:0.4px; }
+.card-actions { display:flex; gap:0.25rem; align-items:center; }
+.fav-btn { background:none; border:none; font-size:0.9rem; cursor:pointer; opacity:0.35; transition:all 0.2s; padding:0; line-height:1; }
+.fav-btn.active { opacity:1; }
+.fav-btn:hover { opacity:0.8; transform:scale(1.2); }
+.audio-btn { width:21px; height:21px; border-radius:50%; background:var(--verde); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.58rem; color:white; flex-shrink:0; transition:transform 0.15s; }
+.audio-btn:hover { transform:scale(1.1); }
+.audio-btn.spinning { animation:pulse 0.6s infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+.word-it { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--verde); line-height:1.2; }
+.word-pt { font-size:0.74rem; color:#555; margin-top:0.1rem; }
+.pronun { font-size:0.66rem; color:var(--vermelho); font-style:italic; margin-top:0.08rem; }
+.expand-btn { width:100%; background:none; border:none; text-align:left; cursor:pointer; padding:0; margin-top:0.4rem; font-size:0.67rem; color:var(--ouro); font-family:'DM Sans',sans-serif; font-weight:600; }
+.example { display:none; margin-top:0.4rem; padding-top:0.4rem; border-top:1px solid #f0ede8; }
+.example.open { display:block; }
+.ex-it { font-family:'Playfair Display',serif; font-style:italic; font-size:0.75rem; color:#333; line-height:1.4; }
+.ex-pt { font-size:0.68rem; color:var(--cinza); margin-top:0.12rem; line-height:1.3; }
+.ex-actions { display:flex; gap:0.35rem; margin-top:0.38rem; flex-wrap:wrap; }
+.ex-btn { display:inline-flex; align-items:center; gap:0.22rem; background:none; border:1px solid; border-radius:20px; padding:0.16rem 0.45rem; font-size:0.63rem; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:all 0.15s; }
+.ex-btn.audio { border-color:var(--verde); color:var(--verde); }
+.ex-btn.audio:hover { background:var(--verde); color:white; }
+.ex-btn.gen { border-color:var(--ouro); color:var(--ouro); }
+.ex-btn.gen:hover { background:var(--ouro); color:white; }
+.gen-result { margin-top:0.38rem; padding:0.4rem 0.55rem; background:#faf7f0; border-radius:6px; border-left:2px solid var(--ouro); }
+.gen-it { font-family:'Playfair Display',serif; font-style:italic; font-size:0.74rem; color:#333; }
+.gen-pt { font-size:0.67rem; color:var(--cinza); margin-top:0.1rem; }
+.gen-loading { font-size:0.68rem; color:var(--cinza); font-style:italic; }
+.no-results { grid-column:1/-1; text-align:center; padding:3rem 1rem; color:var(--cinza); }
+.no-results span { font-size:2rem; display:block; margin-bottom:0.5rem; }
+
+/* ===== PROGRESS DASHBOARD ===== */
+.progress-page { padding:0.8rem; padding-bottom:5rem; }
+.prog-hero { background:var(--verde); border-radius:16px; padding:1.2rem; color:var(--branco); margin-bottom:1rem; position:relative; overflow:hidden; }
+.prog-hero::before { content:'🇮🇹'; position:absolute; font-size:6rem; opacity:0.08; right:-0.5rem; top:-0.5rem; }
+.prog-hero h2 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:0.2rem; }
+.prog-hero p { font-size:0.78rem; opacity:0.75; }
+.prog-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.6rem; margin-top:1rem; }
+.prog-stat { background:rgba(255,255,255,0.12); border-radius:10px; padding:0.7rem 0.5rem; text-align:center; }
+.prog-stat-num { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; }
+.prog-stat-label { font-size:0.62rem; opacity:0.8; margin-top:0.1rem; }
+.prog-bar-section { background:white; border-radius:12px; padding:1rem; box-shadow:var(--shadow); margin-bottom:0.8rem; }
+.prog-bar-section h3 { font-size:0.82rem; font-weight:600; color:var(--verde); margin-bottom:0.7rem; }
+.prog-bar-row { margin-bottom:0.6rem; }
+.prog-bar-label { display:flex; justify-content:space-between; font-size:0.72rem; color:#555; margin-bottom:0.25rem; }
+.prog-bar-track { height:7px; background:var(--cinza-light); border-radius:10px; overflow:hidden; }
+.prog-bar-fill { height:100%; background:var(--verde); border-radius:10px; transition:width 0.6s ease; }
+.prog-actions { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-bottom:0.8rem; }
+.prog-action-btn { background:white; border:none; border-radius:12px; padding:1rem 0.8rem; box-shadow:var(--shadow); cursor:pointer; text-align:center; transition:all 0.15s; }
+.prog-action-btn:hover { transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+.prog-action-btn .icon { font-size:1.5rem; display:block; margin-bottom:0.35rem; }
+.prog-action-btn .label { font-size:0.75rem; font-weight:600; color:var(--verde); font-family:'DM Sans',sans-serif; }
+.prog-action-btn .sublabel { font-size:0.65rem; color:var(--cinza); margin-top:0.1rem; }
+.prog-fav-section { background:white; border-radius:12px; padding:1rem; box-shadow:var(--shadow); margin-bottom:0.8rem; }
+.prog-fav-section h3 { font-size:0.82rem; font-weight:600; color:var(--verde); margin-bottom:0.7rem; }
+.fav-list { display:flex; flex-direction:column; gap:0.4rem; max-height:200px; overflow-y:auto; }
+.fav-item { display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0.5rem; background:var(--branco); border-radius:8px; }
+.fav-item-word { font-family:'Playfair Display',serif; font-size:0.85rem; color:var(--verde); font-weight:700; }
+.fav-item-pt { font-size:0.7rem; color:var(--cinza); }
+.fav-item-actions { display:flex; gap:0.3rem; }
+.fav-mini-btn { background:none; border:none; font-size:0.8rem; cursor:pointer; }
+.prog-empty { text-align:center; padding:1.5rem; color:var(--cinza); font-size:0.8rem; }
+.prog-empty span { display:block; font-size:1.5rem; margin-bottom:0.4rem; }
+.streak-section { background:linear-gradient(135deg,#1a4a2e,#2d6e45); border-radius:12px; padding:1rem; color:white; margin-bottom:0.8rem; }
+.streak-row { display:flex; align-items:center; gap:0.8rem; }
+.streak-icon { font-size:2rem; }
+.streak-info h3 { font-family:'Playfair Display',serif; font-size:1rem; }
+.streak-info p { font-size:0.72rem; opacity:0.75; margin-top:0.1rem; }
+.streak-days { display:flex; gap:0.3rem; margin-top:0.8rem; }
+.streak-day { width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.6rem; font-weight:600; color:rgba(255,255,255,0.6); flex-direction:column; }
+.streak-day.done { background:var(--ouro); color:white; }
+.streak-day.today { background:rgba(255,255,255,0.3); color:white; border:2px solid var(--ouro); }
+
+/* ===== QUIZ ===== */
+.quiz-page { padding:0.8rem; padding-bottom:5rem; }
+.quiz-header-section { margin-bottom:1rem; }
+.quiz-title { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--verde); }
+.quiz-sub { font-size:0.78rem; color:var(--cinza); margin-top:0.2rem; }
+.quiz-mode-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-bottom:1rem; }
+.quiz-mode-card { background:white; border-radius:14px; padding:1rem 0.8rem; box-shadow:var(--shadow); cursor:pointer; border:2px solid transparent; transition:all 0.18s; text-align:center; }
+.quiz-mode-card:hover,.quiz-mode-card.selected { border-color:var(--verde); }
+.quiz-mode-card .qm-icon { font-size:1.8rem; display:block; margin-bottom:0.4rem; }
+.quiz-mode-card .qm-title { font-size:0.82rem; font-weight:700; color:var(--verde); font-family:'Playfair Display',serif; }
+.quiz-mode-card .qm-desc { font-size:0.66rem; color:var(--cinza); margin-top:0.2rem; line-height:1.3; }
+.quiz-cat-select { background:white; border-radius:12px; padding:0.8rem; box-shadow:var(--shadow); margin-bottom:1rem; }
+.quiz-cat-select h4 { font-size:0.8rem; font-weight:600; color:var(--verde); margin-bottom:0.6rem; }
+.quiz-cat-pills { display:flex; flex-wrap:wrap; gap:0.3rem; }
+.qcat-pill { padding:0.28rem 0.65rem; border-radius:16px; border:1.5px solid var(--cinza-light); background:white; font-size:0.72rem; cursor:pointer; color:#555; font-weight:500; transition:all 0.15s; }
+.qcat-pill.active { background:var(--verde); border-color:var(--verde); color:white; }
+.start-quiz-btn { width:100%; padding:0.85rem; background:var(--verde); color:white; border:none; border-radius:12px; font-family:'Playfair Display',serif; font-size:1rem; cursor:pointer; transition:background 0.15s; margin-bottom:1rem; }
+.start-quiz-btn:hover { background:var(--verde-light); }
+
+/* FLASHCARD */
+.flashcard-area { display:none; }
+.flashcard-area.active { display:block; }
+.fc-progress { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.8rem; }
+.fc-progress-bar { flex:1; height:6px; background:var(--cinza-light); border-radius:10px; overflow:hidden; }
+.fc-progress-fill { height:100%; background:var(--verde); border-radius:10px; transition:width 0.4s; }
+.fc-progress-text { font-size:0.72rem; color:var(--cinza); font-weight:600; white-space:nowrap; }
+.fc-score { display:flex; gap:0.8rem; margin-bottom:0.8rem; justify-content:center; }
+.fc-score-item { text-align:center; }
+.fc-score-num { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; }
+.fc-score-num.correct { color:#2d9e5e; }
+.fc-score-num.wrong { color:var(--vermelho); }
+.fc-score-label { font-size:0.62rem; color:var(--cinza); }
+.flashcard-wrap { perspective:1000px; margin-bottom:1rem; }
+.flashcard { width:100%; min-height:200px; position:relative; transform-style:preserve-3d; transition:transform 0.5s; cursor:pointer; border-radius:16px; }
+.flashcard.flipped { transform:rotateY(180deg); }
+.fc-front,.fc-back { position:absolute; width:100%; min-height:200px; backface-visibility:hidden; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.5rem; }
+.fc-front { background:var(--verde); color:var(--branco); }
+.fc-back { background:white; box-shadow:var(--shadow-lg); transform:rotateY(180deg); }
+.fc-front .fc-word { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; text-align:center; }
+.fc-front .fc-cat { font-size:0.72rem; opacity:0.65; margin-top:0.3rem; text-transform:uppercase; letter-spacing:0.4px; }
+.fc-front .fc-hint { font-size:0.7rem; opacity:0.5; position:absolute; bottom:0.8rem; }
+.fc-back .fc-translation { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--verde); text-align:center; }
+.fc-back .fc-pronun { font-size:0.8rem; color:var(--vermelho); font-style:italic; margin-top:0.3rem; }
+.fc-back .fc-example { font-size:0.78rem; color:#555; font-style:italic; text-align:center; margin-top:0.8rem; line-height:1.4; font-family:'Playfair Display',serif; }
+.fc-back .fc-ex-pt { font-size:0.7rem; color:var(--cinza); margin-top:0.25rem; text-align:center; }
+.fc-audio-btn { position:absolute; top:0.7rem; right:0.7rem; width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.15); border:none; cursor:pointer; font-size:0.75rem; color:white; display:flex; align-items:center; justify-content:center; }
+.fc-back .fc-audio-btn { background:var(--cinza-light); color:var(--verde); }
+.fc-actions { display:flex; gap:0.6rem; margin-bottom:1rem; }
+.fc-btn { flex:1; padding:0.75rem; border-radius:10px; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:600; transition:all 0.15s; }
+.fc-btn.wrong { background:#fdecea; color:var(--vermelho); }
+.fc-btn.wrong:hover { background:#f8d0cc; }
+.fc-btn.correct { background:#e6f4ed; color:#1a8a50; }
+.fc-btn.correct:hover { background:#c8ebd9; }
+.fc-btn.skip { background:var(--cinza-light); color:var(--cinza); }
+
+/* MULTIPLE CHOICE */
+.mc-area { display:none; }
+.mc-area.active { display:block; }
+.mc-card { background:white; border-radius:16px; padding:1.5rem 1rem; box-shadow:var(--shadow-lg); margin-bottom:0.8rem; text-align:center; }
+.mc-question-it { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--verde); }
+.mc-question-pr { font-size:0.75rem; color:var(--vermelho); font-style:italic; margin-top:0.3rem; }
+.mc-question-ex { font-size:0.78rem; color:var(--cinza); font-style:italic; margin-top:0.6rem; font-family:'Playfair Display',serif; }
+.mc-audio-btn { margin-top:0.8rem; padding:0.35rem 0.9rem; background:var(--verde); color:white; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.mc-options { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:0.8rem; }
+.mc-option { padding:0.75rem 0.5rem; background:white; border:2px solid var(--cinza-light); border-radius:10px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.8rem; text-align:center; color:#333; transition:all 0.15s; font-weight:500; }
+.mc-option:hover { border-color:var(--verde); color:var(--verde); }
+.mc-option.correct { background:#e6f4ed; border-color:#1a8a50; color:#1a8a50; }
+.mc-option.wrong { background:#fdecea; border-color:var(--vermelho); color:var(--vermelho); }
+.mc-option.reveal { background:#e6f4ed; border-color:#1a8a50; color:#1a8a50; }
+.mc-option:disabled { cursor:default; }
+.mc-feedback { text-align:center; padding:0.6rem; border-radius:10px; font-size:0.8rem; font-weight:600; margin-bottom:0.8rem; display:none; }
+.mc-feedback.show { display:block; }
+.mc-feedback.correct { background:#e6f4ed; color:#1a8a50; }
+.mc-feedback.wrong { background:#fdecea; color:var(--vermelho); }
+.mc-next-btn { width:100%; padding:0.75rem; background:var(--verde); color:white; border:none; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; cursor:pointer; display:none; }
+.mc-next-btn.show { display:block; }
+
+/* QUIZ RESULT */
+.quiz-result { display:none; background:white; border-radius:16px; padding:1.5rem; box-shadow:var(--shadow-lg); text-align:center; margin-bottom:1rem; }
+.quiz-result.show { display:block; }
+.quiz-result h2 { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--verde); margin-bottom:0.5rem; }
+.quiz-result .score-big { font-family:'Playfair Display',serif; font-size:3rem; font-weight:700; color:var(--ouro); }
+.quiz-result .score-label { font-size:0.8rem; color:var(--cinza); }
+.quiz-result-btns { display:flex; gap:0.6rem; margin-top:1rem; }
+.quiz-result-btn { flex:1; padding:0.7rem; border-radius:10px; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:600; }
+.quiz-result-btn.retry { background:var(--verde); color:white; }
+.quiz-result-btn.menu { background:var(--cinza-light); color:var(--cinza); }
+
+/* ===== DIALOGUES ===== */
+.dialogues-page { padding:0.8rem; padding-bottom:5rem; }
+.section-title { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--verde); margin-bottom:0.2rem; }
+.section-sub { font-size:0.76rem; color:var(--cinza); margin-bottom:0.8rem; }
+.dial-cards { display:flex; flex-direction:column; gap:0.6rem; }
+.dial-card { background:white; border-radius:14px; box-shadow:var(--shadow); overflow:hidden; }
+.dial-header { padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+.dial-emoji { font-size:1.2rem; margin-right:0.55rem; }
+.dial-title-wrap { flex:1; }
+.dial-title { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--verde); }
+.dial-subtitle { font-size:0.7rem; color:var(--cinza); margin-top:0.08rem; }
+.dial-arrow { font-size:0.75rem; color:var(--cinza); transition:transform 0.2s; }
+.dial-arrow.open { transform:rotate(180deg); }
+.dial-body { display:none; border-top:1px solid var(--cinza-light); }
+.dial-body.open { display:block; }
+.dial-controls { padding:0.55rem 0.9rem; display:flex; gap:0.4rem; align-items:center; background:#fafaf8; border-bottom:1px solid var(--cinza-light); flex-wrap:wrap; }
+.dial-play-btn { display:flex; align-items:center; gap:0.3rem; background:var(--verde); color:white; border:none; border-radius:20px; padding:0.3rem 0.75rem; font-size:0.73rem; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; }
+.trans-toggle { background:none; border:1px solid var(--cinza-light); border-radius:20px; padding:0.28rem 0.65rem; font-size:0.7rem; cursor:pointer; color:#555; font-family:'DM Sans',sans-serif; }
+.trans-toggle.on { background:var(--branco); border-color:var(--verde); color:var(--verde); }
+.practice-toggle { background:none; border:1px solid var(--ouro); border-radius:20px; padding:0.28rem 0.65rem; font-size:0.7rem; cursor:pointer; color:var(--ouro); font-family:'DM Sans',sans-serif; }
+.dial-lines { padding:0.75rem 0.9rem 0.9rem; display:flex; flex-direction:column; gap:0.55rem; }
+.dial-line { display:flex; gap:0.55rem; align-items:flex-start; }
+.dial-line.b { flex-direction:row-reverse; }
+.speaker-avatar { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0; margin-top:0.1rem; }
+.speaker-a .speaker-avatar { background:#e8f0eb; }
+.speaker-b .speaker-avatar { background:#fdecea; }
+.bubble { max-width:calc(100% - 36px); }
+.bubble-it { background:#f0f7f2; border-radius:0 10px 10px 10px; padding:0.45rem 0.65rem; font-family:'Playfair Display',serif; font-style:italic; font-size:0.8rem; line-height:1.4; color:#222; cursor:pointer; transition:background 0.15s; }
+.dial-line.b .bubble-it { background:#fef3f2; border-radius:10px 0 10px 10px; }
+.bubble-it:hover { filter:brightness(0.96); }
+.bubble-pt { font-size:0.68rem; color:var(--cinza); padding:0.18rem 0.65rem 0; line-height:1.3; display:none; }
+.bubble-pt.show { display:block; }
+.speaker-name { font-size:0.6rem; color:var(--cinza); margin-bottom:0.12rem; font-weight:600; text-transform:uppercase; letter-spacing:0.3px; }
+.dial-tip { margin:0 0.9rem 0.75rem; padding:0.45rem 0.65rem; background:#fdf8ee; border-radius:8px; border-left:2px solid var(--ouro); font-size:0.7rem; color:#665522; line-height:1.4; }
+.dial-tip strong { font-weight:600; }
+.practice-mode-area { display:none; padding:0.5rem 0.9rem 0.9rem; border-top:1px solid var(--cinza-light); }
+.practice-mode-area.open { display:block; }
+.practice-prompt { background:var(--branco); border-radius:10px; padding:0.7rem; margin-bottom:0.6rem; }
+.practice-it { font-family:'Playfair Display',serif; font-style:italic; font-size:0.85rem; color:var(--verde); }
+.practice-pt { font-size:0.75rem; color:var(--cinza); margin-top:0.2rem; }
+.practice-input-row { display:flex; gap:0.4rem; }
+.practice-input { flex:1; padding:0.5rem 0.7rem; border:1.5px solid var(--cinza-light); border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.82rem; outline:none; }
+.practice-input:focus { border-color:var(--verde); }
+.practice-check-btn { padding:0.5rem 0.8rem; background:var(--verde); color:white; border:none; border-radius:8px; font-size:0.78rem; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.practice-feedback { margin-top:0.4rem; font-size:0.73rem; padding:0.35rem 0.55rem; border-radius:6px; display:none; }
+.practice-feedback.show { display:block; }
+.practice-feedback.ok { background:#e6f4ed; color:#1a8a50; }
+.practice-feedback.err { background:#fdecea; color:var(--vermelho); }
+
+/* ===== GRAMMAR ===== */
+.grammar-page { padding:0.8rem; padding-bottom:5rem; }
+.grammar-hero { background:var(--verde); border-radius:14px; padding:1rem 1.2rem; color:white; margin-bottom:0.8rem; }
+.grammar-hero h2 { font-family:'Playfair Display',serif; font-size:1.2rem; }
+.grammar-hero p { font-size:0.75rem; opacity:0.75; margin-top:0.2rem; }
+.grammar-section { background:white; border-radius:12px; box-shadow:var(--shadow); overflow:hidden; margin-bottom:0.6rem; }
+.grammar-sec-header { padding:0.8rem 1rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.grammar-sec-header h3 { font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--verde); display:flex; align-items:center; gap:0.5rem; }
+.grammar-sec-body { display:none; padding:0 1rem 1rem; border-top:1px solid var(--cinza-light); }
+.grammar-sec-body.open { display:block; }
+.grammar-rule { margin-top:0.8rem; }
+.grammar-rule h4 { font-size:0.78rem; font-weight:700; color:var(--verde); margin-bottom:0.4rem; }
+.grammar-rule p { font-size:0.75rem; color:#444; line-height:1.5; margin-bottom:0.3rem; }
+.grammar-table { width:100%; border-collapse:collapse; margin-top:0.4rem; font-size:0.72rem; }
+.grammar-table th { background:var(--verde); color:white; padding:0.35rem 0.5rem; text-align:left; font-weight:600; }
+.grammar-table td { padding:0.3rem 0.5rem; border-bottom:1px solid var(--cinza-light); }
+.grammar-table tr:last-child td { border-bottom:none; }
+.grammar-table tr:nth-child(even) td { background:#fafaf8; }
+.grammar-example { background:var(--branco); border-radius:6px; padding:0.4rem 0.6rem; margin-top:0.3rem; }
+.grammar-example .it { font-family:'Playfair Display',serif; font-style:italic; font-size:0.78rem; color:var(--verde); }
+.grammar-example .pt { font-size:0.7rem; color:var(--cinza); margin-top:0.1rem; }
+.grammar-example .audio-small { background:none; border:none; cursor:pointer; font-size:0.75rem; margin-left:0.3rem; }
+.grammar-tip-box { background:#fdf8ee; border-left:3px solid var(--ouro); border-radius:0 8px 8px 0; padding:0.5rem 0.7rem; margin-top:0.6rem; font-size:0.73rem; color:#665522; line-height:1.4; }
+.grammar-tip-box strong { font-weight:700; }
+
+/* ===== CHAT ===== */
+.chat-page { display:flex; flex-direction:column; height:calc(100vh - 52px); }
+.chat-header { background:var(--verde); padding:0.75rem 1rem; display:flex; align-items:center; gap:0.65rem; }
+.chat-avatar { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+.chat-info h3 { font-family:'Playfair Display',serif; color:white; font-size:0.9rem; }
+.chat-info p { color:rgba(255,255,255,0.6); font-size:0.68rem; margin-top:0.1rem; }
+.chat-status { width:7px; height:7px; border-radius:50%; background:#4caf50; margin-left:auto; flex-shrink:0; }
+.chat-modes { display:flex; gap:0.35rem; padding:0.55rem 0.7rem; background:white; border-bottom:1px solid var(--cinza-light); overflow-x:auto; scrollbar-width:none; }
+.chat-modes::-webkit-scrollbar { display:none; }
+.mode-btn { white-space:nowrap; padding:0.26rem 0.6rem; border-radius:16px; border:1.5px solid var(--cinza-light); background:white; font-size:0.7rem; cursor:pointer; font-family:'DM Sans',sans-serif; color:#555; font-weight:500; transition:all 0.15s; }
+.mode-btn.active { background:var(--verde); border-color:var(--verde); color:white; }
+.chat-messages { flex:1; overflow-y:auto; padding:0.75rem; display:flex; flex-direction:column; gap:0.55rem; scroll-behavior:smooth; }
+.msg { display:flex; gap:0.45rem; align-items:flex-end; max-width:90%; }
+.msg.user { align-self:flex-end; flex-direction:row-reverse; }
+.msg-avatar { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.65rem; flex-shrink:0; }
+.msg.bot .msg-avatar { background:#e8f0eb; }
+.msg.user .msg-avatar { background:var(--verde); color:white; }
+.msg-bubble { padding:0.5rem 0.7rem; border-radius:14px; font-size:0.82rem; line-height:1.5; max-width:100%; }
+.msg.bot .msg-bubble { background:white; border-radius:4px 14px 14px 14px; box-shadow:var(--shadow); color:#1a1a1a; }
+.msg.user .msg-bubble { background:var(--verde); color:white; border-radius:14px 4px 14px 14px; }
+.msg-bubble .translation { font-size:0.68rem; color:var(--cinza); margin-top:0.25rem; padding-top:0.25rem; border-top:1px solid rgba(0,0,0,0.06); font-style:italic; }
+.msg.user .msg-bubble .translation { color:rgba(255,255,255,0.65); border-top-color:rgba(255,255,255,0.2); }
+.msg-audio-btn { background:none; border:none; cursor:pointer; font-size:0.75rem; padding:0.15rem; color:var(--cinza); }
+.typing { display:flex; gap:4px; align-items:center; }
+.typing span { width:5px; height:5px; border-radius:50%; background:var(--cinza); animation:blink 1.2s infinite; }
+.typing span:nth-child(2){animation-delay:0.2s} .typing span:nth-child(3){animation-delay:0.4s}
+@keyframes blink{0%,80%,100%{opacity:0.2}40%{opacity:1}}
+.chat-suggestions { padding:0.45rem 0.7rem; display:flex; gap:0.35rem; overflow-x:auto; scrollbar-width:none; background:white; border-top:1px solid var(--cinza-light); }
+.chat-suggestions::-webkit-scrollbar { display:none; }
+.sugg-btn { white-space:nowrap; padding:0.28rem 0.6rem; border-radius:16px; border:1.5px solid var(--cinza-light); background:white; font-size:0.7rem; cursor:pointer; font-family:'DM Sans',sans-serif; color:#444; transition:all 0.15s; }
+.sugg-btn:hover { border-color:var(--verde); color:var(--verde); }
+.chat-input-wrap { padding:0.55rem 0.7rem; background:white; border-top:1px solid var(--cinza-light); display:flex; gap:0.45rem; align-items:flex-end; }
+.chat-input { flex:1; padding:0.55rem 0.75rem; border:1.5px solid var(--cinza-light); border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.83rem; resize:none; outline:none; max-height:100px; line-height:1.4; transition:border-color 0.2s; }
+.chat-input:focus { border-color:var(--verde); }
+.chat-send { width:36px; height:36px; border-radius:10px; background:var(--verde); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:white; font-size:0.95rem; flex-shrink:0; transition:background 0.15s; }
+.chat-send:hover { background:var(--verde-light); }
+.chat-send:disabled { opacity:0.4; cursor:not-allowed; }
+.chat-correction { margin-top:0.4rem; padding:0.4rem 0.6rem; background:#fdf8ee; border-radius:8px; border-left:2px solid var(--ouro); font-size:0.7rem; color:#665522; display:none; }
+.chat-correction.show { display:block; }
+
+/* TOAST */
+.toast { position:fixed; bottom:4.5rem; left:50%; transform:translateX(-50%) translateY(8px); background:#1a1a1a; color:white; padding:0.45rem 1rem; border-radius:20px; font-size:0.73rem; opacity:0; transition:all 0.25s; pointer-events:none; z-index:999; white-space:nowrap; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* BOTTOM NAV */
+.bottom-nav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid var(--cinza-light); display:flex; padding:0.4rem 0 0.5rem; z-index:90; }
+.bnav-btn { flex:1; display:flex; flex-direction:column; align-items:center; gap:0.1rem; background:none; border:none; cursor:pointer; padding:0.3rem 0; color:var(--cinza); transition:color 0.15s; }
+.bnav-btn.active { color:var(--verde); }
+.bnav-btn .icon { font-size:1.1rem; }
+.bnav-btn .label { font-size:0.58rem; font-family:'DM Sans',sans-serif; font-weight:600; }
+
+/* ===== AUTH MODAL ===== */
+.auth-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1000; display:flex; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(4px); opacity:0; pointer-events:none; transition:opacity 0.25s; }
+.auth-overlay.open { opacity:1; pointer-events:all; }
+.auth-modal { background:white; border-radius:20px; padding:1.6rem 1.4rem; width:100%; max-width:380px; box-shadow:0 20px 60px rgba(0,0,0,0.25); transform:translateY(20px); transition:transform 0.25s; }
+.auth-overlay.open .auth-modal { transform:translateY(0); }
+.auth-logo { text-align:center; margin-bottom:1.2rem; }
+.auth-logo span { font-size:2.5rem; display:block; }
+.auth-logo h2 { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--verde); margin-top:0.3rem; }
+.auth-logo p { font-size:0.75rem; color:var(--cinza); margin-top:0.2rem; }
+.auth-tabs { display:flex; gap:0; margin-bottom:1.2rem; border:1.5px solid var(--cinza-light); border-radius:10px; overflow:hidden; }
+.auth-tab-btn { flex:1; padding:0.55rem; background:none; border:none; font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:600; cursor:pointer; color:var(--cinza); transition:all 0.15s; }
+.auth-tab-btn.active { background:var(--verde); color:white; }
+.auth-field { margin-bottom:0.8rem; }
+.auth-field label { display:block; font-size:0.72rem; font-weight:600; color:#444; margin-bottom:0.3rem; }
+.auth-field input { width:100%; padding:0.6rem 0.8rem; border:1.5px solid var(--cinza-light); border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.85rem; outline:none; transition:border-color 0.2s; }
+.auth-field input:focus { border-color:var(--verde); }
+.auth-btn-primary { width:100%; padding:0.75rem; background:var(--verde); color:white; border:none; border-radius:10px; font-family:'Playfair Display',serif; font-size:0.95rem; cursor:pointer; transition:background 0.15s; margin-top:0.2rem; }
+.auth-btn-primary:hover { background:var(--verde-light); }
+.auth-btn-primary:disabled { opacity:0.6; cursor:not-allowed; }
+.auth-divider { display:flex; align-items:center; gap:0.7rem; margin:0.9rem 0; }
+.auth-divider::before,.auth-divider::after { content:''; flex:1; height:1px; background:var(--cinza-light); }
+.auth-divider span { font-size:0.7rem; color:var(--cinza); }
+.auth-btn-google { width:100%; padding:0.65rem; background:white; border:1.5px solid var(--cinza-light); border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.83rem; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem; transition:border-color 0.15s,box-shadow 0.15s; color:#333; }
+.auth-btn-google:hover { border-color:#aaa; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.auth-err { font-size:0.72rem; color:var(--vermelho); margin-top:0.5rem; text-align:center; min-height:1rem; }
+.auth-skip { display:block; text-align:center; margin-top:0.9rem; font-size:0.72rem; color:var(--cinza); cursor:pointer; text-decoration:underline; }
+/* ===== USER BADGE (nav) ===== */
+.user-badge { display:flex; align-items:center; gap:0.3rem; margin-left:auto; flex-shrink:0; }
+.user-avatar { width:26px; height:26px; border-radius:50%; background:var(--ouro); display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:white; cursor:pointer; }
+.user-menu { position:absolute; top:52px; right:0.5rem; background:white; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); padding:0.5rem; z-index:200; min-width:160px; display:none; }
+.user-menu.open { display:block; }
+.user-menu-email { font-size:0.68rem; color:var(--cinza); padding:0.3rem 0.5rem 0.5rem; border-bottom:1px solid var(--cinza-light); margin-bottom:0.3rem; word-break:break-all; }
+.user-menu-item { display:block; width:100%; text-align:left; padding:0.45rem 0.6rem; background:none; border:none; border-radius:7px; font-size:0.78rem; cursor:pointer; font-family:'DM Sans',sans-serif; color:#333; transition:background 0.12s; }
+.user-menu-item:hover { background:var(--branco); }
+.user-menu-item.danger { color:var(--vermelho); }
+.sync-indicator { font-size:0.6rem; color:rgba(255,255,255,0.5); margin-left:0.2rem; }
+.sync-indicator.syncing { color:var(--ouro); animation:pulse 1s infinite; }
+</style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<div class="nav">
+  <div class="flag-stripe"><div class="s1"></div><div class="s2"></div><div class="s3"></div></div>
+  <div class="nav-inner">
+    <div class="nav-brand">🇮🇹 Italiano</div>
+    <button class="nav-tab active" onclick="showPage('vocab',this)">📚 Palavras</button>
+    <button class="nav-tab" onclick="showPage('progress',this)">📊 Progresso</button>
+    <button class="nav-tab" onclick="showPage('quiz',this)">🃏 Quiz</button>
+    <button class="nav-tab" onclick="showPage('dialogues',this)">💬 Diálogos</button>
+    <button class="nav-tab" onclick="showPage('grammar',this)">📖 Gramática</button>
+    <button class="nav-tab" onclick="showPage('chat',this)">🤖 Chat IA</button>
+  </div>
+</div>
+
+<!-- VOCABULARY PAGE -->
+<div class="page active" id="page-vocab">
+  <div class="vocab-controls">
+    <div class="search-wrap">
+      <input type="text" id="search" placeholder="Buscar palavra…" oninput="filterWords()" autocomplete="off">
+      <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+    </div>
+    <div class="cats" id="cats"></div>
+  </div>
+  <div class="count-bar">
+    <span id="countBar"></span>
+    <button class="fav-toggle-btn" id="fav-toggle" onclick="toggleFavFilter()">⭐ Favoritos</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- PROGRESS PAGE -->
+<div class="page" id="page-progress">
+  <div class="progress-page" id="progress-content"></div>
+</div>
+
+<!-- QUIZ PAGE -->
+<div class="page" id="page-quiz">
+  <div class="quiz-page">
+    <div id="quiz-menu">
+      <div class="quiz-header-section">
+        <div class="quiz-title">Pratique & Teste</div>
+        <div class="quiz-sub">Escolha o modo e a categoria para começar</div>
+      </div>
+      <div class="quiz-mode-grid">
+        <div class="quiz-mode-card selected" id="qm-flash" onclick="selectQuizMode('flash')">
+          <span class="qm-icon">🃏</span>
+          <div class="qm-title">Flashcards</div>
+          <div class="qm-desc">Veja a palavra em italiano e adivinhe o significado</div>
+        </div>
+        <div class="quiz-mode-card" id="qm-mc" onclick="selectQuizMode('mc')">
+          <span class="qm-icon">🎯</span>
+          <div class="qm-title">Múltipla Escolha</div>
+          <div class="qm-desc">4 opções, escolha a tradução correta</div>
+        </div>
+        <div class="quiz-mode-card" id="qm-fav" onclick="selectQuizMode('fav')">
+          <span class="qm-icon">⭐</span>
+          <div class="qm-title">Favoritos</div>
+          <div class="qm-desc">Estude só as palavras que você marcou</div>
+        </div>
+        <div class="quiz-mode-card" id="qm-wrong" onclick="selectQuizMode('wrong')">
+          <span class="qm-icon">🔄</span>
+          <div class="qm-title">Revisão</div>
+          <div class="qm-desc">Revise as palavras que você errou antes</div>
+        </div>
+      </div>
+      <div class="quiz-cat-select">
+        <h4>Categoria</h4>
+        <div class="quiz-cat-pills" id="quiz-cat-pills"></div>
+      </div>
+      <button class="start-quiz-btn" onclick="startQuiz()">▶ Iniciar Quiz</button>
+    </div>
+    <!-- FLASHCARD AREA -->
+    <div class="flashcard-area" id="quiz-flash">
+      <div class="fc-progress">
+        <div class="fc-progress-bar"><div class="fc-progress-fill" id="fc-pbar"></div></div>
+        <span class="fc-progress-text" id="fc-ptext"></span>
+      </div>
+      <div class="fc-score">
+        <div class="fc-score-item"><div class="fc-score-num correct" id="fc-correct">0</div><div class="fc-score-label">Acertos</div></div>
+        <div class="fc-score-item"><div class="fc-score-num wrong" id="fc-wrong">0</div><div class="fc-score-label">Erros</div></div>
+        <div class="fc-score-item"><div class="fc-score-num" id="fc-remain" style="color:var(--cinza)">0</div><div class="fc-score-label">Restam</div></div>
+      </div>
+      <div class="flashcard-wrap">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="fc-front">
+            <button class="fc-audio-btn" id="fc-audio-front" onclick="event.stopPropagation();speakFC()">🔊</button>
+            <div class="fc-word" id="fc-word"></div>
+            <div class="fc-cat" id="fc-cat"></div>
+            <div class="fc-hint">Toque para revelar</div>
+          </div>
+          <div class="fc-back">
+            <button class="fc-audio-btn" id="fc-audio-back" onclick="event.stopPropagation();speakFC()">🔊</button>
+            <div class="fc-translation" id="fc-translation"></div>
+            <div class="fc-pronun" id="fc-pronun"></div>
+            <div class="fc-example" id="fc-example"></div>
+            <div class="fc-ex-pt" id="fc-ex-pt"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-actions">
+        <button class="fc-btn wrong" onclick="fcAnswer(false)">✗ Não sabia</button>
+        <button class="fc-btn skip" onclick="fcSkip()">→ Pular</button>
+        <button class="fc-btn correct" onclick="fcAnswer(true)">✓ Sabia!</button>
+      </div>
+      <button class="quiz-result-btn menu" style="width:100%;border-radius:10px;padding:0.6rem" onclick="backToQuizMenu()">← Voltar ao menu</button>
+    </div>
+    <!-- MULTIPLE CHOICE AREA -->
+    <div class="mc-area" id="quiz-mc">
+      <div class="fc-progress">
+        <div class="fc-progress-bar"><div class="fc-progress-fill" id="mc-pbar"></div></div>
+        <span class="fc-progress-text" id="mc-ptext"></span>
+      </div>
+      <div class="fc-score">
+        <div class="fc-score-item"><div class="fc-score-num correct" id="mc-correct">0</div><div class="fc-score-label">Acertos</div></div>
+        <div class="fc-score-item"><div class="fc-score-num wrong" id="mc-wrong">0</div><div class="fc-score-label">Erros</div></div>
+        <div class="fc-score-item"><div class="fc-score-num" id="mc-remain" style="color:var(--cinza)">0</div><div class="fc-score-label">Restam</div></div>
+      </div>
+      <div class="mc-card">
+        <div class="mc-question-it" id="mc-word"></div>
+        <div class="mc-question-pr" id="mc-pr"></div>
+        <div class="mc-question-ex" id="mc-ex"></div>
+        <button class="mc-audio-btn" onclick="speakMC()">🔊 Ouvir</button>
+      </div>
+      <div class="mc-options" id="mc-options"></div>
+      <div class="mc-feedback" id="mc-feedback"></div>
+      <button class="mc-next-btn" id="mc-next" onclick="mcNext()">Próxima →</button>
+      <button class="quiz-result-btn menu" style="width:100%;border-radius:10px;padding:0.6rem;margin-top:0.5rem" onclick="backToQuizMenu()">← Voltar ao menu</button>
+    </div>
+    <!-- RESULT -->
+    <div class="quiz-result" id="quiz-result">
+      <div id="quiz-result-emoji" style="font-size:2.5rem;margin-bottom:0.5rem"></div>
+      <h2 id="quiz-result-title"></h2>
+      <div class="score-big" id="quiz-result-score"></div>
+      <div class="score-label" id="quiz-result-detail"></div>
+      <div class="quiz-result-btns">
+        <button class="quiz-result-btn retry" onclick="startQuiz()">🔄 Jogar novamente</button>
+        <button class="quiz-result-btn menu" onclick="backToQuizMenu()">← Menu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIALOGUES PAGE -->
+<div class="page" id="page-dialogues">
+  <div class="dialogues-page">
+    <div class="section-title">Conversas do Dia a Dia</div>
+    <div class="section-sub">Toque nas frases para ouvir • tradução linha a linha • pratique digitando</div>
+    <div class="dial-cards" id="dial-cards"></div>
+  </div>
+</div>
+
+<!-- GRAMMAR PAGE -->
+<div class="page" id="page-grammar">
+  <div class="grammar-page" id="grammar-content"></div>
+</div>
+
+<!-- CHAT PAGE -->
+<div class="page" id="page-chat">
+  <div class="chat-page">
+    <div class="chat-header">
+      <div class="chat-avatar">🤌</div>
+      <div class="chat-info">
+        <h3>Sofia — Professora de Italiano</h3>
+        <p>Fale em italiano! Ela corrige e traduz.</p>
+      </div>
+      <div class="chat-status"></div>
+      <button onclick="clearChatHistory()" title="Apagar histórico" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:0.75rem;cursor:pointer;padding:0.2rem 0.4rem;border-radius:6px;white-space:nowrap;flex-shrink:0;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">🗑️ Limpar</button>
+    </div>
+    <div class="chat-modes" id="chat-modes-bar">
+      <button class="mode-btn active" onclick="setMode(this,'free')">💬 Livre</button>
+      <button class="mode-btn" onclick="setMode(this,'restaurant')">🍕 Restaurante</button>
+      <button class="mode-btn" onclick="setMode(this,'hotel')">🏨 Hotel</button>
+      <button class="mode-btn" onclick="setMode(this,'tourist')">🗺️ Turismo</button>
+      <button class="mode-btn" onclick="setMode(this,'shopping')">🛍️ Compras</button>
+      <button class="mode-btn" onclick="setMode(this,'emergency')">🚨 Emergência</button>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-suggestions" id="chat-suggestions"></div>
+    <div class="chat-input-wrap">
+      <textarea class="chat-input" id="chat-input" placeholder="Scrivi in italiano… (ou em português)" rows="1"
+        onkeydown="chatKeydown(event)" oninput="autoResize(this)"></textarea>
+      <button class="chat-send" id="chat-send" onclick="sendChat()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== AUTH MODAL ===== -->
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-modal">
+    <div class="auth-logo">
+      <span>🇮🇹</span>
+      <h2>Italiano para Viagem</h2>
+      <p>Entre para salvar seu progresso em qualquer dispositivo</p>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab-btn active" id="tab-login" onclick="authSwitchTab('login')">Entrar</button>
+      <button class="auth-tab-btn" id="tab-register" onclick="authSwitchTab('register')">Criar conta</button>
+    </div>
+    <div id="auth-form-login">
+      <div class="auth-field"><label>Email</label><input type="email" id="auth-email-l" placeholder="seu@email.com" autocomplete="email"></div>
+      <div class="auth-field"><label>Senha</label><input type="password" id="auth-pass-l" placeholder="••••••••" autocomplete="current-password"></div>
+      <button class="auth-btn-primary" id="auth-login-btn" onclick="authLogin()">Entrar</button>
+    </div>
+    <div id="auth-form-register" style="display:none">
+      <div class="auth-field"><label>Email</label><input type="email" id="auth-email-r" placeholder="seu@email.com" autocomplete="email"></div>
+      <div class="auth-field"><label>Senha (mín. 6 caracteres)</label><input type="password" id="auth-pass-r" placeholder="••••••••" autocomplete="new-password"></div>
+      <button class="auth-btn-primary" id="auth-register-btn" onclick="authRegister()">Criar conta</button>
+    </div>
+    <div class="auth-divider"><span>ou</span></div>
+    <button class="auth-btn-google" onclick="authGoogle()">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continuar com Google
+    </button>
+    <div class="auth-err" id="auth-err"></div>
+    <span class="auth-skip" onclick="authSkip()">Continuar sem conta (só neste dispositivo)</span>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+// ==================== SUPABASE + STORAGE LAYER ====================
+// Supabase credentials loaded from /api/config (set in Vercel env vars)
+let SUPABASE_URL = null;
+let SUPABASE_ANON_KEY = null;
+let sb = null; // Supabase client (null until init)
+let currentUser = null;
+let syncPending = false;
+let syncTimer = null;
+
+async function initSupabase() {
+  try {
+    const res = await fetch('/api/config');
+    const cfg = await res.json();
+    if (!cfg.configured) return;
+    SUPABASE_URL = cfg.supabaseUrl;
+    SUPABASE_ANON_KEY = cfg.supabaseAnonKey;
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch(e) { console.warn('Supabase init failed:', e); }
+}
+
+// ─── LOCAL STORAGE FALLBACK ───────────────────────
+async function storageGet(key) {
+  try { const r = localStorage.getItem(key); return r ? JSON.parse(r) : null; } catch(e) { return null; }
+}
+async function storageSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+  // Debounced cloud sync
+  if (currentUser && sb) scheduleSyncToCloud();
+}
+
+// ─── CLOUD SYNC ───────────────────────────────────
+function scheduleSyncToCloud() {
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(syncToCloud, 1500);
+}
+
+function setSyncStatus(status) {
+  const el = document.getElementById('sync-indicator');
+  if (!el) return;
+  if (status === 'syncing') {
+    el.textContent = '⟳'; el.className = 'sync-indicator syncing'; el.title = 'Sincronizando…';
+  } else if (status === 'done') {
+    el.textContent = '✓'; el.className = 'sync-indicator'; el.title = 'Sincronizado';
+    setTimeout(() => { el.textContent = ''; }, 2000);
+  } else if (status === 'error') {
+    el.textContent = '!'; el.className = 'sync-indicator'; el.title = 'Erro ao sincronizar';
+  }
+}
+
+async function syncToCloud() {
+  if (!currentUser || !sb) return;
+  setSyncStatus('syncing');
+  try {
+    // ── Progress ──
+    const progressPayload = {
+      user_id: currentUser.id,
+      favorites: [...favorites],
+      studied: [...studiedWords],
+      wrong: [...wrongWords],
+      streak: parseInt(localStorage.getItem('it-streak') || '0'),
+      last_visit: localStorage.getItem('it-last-visit') || null,
+      visit_days: JSON.parse(localStorage.getItem('it-visit-days') || '[]'),
+      quiz_total: quizTotalScore,
+    };
+    await sb.from('user_progress').upsert(progressPayload, { onConflict: 'user_id' });
+
+    // ── Chat (save current mode) ──
+    const chatKey = 'it-chat-' + chatMode;
+    const chatMsgs = JSON.parse(localStorage.getItem(chatKey) || '[]');
+    if (chatMsgs.length > 0) {
+      await sb.from('chat_history').upsert(
+        { user_id: currentUser.id, mode: chatMode, messages: chatMsgs },
+        { onConflict: 'user_id,mode' }
+      );
+    }
+
+    // ── Generated phrases ──
+    const phrases = JSON.parse(localStorage.getItem('it-gen-phrases') || '{}');
+    if (Object.keys(phrases).length > 0) {
+      await sb.from('generated_phrases').upsert(
+        { user_id: currentUser.id, phrases },
+        { onConflict: 'user_id' }
+      );
+    }
+
+    setSyncStatus('done');
+  } catch(e) {
+    console.warn('Sync error:', e);
+    setSyncStatus('error');
+  }
+}
+
+async function syncFromCloud() {
+  if (!currentUser || !sb) return;
+  setSyncStatus('syncing');
+  try {
+    // ── Progress ──
+    const { data: prog } = await sb
+      .from('user_progress').select('*').eq('user_id', currentUser.id).single();
+    if (prog) {
+      favorites = new Set(prog.favorites || []);
+      studiedWords = new Set(prog.studied || []);
+      wrongWords = new Set(prog.wrong || []);
+      quizTotalScore = prog.quiz_total || { sessions:0, correct:0, total:0 };
+      if (prog.streak) localStorage.setItem('it-streak', prog.streak);
+      if (prog.last_visit) localStorage.setItem('it-last-visit', prog.last_visit);
+      if (prog.visit_days) localStorage.setItem('it-visit-days', JSON.stringify(prog.visit_days));
+      // Mirror back to localStorage for offline use
+      localStorage.setItem('it-favorites', JSON.stringify([...favorites]));
+      localStorage.setItem('it-studied', JSON.stringify([...studiedWords]));
+      localStorage.setItem('it-wrong', JSON.stringify([...wrongWords]));
+      localStorage.setItem('it-quiz-total', JSON.stringify(quizTotalScore));
+    }
+
+    // ── Chat histories (all modes) ──
+    const { data: chats } = await sb
+      .from('chat_history').select('mode,messages').eq('user_id', currentUser.id);
+    if (chats) {
+      chats.forEach(row => {
+        localStorage.setItem('it-chat-' + row.mode, JSON.stringify(row.messages || []));
+      });
+    }
+
+    // ── Generated phrases ──
+    const { data: phrasesRow } = await sb
+      .from('generated_phrases').select('phrases').eq('user_id', currentUser.id).single();
+    if (phrasesRow?.phrases) {
+      localStorage.setItem('it-gen-phrases', JSON.stringify(phrasesRow.phrases));
+    }
+
+    setSyncStatus('done');
+  } catch(e) {
+    console.warn('Sync from cloud error:', e);
+    setSyncStatus('error');
+  }
+}
+
+async function syncNow() {
+  showToast('🔄 Sincronizando…');
+  await syncToCloud();
+  await syncFromCloud();
+  renderProgress(); filterWords();
+  showToast('✓ Dados sincronizados!');
+  toggleUserMenu();
+}
+
+// ─── AUTH FUNCTIONS ───────────────────────────────
+function authSwitchTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('auth-form-login').style.display = tab==='login' ? 'block' : 'none';
+  document.getElementById('auth-form-register').style.display = tab==='register' ? 'block' : 'none';
+  document.getElementById('auth-err').textContent = '';
+}
+
+function authSetLoading(id, loading) {
+  const btn = document.getElementById(id);
+  btn.disabled = loading;
+  btn.textContent = loading ? 'Aguarde…' : (id==='auth-login-btn' ? 'Entrar' : 'Criar conta');
+}
+
+async function authLogin() {
+  if (!sb) return authShowErr('Supabase não configurado. Configure as variáveis no Vercel.');
+  const email = document.getElementById('auth-email-l').value.trim();
+  const pass = document.getElementById('auth-pass-l').value;
+  if (!email || !pass) return authShowErr('Preencha email e senha.');
+  authSetLoading('auth-login-btn', true);
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  authSetLoading('auth-login-btn', false);
+  if (error) return authShowErr(error.message);
+}
+
+async function authRegister() {
+  if (!sb) return authShowErr('Supabase não configurado. Configure as variáveis no Vercel.');
+  const email = document.getElementById('auth-email-r').value.trim();
+  const pass = document.getElementById('auth-pass-r').value;
+  if (!email || !pass) return authShowErr('Preencha email e senha.');
+  if (pass.length < 6) return authShowErr('Senha deve ter pelo menos 6 caracteres.');
+  authSetLoading('auth-register-btn', true);
+  const { error } = await sb.auth.signUp({ email, password: pass });
+  authSetLoading('auth-register-btn', false);
+  if (error) return authShowErr(error.message);
+  authShowErr('✓ Verifique seu email para confirmar o cadastro!');
+}
+
+async function authGoogle() {
+  if (!sb) return authShowErr('Supabase não configurado.');
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin }
+  });
+  if (error) authShowErr(error.message);
+}
+
+function authSkip() {
+  localStorage.setItem('it-auth-skipped', '1');
+  closeAuthModal();
+  showToast('Modo offline — progresso salvo só neste dispositivo');
+}
+
+async function authSignOut() {
+  if (sb) await sb.auth.signOut();
+  currentUser = null;
+  document.getElementById('user-badge').style.display = 'none';
+  toggleUserMenu();
+  showToast('Sessão encerrada');
+}
+
+function authShowErr(msg) {
+  document.getElementById('auth-err').textContent = msg;
+}
+
+function openAuthModal() {
+  document.getElementById('auth-overlay').classList.add('open');
+}
+function closeAuthModal() {
+  document.getElementById('auth-overlay').classList.remove('open');
+}
+
+function toggleUserMenu() {
+  document.getElementById('user-menu').classList.toggle('open');
+}
+
+// Close menu on outside click
+document.addEventListener('click', e => {
+  const menu = document.getElementById('user-menu');
+  const badge = document.getElementById('user-avatar');
+  if (menu && !menu.contains(e.target) && e.target !== badge) {
+    menu.classList.remove('open');
+  }
+});
+
+async function setupAuth() {
+  await initSupabase();
+  if (!sb) return; // Supabase not configured yet
+
+  // Listen for auth state changes
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (session?.user) {
+      currentUser = session.user;
+      const email = currentUser.email || '';
+      const initials = email.charAt(0).toUpperCase() || '?';
+      document.getElementById('user-avatar').textContent = initials;
+      document.getElementById('user-menu-email').textContent = email;
+      document.getElementById('user-badge').style.display = 'flex';
+      closeAuthModal();
+      // Pull latest data from cloud
+      await syncFromCloud();
+      renderCats(); filterWords(); renderProgress();
+      showToast('✓ Dados sincronizados!');
+    } else {
+      currentUser = null;
+      document.getElementById('user-badge').style.display = 'none';
+    }
+  });
+
+  // Check existing session
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session && !localStorage.getItem('it-auth-skipped')) {
+    // Show auth modal after short delay
+    setTimeout(openAuthModal, 800);
+  }
+}
+
+// ==================== WORDS DATA (500) ====================
+const words = [
+// ESSENCIAL (30)
+{it:"sì",pt:"sim",pr:"si",cat:"Essencial",ex_it:"Sì, capisco perfettamente.",ex_pt:"Sim, entendo perfeitamente."},
+{it:"no",pt:"não",pr:"nô",cat:"Essencial",ex_it:"No, grazie, non voglio altro.",ex_pt:"Não, obrigado, não quero mais."},
+{it:"grazie",pt:"obrigado/a",pr:"grátzie",cat:"Essencial",ex_it:"Grazie mille per tutto!",ex_pt:"Muito obrigado por tudo!"},
+{it:"prego",pt:"de nada",pr:"prêgo",cat:"Essencial",ex_it:"Prego, è stato un piacere.",ex_pt:"De nada, foi um prazer."},
+{it:"scusi",pt:"com licença",pr:"skúzi",cat:"Essencial",ex_it:"Scusi, dov'è il bagno?",ex_pt:"Com licença, onde é o banheiro?"},
+{it:"per favore",pt:"por favor",pr:"per favóre",cat:"Essencial",ex_it:"Un caffè, per favore.",ex_pt:"Um café, por favor."},
+{it:"aiuto",pt:"socorro",pr:"aiúto",cat:"Essencial",ex_it:"Aiuto! Ho perso il passaporto.",ex_pt:"Socorro! Perdi o passaporte."},
+{it:"basta",pt:"chega / basta",pr:"básta",cat:"Essencial",ex_it:"Basta così, grazie.",ex_pt:"Chega assim, obrigado."},
+{it:"non capisco",pt:"não entendo",pr:"non kapísko",cat:"Essencial",ex_it:"Non capisco, può ripetere?",ex_pt:"Não entendo, pode repetir?"},
+{it:"parla inglese",pt:"fala inglês?",pr:"párla inglêze",cat:"Essencial",ex_it:"Scusi, parla inglese?",ex_pt:"Com licença, fala inglês?"},
+{it:"piano",pt:"devagar",pr:"piáno",cat:"Essencial",ex_it:"Parli più piano, per favore.",ex_pt:"Fale mais devagar, por favor."},
+{it:"ancora",pt:"de novo",pr:"ankóra",cat:"Essencial",ex_it:"Può ripetere ancora?",ex_pt:"Pode repetir de novo?"},
+{it:"subito",pt:"imediatamente",pr:"súbito",cat:"Essencial",ex_it:"Vengo subito!",ex_pt:"Já vou!"},
+{it:"va bene",pt:"tudo bem / ok",pr:"va bêne",cat:"Essencial",ex_it:"Va bene, non c'è problema.",ex_pt:"Tudo bem, não tem problema."},
+{it:"certo",pt:"claro / certo",pr:"tchérto",cat:"Essencial",ex_it:"Certo, con piacere!",ex_pt:"Claro, com prazer!"},
+{it:"forse",pt:"talvez",pr:"fórse",cat:"Essencial",ex_it:"Forse domani riesco a venire.",ex_pt:"Talvez amanhã consiga vir."},
+{it:"allora",pt:"então / bem",pr:"alóra",cat:"Essencial",ex_it:"Allora, che cosa facciamo?",ex_pt:"Então, o que fazemos?"},
+{it:"ecco",pt:"aqui está",pr:"éco",cat:"Essencial",ex_it:"Ecco il suo caffè.",ex_pt:"Aqui está o seu café."},
+{it:"purtroppo",pt:"infelizmente",pr:"purtrópo",cat:"Essencial",ex_it:"Purtroppo non ho contanti.",ex_pt:"Infelizmente não tenho dinheiro em espécie."},
+{it:"davvero",pt:"de verdade?",pr:"davvéro",cat:"Essencial",ex_it:"Davvero?! Che bello!",ex_pt:"De verdade?! Que ótimo!"},
+{it:"magari",pt:"quem dera",pr:"magári",cat:"Essencial",ex_it:"Magari un giorno torno qui.",ex_pt:"Quem dera um dia voltar aqui."},
+{it:"mi dispiace",pt:"sinto muito",pr:"mi dispjátche",cat:"Essencial",ex_it:"Mi dispiace, ho sbagliato numero.",ex_pt:"Me desculpe, liguei para o número errado."},
+{it:"non lo so",pt:"não sei",pr:"non lo so",cat:"Essencial",ex_it:"Non lo so, chieda a qualcun altro.",ex_pt:"Não sei, pergunte a outra pessoa."},
+{it:"capito",pt:"entendido",pr:"kapíto",cat:"Essencial",ex_it:"Capito, grazie per la spiegazione.",ex_pt:"Entendido, obrigado pela explicação."},
+{it:"pronto",pt:"pronto / alô",pr:"prônto",cat:"Essencial",ex_it:"Pronto? Chi parla?",ex_pt:"Alô? Quem fala?"},
+{it:"andiamo",pt:"vamos",pr:"andiámo",cat:"Essencial",ex_it:"Andiamo, il treno parte!",ex_pt:"Vamos, o trem parte!"},
+{it:"aspetta",pt:"espera",pr:"aspéta",cat:"Essencial",ex_it:"Aspetta un momento, per favore.",ex_pt:"Espera um momento, por favor."},
+{it:"però",pt:"porém / mas",pr:"però",cat:"Essencial",ex_it:"Mi piace però è troppo caro.",ex_pt:"Gosto, porém é muito caro."},
+{it:"insomma",pt:"enfim",pr:"insóma",cat:"Essencial",ex_it:"Insomma, non è andata bene.",ex_pt:"Enfim, não correu bem."},
+{it:"dai",pt:"vamos / anda lá",pr:"dái",cat:"Essencial",ex_it:"Dai, non essere timido!",ex_pt:"Vamos, não seja tímido!"},
+// SAUDAÇÃO (16)
+{it:"ciao",pt:"olá / tchau",pr:"tcháo",cat:"Saudação",ex_it:"Ciao! Come stai oggi?",ex_pt:"Oi! Como vai você hoje?"},
+{it:"buongiorno",pt:"bom dia",pr:"buon-djórno",cat:"Saudação",ex_it:"Buongiorno, signora! Bella giornata.",ex_pt:"Bom dia, senhora! Dia bonito."},
+{it:"buonasera",pt:"boa tarde/noite",pr:"buona-séra",cat:"Saudação",ex_it:"Buonasera a tutti voi.",ex_pt:"Boa noite a todos vocês."},
+{it:"buonanotte",pt:"boa noite (despedida)",pr:"buona-nóte",cat:"Saudação",ex_it:"Buonanotte, a domani!",ex_pt:"Boa noite, até amanhã!"},
+{it:"arrivederci",pt:"até logo (formal)",pr:"arrivederchi",cat:"Saudação",ex_it:"Arrivederci e grazie!",ex_pt:"Até logo e obrigado!"},
+{it:"salve",pt:"olá (formal)",pr:"sálve",cat:"Saudação",ex_it:"Salve, sono qui per informazioni.",ex_pt:"Olá, estou aqui para informações."},
+{it:"benvenuto",pt:"bem-vindo",pr:"benvenúto",cat:"Saudação",ex_it:"Benvenuto a Roma!",ex_pt:"Bem-vindo a Roma!"},
+{it:"come stai",pt:"como vai você?",pr:"kôme stái",cat:"Saudação",ex_it:"Ciao! Come stai?",ex_pt:"Oi! Como vai você?"},
+{it:"bene",pt:"bem",pr:"bêne",cat:"Saudação",ex_it:"Sto bene, grazie!",ex_pt:"Estou bem, obrigado!"},
+{it:"così così",pt:"mais ou menos",pr:"kozì kozì",cat:"Saudação",ex_it:"Come stai? — Così così.",ex_pt:"Como vai? — Mais ou menos."},
+{it:"piacere",pt:"prazer em conhecê-lo",pr:"pjatcére",cat:"Saudação",ex_it:"Piacere di conoscerti!",ex_pt:"Prazer em te conhecer!"},
+{it:"mi chiamo",pt:"meu nome é",pr:"mi kiámo",cat:"Saudação",ex_it:"Mi chiamo Marco, e tu?",ex_pt:"Meu nome é Marco, e você?"},
+{it:"a presto",pt:"até logo",pr:"a présto",cat:"Saudação",ex_it:"A presto! Ci vediamo domani.",ex_pt:"Até logo! Nos vemos amanhã."},
+{it:"auguri",pt:"parabéns",pr:"augúri",cat:"Saudação",ex_it:"Auguri per il tuo compleanno!",ex_pt:"Parabéns pelo seu aniversário!"},
+{it:"in bocca al lupo",pt:"boa sorte",pr:"in bóka al lúpo",cat:"Saudação",ex_it:"In bocca al lupo per il viaggio!",ex_pt:"Boa sorte na viagem!"},
+{it:"come si chiama",pt:"como se chama?",pr:"kôme si kiáma",cat:"Saudação",ex_it:"Come si chiama, signore?",ex_pt:"Como o senhor se chama?"},
+// PESSOAS (22)
+{it:"io",pt:"eu",pr:"ío",cat:"Pessoa",ex_it:"Io sono brasiliano.",ex_pt:"Eu sou brasileiro."},
+{it:"tu",pt:"você / tu",pr:"tu",cat:"Pessoa",ex_it:"Tu parli molto bene l'italiano.",ex_pt:"Você fala muito bem italiano."},
+{it:"lui",pt:"ele",pr:"lúi",cat:"Pessoa",ex_it:"Lui è il mio amico.",ex_pt:"Ele é meu amigo."},
+{it:"lei",pt:"ela / você (formal)",pr:"lêi",cat:"Pessoa",ex_it:"Lei parla inglese?",ex_pt:"A senhora fala inglês?"},
+{it:"noi",pt:"nós",pr:"nói",cat:"Pessoa",ex_it:"Noi siamo qui in vacanza.",ex_pt:"Nós estamos aqui de férias."},
+{it:"voi",pt:"vocês",pr:"vói",cat:"Pessoa",ex_it:"Voi siete stanchi?",ex_pt:"Vocês estão cansados?"},
+{it:"loro",pt:"eles / elas",pr:"lóro",cat:"Pessoa",ex_it:"Loro vengono dal Brasile.",ex_pt:"Eles vêm do Brasil."},
+{it:"uomo",pt:"homem",pr:"uômo",cat:"Pessoa",ex_it:"Quell'uomo è molto gentile.",ex_pt:"Aquele homem é muito gentil."},
+{it:"donna",pt:"mulher",pr:"dôna",cat:"Pessoa",ex_it:"Quella donna parla tre lingue.",ex_pt:"Aquela mulher fala três idiomas."},
+{it:"bambino",pt:"criança",pr:"bambíno",cat:"Pessoa",ex_it:"Il bambino gioca in piazza.",ex_pt:"A criança brinca na praça."},
+{it:"ragazzo",pt:"rapaz / jovem",pr:"ragátzo",cat:"Pessoa",ex_it:"Quel ragazzo è il mio figlio.",ex_pt:"Aquele rapaz é meu filho."},
+{it:"ragazza",pt:"moça / namorada",pr:"ragatza",cat:"Pessoa",ex_it:"La mia ragazza viene domani.",ex_pt:"Minha namorada vem amanhã."},
+{it:"signore",pt:"senhor",pr:"sinyóre",cat:"Pessoa",ex_it:"Buongiorno, signore!",ex_pt:"Bom dia, senhor!"},
+{it:"signora",pt:"senhora",pr:"sinyóra",cat:"Pessoa",ex_it:"Prego, signora.",ex_pt:"Por favor, senhora."},
+{it:"amico",pt:"amigo",pr:"amíco",cat:"Pessoa",ex_it:"Il mio amico abita a Milano.",ex_pt:"Meu amigo mora em Milão."},
+{it:"famiglia",pt:"família",pr:"famíllja",cat:"Pessoa",ex_it:"Sono qui con la mia famiglia.",ex_pt:"Estou aqui com minha família."},
+{it:"marito",pt:"marido",pr:"maríto",cat:"Pessoa",ex_it:"Mio marito aspetta fuori.",ex_pt:"Meu marido espera lá fora."},
+{it:"moglie",pt:"esposa",pr:"mólje",cat:"Pessoa",ex_it:"Mia moglie adora la cucina italiana.",ex_pt:"Minha esposa adora a culinária italiana."},
+{it:"figlio",pt:"filho",pr:"fíljo",cat:"Pessoa",ex_it:"Ho un figlio di dieci anni.",ex_pt:"Tenho um filho de dez anos."},
+{it:"collega",pt:"colega de trabalho",pr:"kolêga",cat:"Pessoa",ex_it:"Il mio collega viene a Roma.",ex_pt:"Meu colega vem a Roma."},
+{it:"medico",pt:"médico",pr:"médico",cat:"Pessoa",ex_it:"Ho bisogno di un medico!",ex_pt:"Preciso de um médico!"},
+{it:"polizia",pt:"polícia",pr:"polítzia",cat:"Pessoa",ex_it:"Devo chiamare la polizia.",ex_pt:"Preciso chamar a polícia."},
+// VERBOS (50)
+{it:"essere",pt:"ser / estar",pr:"éssere",cat:"Verbo",ex_it:"Sono contento di essere qui.",ex_pt:"Estou feliz de estar aqui."},
+{it:"avere",pt:"ter",pr:"avére",cat:"Verbo",ex_it:"Ho fame e sete.",ex_pt:"Estou com fome e sede."},
+{it:"andare",pt:"ir",pr:"andáre",cat:"Verbo",ex_it:"Vado a Venezia domani.",ex_pt:"Vou a Veneza amanhã."},
+{it:"venire",pt:"vir",pr:"veníre",cat:"Verbo",ex_it:"Vieni con me al museo?",ex_pt:"Você vem comigo ao museu?"},
+{it:"volere",pt:"querer",pr:"voléré",cat:"Verbo",ex_it:"Voglio una pizza margherita.",ex_pt:"Eu quero uma pizza margherita."},
+{it:"potere",pt:"poder",pr:"potére",cat:"Verbo",ex_it:"Puoi aiutarmi con questo?",ex_pt:"Você pode me ajudar com isso?"},
+{it:"sapere",pt:"saber",pr:"sapére",cat:"Verbo",ex_it:"Non so dove si trova.",ex_pt:"Não sei onde fica."},
+{it:"fare",pt:"fazer",pr:"fáre",cat:"Verbo",ex_it:"Cosa fai stasera?",ex_pt:"O que você faz esta noite?"},
+{it:"dire",pt:"dizer",pr:"díre",cat:"Verbo",ex_it:"Come si dice in italiano?",ex_pt:"Como se diz em italiano?"},
+{it:"capire",pt:"entender",pr:"kapíre",cat:"Verbo",ex_it:"Non capisco, parli più piano.",ex_pt:"Não entendo, fale mais devagar."},
+{it:"mangiare",pt:"comer",pr:"mandjáre",cat:"Verbo",ex_it:"Voglio mangiare la pasta.",ex_pt:"Quero comer macarrão."},
+{it:"bere",pt:"beber",pr:"bére",cat:"Verbo",ex_it:"Bevo un bicchiere di vino.",ex_pt:"Bebo uma taça de vinho."},
+{it:"pagare",pt:"pagar",pr:"pagáre",cat:"Verbo",ex_it:"Posso pagare con la carta?",ex_pt:"Posso pagar com cartão?"},
+{it:"cercare",pt:"procurar",pr:"tsherkáre",cat:"Verbo",ex_it:"Cerco un ristorante tipico.",ex_pt:"Procuro um restaurante típico."},
+{it:"parlare",pt:"falar",pr:"parlare",cat:"Verbo",ex_it:"Parla inglese per favore?",ex_pt:"Fala inglês por favor?"},
+{it:"abitare",pt:"morar",pr:"abitáre",cat:"Verbo",ex_it:"Abito a San Paolo.",ex_pt:"Moro em São Paulo."},
+{it:"lavorare",pt:"trabalhar",pr:"lavoráre",cat:"Verbo",ex_it:"Lavoro nel settore turistico.",ex_pt:"Trabalho no setor turístico."},
+{it:"dormire",pt:"dormir",pr:"dormíre",cat:"Verbo",ex_it:"Ho dormito male stanotte.",ex_pt:"Dormi mal esta noite."},
+{it:"sentire",pt:"sentir / ouvir",pr:"sentíre",cat:"Verbo",ex_it:"Non sento bene, può parlare più forte?",ex_pt:"Não ouço bem, pode falar mais alto?"},
+{it:"vedere",pt:"ver",pr:"vedére",cat:"Verbo",ex_it:"Hai visto il Colosseo?",ex_pt:"Você viu o Coliseu?"},
+{it:"comprare",pt:"comprar",pr:"kompráre",cat:"Verbo",ex_it:"Voglio comprare un souvenir.",ex_pt:"Quero comprar uma lembrança."},
+{it:"vendere",pt:"vender",pr:"vendére",cat:"Verbo",ex_it:"Vende prodotti artigianali?",ex_pt:"Vende produtos artesanais?"},
+{it:"prendere",pt:"pegar / tomar",pr:"préndere",cat:"Verbo",ex_it:"Prendo il treno delle otto.",ex_pt:"Pego o trem das oito."},
+{it:"portare",pt:"trazer / levar",pr:"portáre",cat:"Verbo",ex_it:"Porta il conto, per favore.",ex_pt:"Traga a conta, por favor."},
+{it:"aspettare",pt:"esperar",pr:"aspettáre",cat:"Verbo",ex_it:"Aspetto qui fuori.",ex_pt:"Espero aqui fora."},
+{it:"partire",pt:"partir",pr:"partíre",cat:"Verbo",ex_it:"A che ora parte il treno?",ex_pt:"A que horas parte o trem?"},
+{it:"arrivare",pt:"chegar",pr:"arrivare",cat:"Verbo",ex_it:"A che ora arriviamo?",ex_pt:"A que horas chegamos?"},
+{it:"prenotare",pt:"reservar",pr:"prenotáre",cat:"Verbo",ex_it:"Vorrei prenotare un tavolo.",ex_pt:"Gostaria de reservar uma mesa."},
+{it:"cambiare",pt:"trocar / mudar",pr:"kambiáre",cat:"Verbo",ex_it:"Posso cambiare la camera?",ex_pt:"Posso trocar de quarto?"},
+{it:"perdere",pt:"perder",pr:"pérdere",cat:"Verbo",ex_it:"Ho perso il portafoglio!",ex_pt:"Perdi minha carteira!"},
+{it:"trovare",pt:"encontrar",pr:"trováre",cat:"Verbo",ex_it:"Non riesco a trovare l'hotel.",ex_pt:"Não consigo encontrar o hotel."},
+{it:"aiutare",pt:"ajudar",pr:"aiutáre",cat:"Verbo",ex_it:"Puoi aiutarmi a trovare questa via?",ex_pt:"Pode me ajudar a encontrar esta rua?"},
+{it:"chiamare",pt:"chamar / ligar",pr:"kiamáre",cat:"Verbo",ex_it:"Puoi chiamare un taxi per me?",ex_pt:"Pode chamar um táxi para mim?"},
+{it:"aprire",pt:"abrir",pr:"apríre",cat:"Verbo",ex_it:"A che ora apre il negozio?",ex_pt:"A que horas abre a loja?"},
+{it:"chiudere",pt:"fechar",pr:"kiúdere",cat:"Verbo",ex_it:"Il museo chiude alle sei.",ex_pt:"O museu fecha às seis."},
+{it:"scrivere",pt:"escrever",pr:"skrívere",cat:"Verbo",ex_it:"Puoi scrivere l'indirizzo?",ex_pt:"Pode escrever o endereço?"},
+{it:"provare",pt:"tentar / experimentar",pr:"prováre",cat:"Verbo",ex_it:"Posso provare questo vestito?",ex_pt:"Posso experimentar este vestido?"},
+{it:"costare",pt:"custar",pr:"kostáre",cat:"Verbo",ex_it:"Quanto costa questo?",ex_pt:"Quanto custa isso?"},
+{it:"preferire",pt:"preferir",pr:"preferíre",cat:"Verbo",ex_it:"Preferisco il vino rosso.",ex_pt:"Prefiro vinho tinto."},
+{it:"uscire",pt:"sair",pr:"ushíre",cat:"Verbo",ex_it:"Usciamo a cena stasera?",ex_pt:"Saímos para jantar esta noite?"},
+{it:"tornare",pt:"voltar",pr:"tornáre",cat:"Verbo",ex_it:"Torno in Brasile domani.",ex_pt:"Volto ao Brasil amanhã."},
+{it:"stare",pt:"estar",pr:"stáre",cat:"Verbo",ex_it:"Come stai? Sto bene.",ex_pt:"Como vai? Estou bem."},
+{it:"avere bisogno",pt:"precisar de",pr:"avére bisónjo",cat:"Verbo",ex_it:"Ho bisogno di aiuto.",ex_pt:"Preciso de ajuda."},
+{it:"piacere",pt:"gostar",pr:"pjatcére",cat:"Verbo",ex_it:"Mi piace molto la cucina italiana.",ex_pt:"Gosto muito da culinária italiana."},
+{it:"sembrare",pt:"parecer",pr:"sembráre",cat:"Verbo",ex_it:"Sembra delizioso!",ex_pt:"Parece delicioso!"},
+{it:"mostrare",pt:"mostrar",pr:"mostráre",cat:"Verbo",ex_it:"Puoi mostrarmi la mappa?",ex_pt:"Pode me mostrar o mapa?"},
+{it:"ringraziare",pt:"agradecer",pr:"ringratzjáre",cat:"Verbo",ex_it:"Voglio ringraziarti di cuore.",ex_pt:"Quero te agradecer de coração."},
+{it:"imparare",pt:"aprender",pr:"imparáre",cat:"Verbo",ex_it:"Sto imparando l'italiano.",ex_pt:"Estou aprendendo italiano."},
+{it:"scegliere",pt:"escolher",pr:"shéljere",cat:"Verbo",ex_it:"Non riesco a scegliere!",ex_pt:"Não consigo escolher!"},
+{it:"leggere",pt:"ler",pr:"lédjere",cat:"Verbo",ex_it:"Non riesco a leggere questo.",ex_pt:"Não consigo ler isso."},
+{it:"capire",pt:"compreender",pr:"kapíre",cat:"Verbo",ex_it:"Ora capisco meglio.",ex_pt:"Agora entendo melhor."},
+// LUGARES (30)
+{it:"dove",pt:"onde",pr:"dóve",cat:"Lugar",ex_it:"Dove si trova il Colosseo?",ex_pt:"Onde fica o Coliseu?"},
+{it:"qui / qua",pt:"aqui",pr:"kwi / kwá",cat:"Lugar",ex_it:"Sono qui da tre giorni.",ex_pt:"Estou aqui há três dias."},
+{it:"lì / là",pt:"ali / lá",pr:"li / lá",cat:"Lugar",ex_it:"Il ristorante è lì a destra.",ex_pt:"O restaurante é lá à direita."},
+{it:"destra",pt:"direita",pr:"déstra",cat:"Lugar",ex_it:"Giri a destra al semaforo.",ex_pt:"Vire à direita no semáforo."},
+{it:"sinistra",pt:"esquerda",pr:"sinístra",cat:"Lugar",ex_it:"La farmacia è a sinistra.",ex_pt:"A farmácia é à esquerda."},
+{it:"dritto",pt:"em frente / reto",pr:"dríto",cat:"Lugar",ex_it:"Vada sempre dritto.",ex_pt:"Siga sempre em frente."},
+{it:"vicino",pt:"perto",pr:"vitchíno",cat:"Lugar",ex_it:"C'è un bar vicino?",ex_pt:"Tem um bar perto?"},
+{it:"lontano",pt:"longe",pr:"lontáno",cat:"Lugar",ex_it:"È lontano a piedi?",ex_pt:"É longe a pé?"},
+{it:"bagno",pt:"banheiro",pr:"bánjo",cat:"Lugar",ex_it:"Dov'è il bagno, per favore?",ex_pt:"Onde é o banheiro, por favor?"},
+{it:"stazione",pt:"estação de trem",pr:"statzjóne",cat:"Lugar",ex_it:"La stazione è lontana da qui?",ex_pt:"A estação é longe daqui?"},
+{it:"aeroporto",pt:"aeroporto",pr:"aeropórto",cat:"Lugar",ex_it:"Come arrivo all'aeroporto?",ex_pt:"Como chego ao aeroporto?"},
+{it:"centro",pt:"centro da cidade",pr:"tchéntro",cat:"Lugar",ex_it:"Voglio andare al centro storico.",ex_pt:"Quero ir ao centro histórico."},
+{it:"albergo",pt:"hotel",pr:"albérgo",cat:"Lugar",ex_it:"Il mio albergo è in Via Roma.",ex_pt:"Meu hotel é na Rua Roma."},
+{it:"farmacia",pt:"farmácia",pr:"farmatchía",cat:"Lugar",ex_it:"C'è una farmacia aperta di notte?",ex_pt:"Tem uma farmácia aberta à noite?"},
+{it:"ospedale",pt:"hospital",pr:"ospedale",cat:"Lugar",ex_it:"Dov'è l'ospedale più vicino?",ex_pt:"Onde é o hospital mais próximo?"},
+{it:"chiesa",pt:"igreja",pr:"kiêza",cat:"Lugar",ex_it:"Quella chiesa è bellissima.",ex_pt:"Aquela igreja é lindíssima."},
+{it:"museo",pt:"museu",pr:"muzêo",cat:"Lugar",ex_it:"Il museo è aperto oggi?",ex_pt:"O museu está aberto hoje?"},
+{it:"piazza",pt:"praça",pr:"pjátza",cat:"Lugar",ex_it:"Ci vediamo in piazza alle tre.",ex_pt:"Nos vemos na praça às três."},
+{it:"via",pt:"rua",pr:"vía",cat:"Lugar",ex_it:"In quale via si trova?",ex_pt:"Em qual rua fica?"},
+{it:"supermercato",pt:"supermercado",pr:"supermerkáto",cat:"Lugar",ex_it:"C'è un supermercato vicino?",ex_pt:"Tem um supermercado perto?"},
+{it:"banca",pt:"banco",pr:"bánka",cat:"Lugar",ex_it:"Dov'è la banca più vicina?",ex_pt:"Onde é o banco mais próximo?"},
+{it:"porto",pt:"porto",pr:"pórto",cat:"Lugar",ex_it:"Il traghetto parte dal porto.",ex_pt:"O barco parte do porto."},
+{it:"spiaggia",pt:"praia",pr:"spjáddja",cat:"Lugar",ex_it:"La spiaggia è bellissima.",ex_pt:"A praia é lindíssima."},
+{it:"montagna",pt:"montanha",pr:"montánja",cat:"Lugar",ex_it:"Adoro le montagne italiane.",ex_pt:"Adoro as montanhas italianas."},
+{it:"negozio",pt:"loja",pr:"negótzo",cat:"Lugar",ex_it:"I negozi chiudono a mezzogiorno.",ex_pt:"As lojas fecham ao meio-dia."},
+{it:"mercato",pt:"mercado",pr:"merkáto",cat:"Lugar",ex_it:"Il mercato apre alle otto.",ex_pt:"O mercado abre às oito."},
+{it:"fermata",pt:"parada de ônibus/metro",pr:"fermáta",cat:"Lugar",ex_it:"Qual è la fermata più vicina?",ex_pt:"Qual é a parada mais próxima?"},
+{it:"ufficio",pt:"escritório",pr:"uffítcho",cat:"Lugar",ex_it:"L'ufficio informazioni è al piano zero.",ex_pt:"O escritório de informações é no térreo."},
+{it:"posta",pt:"correios",pr:"pósta",cat:"Lugar",ex_it:"Devo andare alla posta.",ex_pt:"Preciso ir aos correios."},
+{it:"scala",pt:"escada",pr:"skála",cat:"Lugar",ex_it:"La scala è lì a sinistra.",ex_pt:"A escada é lá à esquerda."},
+// COMIDA (40)
+{it:"acqua",pt:"água",pr:"ákua",cat:"Comida",ex_it:"Un'acqua naturale, per favore.",ex_pt:"Uma água sem gás, por favor."},
+{it:"vino",pt:"vinho",pr:"víno",cat:"Comida",ex_it:"Un bicchiere di vino rosso.",ex_pt:"Uma taça de vinho tinto."},
+{it:"caffè",pt:"café",pr:"kafê",cat:"Comida",ex_it:"Un caffè ristretto, grazie.",ex_pt:"Um café curto, obrigado."},
+{it:"pane",pt:"pão",pr:"páne",cat:"Comida",ex_it:"Il pane italiano è delizioso.",ex_pt:"O pão italiano é delicioso."},
+{it:"carne",pt:"carne",pr:"kárne",cat:"Comida",ex_it:"Vorrei la carne ben cotta.",ex_pt:"Gostaria da carne bem passada."},
+{it:"pesce",pt:"peixe",pr:"pêshe",cat:"Comida",ex_it:"Il pesce del giorno è ottimo.",ex_pt:"O peixe do dia é ótimo."},
+{it:"pizza",pt:"pizza",pr:"pítza",cat:"Comida",ex_it:"Una pizza margherita, per favore.",ex_pt:"Uma pizza margherita, por favor."},
+{it:"pasta",pt:"macarrão / massa",pr:"pásta",cat:"Comida",ex_it:"La pasta alla carbonara è buonissima.",ex_pt:"O macarrão à carbonara é delicioso."},
+{it:"gelato",pt:"sorvete",pr:"djeláto",cat:"Comida",ex_it:"Un gelato al pistacchio.",ex_pt:"Um sorvete de pistache."},
+{it:"conto",pt:"conta (restaurante)",pr:"kônto",cat:"Comida",ex_it:"Il conto, per favore.",ex_pt:"A conta, por favor."},
+{it:"menu",pt:"cardápio",pr:"menú",cat:"Comida",ex_it:"Posso vedere il menu?",ex_pt:"Posso ver o cardápio?"},
+{it:"tavolo",pt:"mesa",pr:"távolo",cat:"Comida",ex_it:"Ho prenotato un tavolo per due.",ex_pt:"Reservei uma mesa para dois."},
+{it:"risotto",pt:"risoto",pr:"rizóto",cat:"Comida",ex_it:"Il risotto ai funghi è speciale.",ex_pt:"O risoto de cogumelos é especial."},
+{it:"tiramisù",pt:"tiramisu",pr:"tiramisù",cat:"Comida",ex_it:"Il tiramisù qui è fatto in casa.",ex_pt:"O tiramisu aqui é caseiro."},
+{it:"formaggio",pt:"queijo",pr:"formáddjo",cat:"Comida",ex_it:"Un piatto di formaggi misti.",ex_pt:"Um prato de queijos sortidos."},
+{it:"prosciutto",pt:"presunto",pr:"proshúto",cat:"Comida",ex_it:"Il prosciutto di Parma è eccellente.",ex_pt:"O presunto de Parma é excelente."},
+{it:"verdura",pt:"legume / verdura",pr:"verdúra",cat:"Comida",ex_it:"Preferisco piatti con verdura.",ex_pt:"Prefiro pratos com verdura."},
+{it:"frutta",pt:"fruta",pr:"frúta",cat:"Comida",ex_it:"Che frutta avete oggi?",ex_pt:"Que frutas vocês têm hoje?"},
+{it:"dolce",pt:"sobremesa / doce",pr:"dóltshe",cat:"Comida",ex_it:"Avete un dolce del giorno?",ex_pt:"Vocês têm uma sobremesa do dia?"},
+{it:"antipasto",pt:"entrada",pr:"antipásto",cat:"Comida",ex_it:"Prendo un antipasto misto.",ex_pt:"Vou pegar uma entrada mista."},
+{it:"olio",pt:"azeite / óleo",pr:"ólio",cat:"Comida",ex_it:"Un filo d'olio d'oliva.",ex_pt:"Um fio de azeite de oliva."},
+{it:"sale",pt:"sal",pr:"sále",cat:"Comida",ex_it:"Questo ha troppo sale.",ex_pt:"Isso tem muito sal."},
+{it:"zucchero",pt:"açúcar",pr:"dzúkero",cat:"Comida",ex_it:"Un caffè senza zucchero.",ex_pt:"Um café sem açúcar."},
+{it:"birra",pt:"cerveja",pr:"bíra",cat:"Comida",ex_it:"Una birra alla spina, grazie.",ex_pt:"Uma cerveja de barril, obrigado."},
+{it:"latte",pt:"leite",pr:"láte",cat:"Comida",ex_it:"Un caffè macchiato con latte caldo.",ex_pt:"Um café manchado com leite quente."},
+{it:"allergico",pt:"alérgico",pr:"allérdjico",cat:"Comida",ex_it:"Sono allergico ai frutti di mare.",ex_pt:"Sou alérgico a frutos do mar."},
+{it:"vegetariano",pt:"vegetariano",pr:"vedjetarjáno",cat:"Comida",ex_it:"Avete piatti vegetariani?",ex_pt:"Vocês têm pratos vegetarianos?"},
+{it:"senza glutine",pt:"sem glúten",pr:"séntza glútine",cat:"Comida",ex_it:"Avete opzioni senza glutine?",ex_pt:"Vocês têm opções sem glúten?"},
+{it:"piccante",pt:"picante",pr:"pikánte",cat:"Comida",ex_it:"Non voglio niente di piccante.",ex_pt:"Não quero nada picante."},
+{it:"delizioso",pt:"delicioso",pr:"delitzjóso",cat:"Comida",ex_it:"Questo è davvero delizioso!",ex_pt:"Isso é realmente delicioso!"},
+{it:"cameriere",pt:"garçom",pr:"kamerjére",cat:"Comida",ex_it:"Scusi, cameriere!",ex_pt:"Com licença, garçom!"},
+{it:"prenotazione",pt:"reserva",pr:"prenotatzjóne",cat:"Comida",ex_it:"Ho una prenotazione a nome Rossi.",ex_pt:"Tenho uma reserva em nome de Rossi."},
+{it:"ricevuta",pt:"recibo",pr:"ritshevúta",cat:"Comida",ex_it:"Posso avere la ricevuta?",ex_pt:"Posso ter o recibo?"},
+{it:"mancia",pt:"gorjeta",pr:"mántshe",cat:"Comida",ex_it:"È inclusa la mancia?",ex_pt:"A gorjeta está incluída?"},
+{it:"coperto",pt:"couvert",pr:"kopérto",cat:"Comida",ex_it:"C'è il coperto?",ex_pt:"Tem couvert?"},
+{it:"porzione",pt:"porção",pr:"portzione",cat:"Comida",ex_it:"Le porzioni sono abbondanti.",ex_pt:"As porções são fartas."},
+{it:"contorno",pt:"acompanhamento",pr:"kontórno",cat:"Comida",ex_it:"Quale contorno consigliate?",ex_pt:"Qual acompanhamento vocês recomendam?"},
+{it:"primo piatto",pt:"primeiro prato",pr:"prímo pjáto",cat:"Comida",ex_it:"Come primo piatto prendo la pasta.",ex_pt:"Como primeiro prato, peço macarrão."},
+{it:"secondo piatto",pt:"segundo prato",pr:"sekóndo pjáto",cat:"Comida",ex_it:"Per secondo, la bistecca.",ex_pt:"Como segundo prato, o bife."},
+{it:"succo",pt:"suco",pr:"súco",cat:"Comida",ex_it:"Un succo d'arancia fresco.",ex_pt:"Um suco de laranja fresco."},
+// NÚMEROS (20)
+{it:"zero",pt:"zero",pr:"dzéro",cat:"Número",ex_it:"Il mio numero è zero-uno…",ex_pt:"Meu número é zero-um…"},
+{it:"uno",pt:"um",pr:"úno",cat:"Número",ex_it:"Un biglietto, per favore.",ex_pt:"Um ingresso, por favor."},
+{it:"due",pt:"dois",pr:"dúe",cat:"Número",ex_it:"Due caffè, grazie.",ex_pt:"Dois cafés, obrigado."},
+{it:"tre",pt:"três",pr:"trê",cat:"Número",ex_it:"Tre notti in albergo.",ex_pt:"Três noites no hotel."},
+{it:"quattro",pt:"quatro",pr:"kuátro",cat:"Número",ex_it:"Siamo in quattro persone.",ex_pt:"Somos quatro pessoas."},
+{it:"cinque",pt:"cinco",pr:"tchínkue",cat:"Número",ex_it:"Cinque euro, per favore.",ex_pt:"Cinco euros, por favor."},
+{it:"sei",pt:"seis",pr:"sêi",cat:"Número",ex_it:"Il treno parte alle sei.",ex_pt:"O trem parte às seis."},
+{it:"sette",pt:"sete",pr:"séte",cat:"Número",ex_it:"Ho sette giorni di vacanza.",ex_pt:"Tenho sete dias de férias."},
+{it:"otto",pt:"oito",pr:"óto",cat:"Número",ex_it:"Il museo apre alle otto.",ex_pt:"O museu abre às oito."},
+{it:"nove",pt:"nove",pr:"nóve",cat:"Número",ex_it:"Sono le nove di mattina.",ex_pt:"São nove da manhã."},
+{it:"dieci",pt:"dez",pr:"diétchi",cat:"Número",ex_it:"Ci vogliono dieci minuti.",ex_pt:"Leva dez minutos."},
+{it:"venti",pt:"vinte",pr:"vénti",cat:"Número",ex_it:"Costa venti euro.",ex_pt:"Custa vinte euros."},
+{it:"trenta",pt:"trinta",pr:"trénnta",cat:"Número",ex_it:"Trenta minuti di cammino.",ex_pt:"Trinta minutos a pé."},
+{it:"cinquanta",pt:"cinquenta",pr:"tchinkuánta",cat:"Número",ex_it:"Costa cinquanta euro al giorno.",ex_pt:"Custa cinquenta euros por dia."},
+{it:"cento",pt:"cem",pr:"tchênto",cat:"Número",ex_it:"Costa cento euro a notte.",ex_pt:"Custa cem euros por noite."},
+{it:"mille",pt:"mil",pr:"míle",cat:"Número",ex_it:"Un volo da mille euro.",ex_pt:"Um voo de mil euros."},
+{it:"primo",pt:"primeiro",pr:"prímo",cat:"Número",ex_it:"È il primo giorno in Italia.",ex_pt:"É o primeiro dia na Itália."},
+{it:"secondo",pt:"segundo",pr:"sekóndo",cat:"Número",ex_it:"Prendo il secondo piano.",ex_pt:"Pego o segundo andar."},
+{it:"terzo",pt:"terceiro",pr:"tértzo",cat:"Número",ex_it:"Scendo alla terza fermata.",ex_pt:"Desço na terceira parada."},
+{it:"ultimo",pt:"último",pr:"último",cat:"Número",ex_it:"È l'ultimo giorno di vacanza.",ex_pt:"É o último dia de férias."},
+// TEMPO (25)
+{it:"oggi",pt:"hoje",pr:"ódji",cat:"Tempo",ex_it:"Cosa facciamo oggi?",ex_pt:"O que fazemos hoje?"},
+{it:"domani",pt:"amanhã",pr:"dománi",cat:"Tempo",ex_it:"Parto domani mattina.",ex_pt:"Parto amanhã de manhã."},
+{it:"ieri",pt:"ontem",pr:"iéri",cat:"Tempo",ex_it:"Ieri ho visitato il Vaticano.",ex_pt:"Ontem visitei o Vaticano."},
+{it:"ora",pt:"agora / hora",pr:"óra",cat:"Tempo",ex_it:"Che ora è adesso?",ex_pt:"Que horas são agora?"},
+{it:"presto",pt:"cedo / logo",pr:"présto",cat:"Tempo",ex_it:"Ci vediamo presto!",ex_pt:"Até logo!"},
+{it:"tardi",pt:"tarde (horário)",pr:"tárdi",cat:"Tempo",ex_it:"È troppo tardi per cenare.",ex_pt:"É tarde demais para jantar."},
+{it:"sempre",pt:"sempre",pr:"sémpre",cat:"Tempo",ex_it:"Mangio sempre a mezzogiorno.",ex_pt:"Sempre como ao meio-dia."},
+{it:"mai",pt:"nunca",pr:"mái",cat:"Tempo",ex_it:"Non ho mai mangiato così bene.",ex_pt:"Nunca comi tão bem."},
+{it:"spesso",pt:"frequentemente",pr:"spéso",cat:"Tempo",ex_it:"Vengo spesso in Italia.",ex_pt:"Venho frequentemente à Itália."},
+{it:"dopo",pt:"depois",pr:"dópo",cat:"Tempo",ex_it:"Ci vediamo dopo pranzo.",ex_pt:"Nos vemos depois do almoço."},
+{it:"prima",pt:"antes",pr:"príma",cat:"Tempo",ex_it:"Prima di uscire, chiudi la finestra.",ex_pt:"Antes de sair, feche a janela."},
+{it:"mattina",pt:"manhã",pr:"matína",cat:"Tempo",ex_it:"La mattina faccio una passeggiata.",ex_pt:"De manhã faço uma caminhada."},
+{it:"pomeriggio",pt:"tarde (período)",pr:"pomeríddjo",cat:"Tempo",ex_it:"Il pomeriggio visito i musei.",ex_pt:"À tarde visito os museus."},
+{it:"sera",pt:"noite (início)",pr:"séra",cat:"Tempo",ex_it:"La sera ceno fuori.",ex_pt:"À noite janto fora."},
+{it:"notte",pt:"madrugada",pr:"nóte",cat:"Tempo",ex_it:"Buona notte!",ex_pt:"Boa noite!"},
+{it:"settimana",pt:"semana",pr:"setimána",cat:"Tempo",ex_it:"Resto una settimana in Italia.",ex_pt:"Fico uma semana na Itália."},
+{it:"mese",pt:"mês",pr:"méze",cat:"Tempo",ex_it:"Parto il mese prossimo.",ex_pt:"Parto no mês que vem."},
+{it:"anno",pt:"ano",pr:"áno",cat:"Tempo",ex_it:"Vengo ogni anno in Europa.",ex_pt:"Venho todo ano à Europa."},
+{it:"minuto",pt:"minuto",pr:"minúto",cat:"Tempo",ex_it:"Aspetta cinque minuti.",ex_pt:"Espera cinco minutos."},
+{it:"lunedì",pt:"segunda-feira",pr:"lunedì",cat:"Tempo",ex_it:"Il museo è chiuso il lunedì.",ex_pt:"O museu é fechado na segunda."},
+{it:"venerdì",pt:"sexta-feira",pr:"venerdì",cat:"Tempo",ex_it:"Parto venerdì sera.",ex_pt:"Parto na sexta à noite."},
+{it:"sabato",pt:"sábado",pr:"sábato",cat:"Tempo",ex_it:"Sabato andiamo al mercato.",ex_pt:"Sábado vamos ao mercado."},
+{it:"domenica",pt:"domingo",pr:"doménica",cat:"Tempo",ex_it:"La domenica i negozi chiudono.",ex_pt:"No domingo as lojas fecham."},
+{it:"adesso",pt:"agora (imediato)",pr:"adésso",cat:"Tempo",ex_it:"Vieni adesso, per favore!",ex_pt:"Vem agora, por favor!"},
+{it:"quando",pt:"quando",pr:"kuándo",cat:"Tempo",ex_it:"Quando apre il negozio?",ex_pt:"Quando a loja abre?"},
+// ADJETIVOS (35)
+{it:"buono",pt:"bom / gostoso",pr:"buôno",cat:"Adjetivo",ex_it:"Questo vino è molto buono.",ex_pt:"Este vinho é muito bom."},
+{it:"cattivo",pt:"ruim / mau",pr:"katívo",cat:"Adjetivo",ex_it:"Ho passato una notte cattiva.",ex_pt:"Passei uma noite ruim."},
+{it:"bello",pt:"bonito / lindo",pr:"bêlo",cat:"Adjetivo",ex_it:"Che bello questo panorama!",ex_pt:"Que panorama bonito!"},
+{it:"brutto",pt:"feio / ruim",pr:"brúto",cat:"Adjetivo",ex_it:"Che tempo brutto oggi!",ex_pt:"Que tempo feio hoje!"},
+{it:"grande",pt:"grande",pr:"gránde",cat:"Adjetivo",ex_it:"Roma è una grande città.",ex_pt:"Roma é uma grande cidade."},
+{it:"piccolo",pt:"pequeno",pr:"píkolo",cat:"Adjetivo",ex_it:"Una piccola porzione, grazie.",ex_pt:"Uma porção pequena, obrigado."},
+{it:"caro",pt:"caro / querido",pr:"káro",cat:"Adjetivo",ex_it:"È troppo caro per me.",ex_pt:"É muito caro para mim."},
+{it:"economico",pt:"barato",pr:"ekonómico",cat:"Adjetivo",ex_it:"Cerco qualcosa di più economico.",ex_pt:"Procuro algo mais barato."},
+{it:"aperto",pt:"aberto",pr:"apérto",cat:"Adjetivo",ex_it:"Il negozio è aperto?",ex_pt:"A loja está aberta?"},
+{it:"chiuso",pt:"fechado",pr:"kiúzo",cat:"Adjetivo",ex_it:"Siamo chiusi il lunedì.",ex_pt:"Estamos fechados na segunda."},
+{it:"stanco",pt:"cansado",pr:"stánko",cat:"Adjetivo",ex_it:"Sono molto stanco dal viaggio.",ex_pt:"Estou muito cansado da viagem."},
+{it:"malato",pt:"doente",pr:"maláto",cat:"Adjetivo",ex_it:"Mi sento malato, ho la febbre.",ex_pt:"Estou doente, tenho febre."},
+{it:"pieno",pt:"cheio",pr:"pjêno",cat:"Adjetivo",ex_it:"Sono pieno, ho mangiato troppo.",ex_pt:"Estou cheio, comi demais."},
+{it:"veloce",pt:"rápido",pr:"velótshe",cat:"Adjetivo",ex_it:"C'è un treno più veloce?",ex_pt:"Tem um trem mais rápido?"},
+{it:"lento",pt:"lento",pr:"lênto",cat:"Adjetivo",ex_it:"Il servizio è un po' lento.",ex_pt:"O serviço é um pouco lento."},
+{it:"caldo",pt:"quente",pr:"káldo",cat:"Adjetivo",ex_it:"Fa molto caldo oggi.",ex_pt:"Está muito quente hoje."},
+{it:"freddo",pt:"frio",pr:"frêdo",cat:"Adjetivo",ex_it:"Ho freddo, hai una giacca?",ex_pt:"Estou com frio, tem um casaco?"},
+{it:"nuovo",pt:"novo",pr:"nuôvo",cat:"Adjetivo",ex_it:"Questo è un ristorante nuovo.",ex_pt:"Este é um restaurante novo."},
+{it:"vecchio",pt:"velho / antigo",pr:"vékjo",cat:"Adjetivo",ex_it:"Roma è una città molto vecchia.",ex_pt:"Roma é uma cidade muito antiga."},
+{it:"facile",pt:"fácil",pr:"fátshile",cat:"Adjetivo",ex_it:"È facile da trovare.",ex_pt:"É fácil de encontrar."},
+{it:"difficile",pt:"difícil",pr:"difítshile",cat:"Adjetivo",ex_it:"L'italiano non è difficile.",ex_pt:"O italiano não é difícil."},
+{it:"simpatico",pt:"simpático",pr:"simpático",cat:"Adjetivo",ex_it:"I romani sono molto simpatici.",ex_pt:"Os romanos são muito simpáticos."},
+{it:"gentile",pt:"gentil",pr:"djentíle",cat:"Adjetivo",ex_it:"Sei molto gentile, grazie!",ex_pt:"Você é muito gentil, obrigado!"},
+{it:"occupato",pt:"ocupado",pr:"okupáto",cat:"Adjetivo",ex_it:"Sono occupato adesso.",ex_pt:"Estou ocupado agora."},
+{it:"libero",pt:"livre / disponível",pr:"líbero",cat:"Adjetivo",ex_it:"Sei libero domani sera?",ex_pt:"Você está livre amanhã à noite?"},
+{it:"giusto",pt:"certo / correto",pr:"djústo",cat:"Adjetivo",ex_it:"È la strada giusta?",ex_pt:"É o caminho certo?"},
+{it:"sbagliato",pt:"errado",pr:"zbaljáto",cat:"Adjetivo",ex_it:"Ho preso la strada sbagliata.",ex_pt:"Peguei o caminho errado."},
+{it:"tranquillo",pt:"tranquilo",pr:"trankuílo",cat:"Adjetivo",ex_it:"È un posto molto tranquillo.",ex_pt:"É um lugar muito tranquilo."},
+{it:"rumoroso",pt:"barulhento",pr:"rumorózo",cat:"Adjetivo",ex_it:"La stanza è troppo rumorosa.",ex_pt:"O quarto é muito barulhento."},
+{it:"pulito",pt:"limpo",pr:"pulíto",cat:"Adjetivo",ex_it:"L'albergo è pulito e accogliente.",ex_pt:"O hotel é limpo e acolhedor."},
+{it:"sporco",pt:"sujo",pr:"spórco",cat:"Adjetivo",ex_it:"Il bagno non è molto pulito.",ex_pt:"O banheiro não está muito limpo."},
+{it:"vuoto",pt:"vazio",pr:"vuôto",cat:"Adjetivo",ex_it:"Il treno è quasi vuoto.",ex_pt:"O trem está quase vazio."},
+{it:"lungo",pt:"longo",pr:"lúngo",cat:"Adjetivo",ex_it:"È un viaggio lungo.",ex_pt:"É uma viagem longa."},
+{it:"corto",pt:"curto",pr:"kórto",cat:"Adjetivo",ex_it:"Una sosta corta va bene.",ex_pt:"Uma parada curta tá bom."},
+{it:"disponibile",pt:"disponível",pr:"disponíbile",cat:"Adjetivo",ex_it:"Avete una camera disponibile?",ex_pt:"Vocês têm um quarto disponível?"},
+// TRANSPORTE (20)
+{it:"treno",pt:"trem",pr:"tréno",cat:"Transporte",ex_it:"Il treno per Firenze è in ritardo.",ex_pt:"O trem para Florença está atrasado."},
+{it:"autobus",pt:"ônibus",pr:"autobús",cat:"Transporte",ex_it:"Quale autobus va al centro?",ex_pt:"Qual ônibus vai ao centro?"},
+{it:"taxi",pt:"táxi",pr:"táxi",cat:"Transporte",ex_it:"Può chiamare un taxi?",ex_pt:"Pode chamar um táxi?"},
+{it:"metropolitana",pt:"metrô",pr:"metropolitána",cat:"Transporte",ex_it:"La metropolitana è vicina?",ex_pt:"O metrô é próximo?"},
+{it:"aereo",pt:"avião",pr:"aéreo",cat:"Transporte",ex_it:"L'aereo parte alle dodici.",ex_pt:"O avião parte ao meio-dia."},
+{it:"nave",pt:"navio / barco",pr:"náve",cat:"Transporte",ex_it:"Prendiamo la nave per la Sicilia.",ex_pt:"Pegamos o barco para a Sicília."},
+{it:"bicicletta",pt:"bicicleta",pr:"bitshikléta",cat:"Transporte",ex_it:"Posso noleggiare una bicicletta?",ex_pt:"Posso alugar uma bicicleta?"},
+{it:"macchina",pt:"carro",pr:"mákina",cat:"Transporte",ex_it:"Ho noleggiato una macchina.",ex_pt:"Aluguei um carro."},
+{it:"biglietto",pt:"passagem / ingresso",pr:"biljéto",cat:"Transporte",ex_it:"Dove si compra il biglietto?",ex_pt:"Onde se compra a passagem?"},
+{it:"andata",pt:"ida",pr:"andáta",cat:"Transporte",ex_it:"Un biglietto di sola andata.",ex_pt:"Uma passagem somente de ida."},
+{it:"ritorno",pt:"volta / retorno",pr:"ritórno",cat:"Transporte",ex_it:"Un biglietto di andata e ritorno.",ex_pt:"Uma passagem de ida e volta."},
+{it:"orario",pt:"horário",pr:"orário",cat:"Transporte",ex_it:"Qual è l'orario del treno?",ex_pt:"Qual é o horário do trem?"},
+{it:"binario",pt:"plataforma",pr:"binário",cat:"Transporte",ex_it:"Il treno è al binario tre.",ex_pt:"O trem está na plataforma três."},
+{it:"ritardo",pt:"atraso",pr:"ritárdo",cat:"Transporte",ex_it:"Il volo ha un'ora di ritardo.",ex_pt:"O voo tem uma hora de atraso."},
+{it:"bagaglio",pt:"bagagem",pr:"bagálio",cat:"Transporte",ex_it:"Dov'è il deposito bagagli?",ex_pt:"Onde é o depósito de bagagem?"},
+{it:"passaporto",pt:"passaporte",pr:"pasapórto",cat:"Transporte",ex_it:"Il passaporto è nel borsello.",ex_pt:"O passaporte está na pochete."},
+{it:"valigia",pt:"mala",pr:"valídja",cat:"Transporte",ex_it:"La mia valigia è verde.",ex_pt:"Minha mala é verde."},
+{it:"noleggio",pt:"aluguel",pr:"noléddjo",cat:"Transporte",ex_it:"C'è un noleggio auto vicino?",ex_pt:"Tem um aluguel de carros próximo?"},
+{it:"coincidenza",pt:"conexão / baldeação",pr:"koíntshidéntza",cat:"Transporte",ex_it:"Ho una coincidenza a Milano.",ex_pt:"Tenho uma conexão em Milão."},
+{it:"fermata del bus",pt:"ponto de ônibus",pr:"fermáta del bus",cat:"Transporte",ex_it:"Dov'è la fermata del bus?",ex_pt:"Onde é o ponto de ônibus?"},
+// HOTEL (18)
+{it:"camera",pt:"quarto",pr:"kámera",cat:"Hotel",ex_it:"Vorrei una camera singola.",ex_pt:"Gostaria de um quarto individual."},
+{it:"singola",pt:"individual",pr:"síngola",cat:"Hotel",ex_it:"Ho prenotato una camera singola.",ex_pt:"Reservei um quarto individual."},
+{it:"doppia",pt:"duplo",pr:"dópja",cat:"Hotel",ex_it:"Una camera doppia con letto matrimoniale.",ex_pt:"Um quarto duplo com cama de casal."},
+{it:"chiave",pt:"chave",pr:"kjáve",cat:"Hotel",ex_it:"Ho perso la chiave della camera.",ex_pt:"Perdi a chave do quarto."},
+{it:"ascensore",pt:"elevador",pr:"ashensóre",cat:"Hotel",ex_it:"L'ascensore è in fondo al corridoio.",ex_pt:"O elevador é no fundo do corredor."},
+{it:"colazione",pt:"café da manhã",pr:"kolatzjóne",cat:"Hotel",ex_it:"La colazione è inclusa?",ex_pt:"O café da manhã está incluído?"},
+{it:"asciugamano",pt:"toalha",pr:"ashuguamáno",cat:"Hotel",ex_it:"Potrei avere più asciugamani?",ex_pt:"Poderia ter mais toalhas?"},
+{it:"cuscino",pt:"travesseiro",pr:"kushíno",cat:"Hotel",ex_it:"Posso avere un cuscino in più?",ex_pt:"Posso ter um travesseiro a mais?"},
+{it:"aria condizionata",pt:"ar condicionado",pr:"ária konditzionáta",cat:"Hotel",ex_it:"L'aria condizionata non funziona.",ex_pt:"O ar condicionado não funciona."},
+{it:"wifi",pt:"wifi",pr:"wifí",cat:"Hotel",ex_it:"Qual è la password del WiFi?",ex_pt:"Qual é a senha do WiFi?"},
+{it:"check-in",pt:"check-in",pr:"tchek-in",cat:"Hotel",ex_it:"A che ora si fa il check-in?",ex_pt:"A que horas é o check-in?"},
+{it:"check-out",pt:"check-out",pr:"tchek-áut",cat:"Hotel",ex_it:"Devo fare il check-out entro le undici.",ex_pt:"Devo fazer o check-out até as onze."},
+{it:"reception",pt:"recepção",pr:"retsépshion",cat:"Hotel",ex_it:"Parlo con la reception.",ex_pt:"Falo com a recepção."},
+{it:"piano",pt:"andar",pr:"pjáno",cat:"Hotel",ex_it:"Sono al terzo piano.",ex_pt:"Estou no terceiro andar."},
+{it:"vista",pt:"vista",pr:"vísta",cat:"Hotel",ex_it:"Avete camere con vista sul mare?",ex_pt:"Vocês têm quartos com vista para o mar?"},
+{it:"rumore",pt:"barulho",pr:"rumóre",cat:"Hotel",ex_it:"C'è troppo rumore di notte.",ex_pt:"Tem muito barulho à noite."},
+{it:"portiere",pt:"porteiro",pr:"portjére",cat:"Hotel",ex_it:"Il portiere può aiutarmi?",ex_pt:"O porteiro pode me ajudar?"},
+{it:"corridoio",pt:"corredor",pr:"korridóio",cat:"Hotel",ex_it:"La camera è in fondo al corridoio.",ex_pt:"O quarto é no fundo do corredor."},
+// COMPRAS (18)
+{it:"quanto costa",pt:"quanto custa?",pr:"kuánto kósta",cat:"Compras",ex_it:"Quanto costa questo vestito?",ex_pt:"Quanto custa este vestido?"},
+{it:"sconto",pt:"desconto",pr:"skônto",cat:"Compras",ex_it:"C'è uno sconto per i turisti?",ex_pt:"Tem desconto para turistas?"},
+{it:"cassa",pt:"caixa (pagamento)",pr:"kása",cat:"Compras",ex_it:"Dov'è la cassa, per favore?",ex_pt:"Onde é o caixa, por favor?"},
+{it:"taglia",pt:"tamanho (roupa)",pr:"tália",cat:"Compras",ex_it:"Che taglia porta?",ex_pt:"Qual tamanho você usa?"},
+{it:"colore",pt:"cor",pr:"kolóre",cat:"Compras",ex_it:"Avete questo in un altro colore?",ex_pt:"Vocês têm isso em outra cor?"},
+{it:"euro",pt:"euro",pr:"êuro",cat:"Compras",ex_it:"Costa cinquanta euro.",ex_pt:"Custa cinquenta euros."},
+{it:"carta di credito",pt:"cartão de crédito",pr:"kárta di krédito",cat:"Compras",ex_it:"Accettate la carta di credito?",ex_pt:"Vocês aceitam cartão de crédito?"},
+{it:"contanti",pt:"dinheiro em espécie",pr:"kontánti",cat:"Compras",ex_it:"Pago in contanti.",ex_pt:"Pago em dinheiro."},
+{it:"vetrina",pt:"vitrine",pr:"vetrína",cat:"Compras",ex_it:"Quello in vetrina, quanto costa?",ex_pt:"Aquele na vitrine, quanto custa?"},
+{it:"saldo",pt:"liquidação",pr:"sáldo",cat:"Compras",ex_it:"Sono in periodo di saldi!",ex_pt:"Estamos em período de liquidação!"},
+{it:"regalo",pt:"presente / lembrança",pr:"regálo",cat:"Compras",ex_it:"Cerco un regalo tipico italiano.",ex_pt:"Procuro um presente típico italiano."},
+{it:"busta",pt:"sacola",pr:"bústa",cat:"Compras",ex_it:"Posso avere una busta?",ex_pt:"Posso ter uma sacola?"},
+{it:"prezzo",pt:"preço",pr:"prétzo",cat:"Compras",ex_it:"Il prezzo è troppo alto.",ex_pt:"O preço é muito alto."},
+{it:"souvenir",pt:"souvenir",pr:"suvenir",cat:"Compras",ex_it:"Dove trovo souvenir tipici?",ex_pt:"Onde encontro lembranças típicas?"},
+{it:"ricevuta",pt:"recibo",pr:"ritshevúta",cat:"Compras",ex_it:"Posso avere la ricevuta?",ex_pt:"Posso ter o recibo?"},
+{it:"cambio",pt:"troco / câmbio",pr:"kámbio",cat:"Compras",ex_it:"Non ho il cambio esatto.",ex_pt:"Não tenho o troco exato."},
+{it:"trattare",pt:"negociar",pr:"tratáre",cat:"Compras",ex_it:"Si può trattare il prezzo?",ex_pt:"Pode negociar o preço?"},
+{it:"misura",pt:"medida / tamanho",pr:"mizúra",cat:"Compras",ex_it:"Qual è la misura giusta?",ex_pt:"Qual é a medida certa?"},
+// SAÚDE (20)
+{it:"dolore",pt:"dor",pr:"dolóre",cat:"Saúde",ex_it:"Ho un forte dolore alla testa.",ex_pt:"Tenho uma forte dor de cabeça."},
+{it:"mal di testa",pt:"dor de cabeça",pr:"mal di tésta",cat:"Saúde",ex_it:"Ho il mal di testa da stamattina.",ex_pt:"Tenho dor de cabeça desde esta manhã."},
+{it:"febbre",pt:"febre",pr:"fébre",cat:"Saúde",ex_it:"Ho la febbre a 38.",ex_pt:"Tenho febre de 38."},
+{it:"allergia",pt:"alergia",pr:"allerdja",cat:"Saúde",ex_it:"Ho un'allergia alle arachidi.",ex_pt:"Tenho alergia a amendoim."},
+{it:"medicine",pt:"remédio",pr:"meditstshíne",cat:"Saúde",ex_it:"Ho bisogno delle mie medicine.",ex_pt:"Preciso dos meus remédios."},
+{it:"pronto soccorso",pt:"pronto-socorro",pr:"prónto sokórso",cat:"Saúde",ex_it:"Dov'è il pronto soccorso?",ex_pt:"Onde é o pronto-socorro?"},
+{it:"ambulanza",pt:"ambulância",pr:"ambulántza",cat:"Saúde",ex_it:"Chiamate un'ambulanza!",ex_pt:"Chamem uma ambulância!"},
+{it:"assicurazione",pt:"seguro",pr:"asikuratzjóne",cat:"Saúde",ex_it:"Ho l'assicurazione sanitaria.",ex_pt:"Tenho seguro de saúde."},
+{it:"ricetta",pt:"receita médica",pr:"ritshéta",cat:"Saúde",ex_it:"Ho bisogno di una ricetta.",ex_pt:"Preciso de uma receita."},
+{it:"stomaco",pt:"estômago",pr:"stómaco",cat:"Saúde",ex_it:"Ho un dolore allo stomaco.",ex_pt:"Tenho dor de estômago."},
+{it:"nausea",pt:"náusea",pr:"náuzea",cat:"Saúde",ex_it:"Ho la nausea, non sto bene.",ex_pt:"Estou com náusea, não estou bem."},
+{it:"vertigini",pt:"tontura",pr:"vertídnji",cat:"Saúde",ex_it:"Ho le vertigini.",ex_pt:"Estou com vertigem."},
+{it:"incidente",pt:"acidente",pr:"intshdénte",cat:"Saúde",ex_it:"C'è stato un incidente.",ex_pt:"Houve um acidente."},
+{it:"furto",pt:"roubo / furto",pr:"fúrto",cat:"Saúde",ex_it:"Ho subito un furto.",ex_pt:"Fui vítima de roubo."},
+{it:"ambasciata",pt:"embaixada",pr:"ambasháta",cat:"Saúde",ex_it:"Dov'è l'ambasciata brasiliana?",ex_pt:"Onde é a embaixada brasileira?"},
+{it:"aiutami",pt:"me ajude",pr:"aiutámi",cat:"Saúde",ex_it:"Aiutami, per favore!",ex_pt:"Me ajude, por favor!"},
+{it:"sangue",pt:"sangue",pr:"sángue",cat:"Saúde",ex_it:"C'è del sangue, è urgente.",ex_pt:"Tem sangue, é urgente."},
+{it:"schiena",pt:"costas",pr:"skiéna",cat:"Saúde",ex_it:"Ho un forte mal di schiena.",ex_pt:"Tenho forte dor nas costas."},
+{it:"dente",pt:"dente",pr:"dénte",cat:"Saúde",ex_it:"Ho mal di denti.",ex_pt:"Tenho dor de dente."},
+{it:"numero di emergenza",pt:"número de emergência",pr:"número di emerdjéntza",cat:"Saúde",ex_it:"Il numero di emergenza è 112.",ex_pt:"O número de emergência é 112."},
+// CONECTIVOS (30)
+{it:"e",pt:"e",pr:"ê",cat:"Conector",ex_it:"Pane e vino, per favore.",ex_pt:"Pão e vinho, por favor."},
+{it:"ma",pt:"mas",pr:"má",cat:"Conector",ex_it:"Mi piace ma è caro.",ex_pt:"Gosto mas é caro."},
+{it:"o",pt:"ou",pr:"ô",cat:"Conector",ex_it:"Caffè o tè?",ex_pt:"Café ou chá?"},
+{it:"con",pt:"com",pr:"kon",cat:"Conector",ex_it:"Una pizza con funghi.",ex_pt:"Uma pizza com cogumelos."},
+{it:"senza",pt:"sem",pr:"séntza",cat:"Conector",ex_it:"Un caffè senza zucchero.",ex_pt:"Um café sem açúcar."},
+{it:"molto",pt:"muito",pr:"mólto",cat:"Conector",ex_it:"Grazie molto!",ex_pt:"Muito obrigado!"},
+{it:"poco",pt:"pouco",pr:"póco",cat:"Conector",ex_it:"Un poco di vino, grazie.",ex_pt:"Um pouquinho de vinho, obrigado."},
+{it:"come",pt:"como",pr:"kôme",cat:"Conector",ex_it:"Come si fa?",ex_pt:"Como se faz?"},
+{it:"perché",pt:"porque / por quê",pr:"perkê",cat:"Conector",ex_it:"Perché è chiuso?",ex_pt:"Por que está fechado?"},
+{it:"anche",pt:"também",pr:"ánke",cat:"Conector",ex_it:"Anch'io voglio venire.",ex_pt:"Eu também quero ir."},
+{it:"non",pt:"não (negação)",pr:"non",cat:"Conector",ex_it:"Non parlo italiano bene.",ex_pt:"Não falo italiano bem."},
+{it:"che",pt:"que",pr:"ke",cat:"Conector",ex_it:"Penso che sia giusto.",ex_pt:"Acho que está certo."},
+{it:"quanto",pt:"quanto",pr:"kuánto",cat:"Conector",ex_it:"Quanto tempo ci vuole?",ex_pt:"Quanto tempo leva?"},
+{it:"quale",pt:"qual",pr:"kuále",cat:"Conector",ex_it:"Quale preferisci?",ex_pt:"Qual você prefere?"},
+{it:"chi",pt:"quem",pr:"ki",cat:"Conector",ex_it:"Chi è responsabile?",ex_pt:"Quem é o responsável?"},
+{it:"cosa",pt:"o quê / coisa",pr:"kóza",cat:"Conector",ex_it:"Cosa vuoi mangiare?",ex_pt:"O que você quer comer?"},
+{it:"di",pt:"de",pr:"di",cat:"Conector",ex_it:"Un bicchiere di acqua.",ex_pt:"Um copo de água."},
+{it:"in",pt:"em / na / no",pr:"in",cat:"Conector",ex_it:"Sono in Italia.",ex_pt:"Estou na Itália."},
+{it:"a",pt:"a / para",pr:"á",cat:"Conector",ex_it:"Vado a Roma.",ex_pt:"Vou a Roma."},
+{it:"da",pt:"de / desde / por",pr:"dá",cat:"Conector",ex_it:"Vengo dal Brasile.",ex_pt:"Venho do Brasil."},
+{it:"per",pt:"por / para",pr:"per",cat:"Conector",ex_it:"È per me?",ex_pt:"É para mim?"},
+{it:"su",pt:"em cima / sobre",pr:"su",cat:"Conector",ex_it:"Il libro è sul tavolo.",ex_pt:"O livro está sobre a mesa."},
+{it:"tra / fra",pt:"entre / em (tempo)",pr:"trá / frá",cat:"Conector",ex_it:"Arrivo tra dieci minuti.",ex_pt:"Chego em dez minutos."},
+{it:"davanti",pt:"na frente",pr:"davánti",cat:"Conector",ex_it:"Ci vediamo davanti alla chiesa.",ex_pt:"Nos vemos na frente da igreja."},
+{it:"dietro",pt:"atrás",pr:"diêtro",cat:"Conector",ex_it:"Il parcheggio è dietro.",ex_pt:"O estacionamento é atrás."},
+{it:"dentro",pt:"dentro",pr:"déntro",cat:"Conector",ex_it:"È dentro la borsa.",ex_pt:"Está dentro da bolsa."},
+{it:"fuori",pt:"fora",pr:"fuóri",cat:"Conector",ex_it:"Aspetto fuori.",ex_pt:"Espero lá fora."},
+{it:"sopra",pt:"acima",pr:"sópra",cat:"Conector",ex_it:"L'appartamento è sopra.",ex_pt:"O apartamento é em cima."},
+{it:"sotto",pt:"embaixo",pr:"sóto",cat:"Conector",ex_it:"Le chiavi sono sotto il tappeto.",ex_pt:"As chaves estão embaixo do tapete."},
+{it:"sempre",pt:"sempre",pr:"sémpre",cat:"Conector",ex_it:"Vengo sempre qui.",ex_pt:"Sempre venho aqui."},
+// CULTURA (20)
+{it:"visita",pt:"visita",pr:"vízita",cat:"Cultura",ex_it:"Voglio fare una visita guidata.",ex_pt:"Quero fazer uma visita guiada."},
+{it:"tour",pt:"passeio / tour",pr:"tur",cat:"Cultura",ex_it:"C'è un tour in lingua portoghese?",ex_pt:"Tem um tour em português?"},
+{it:"monumento",pt:"monumento",pr:"monuménto",cat:"Cultura",ex_it:"Questo monumento è meraviglioso.",ex_pt:"Este monumento é maravilhoso."},
+{it:"fontana",pt:"fonte",pr:"fontána",cat:"Cultura",ex_it:"La Fontana di Trevi è vicina?",ex_pt:"A Fontana di Trevi é perto?"},
+{it:"rovine",pt:"ruínas",pr:"rovíne",cat:"Cultura",ex_it:"Le rovine del Foro Romano.",ex_pt:"As ruínas do Foro Romano."},
+{it:"palazzo",pt:"palácio",pr:"palátz zo",cat:"Cultura",ex_it:"Visito il Palazzo Reale.",ex_pt:"Visito o Palácio Real."},
+{it:"cattedrale",pt:"catedral",pr:"katredrale",cat:"Cultura",ex_it:"La cattedrale è aperta la domenica?",ex_pt:"A catedral está aberta no domingo?"},
+{it:"arte",pt:"arte",pr:"árte",cat:"Cultura",ex_it:"Amo l'arte rinascimentale.",ex_pt:"Amo a arte renascentista."},
+{it:"guida",pt:"guia",pr:"guída",cat:"Cultura",ex_it:"Abbiamo bisogno di una guida.",ex_pt:"Precisamos de um guia."},
+{it:"biglietteria",pt:"bilheteria",pr:"biljetería",cat:"Cultura",ex_it:"Dov'è la biglietteria?",ex_pt:"Onde é a bilheteria?"},
+{it:"ingresso",pt:"entrada (ingresso)",pr:"ingréso",cat:"Cultura",ex_it:"Quanto costa l'ingresso?",ex_pt:"Quanto custa a entrada?"},
+{it:"fotografia",pt:"fotografia",pr:"fotografía",cat:"Cultura",ex_it:"Posso fare fotografie?",ex_pt:"Posso tirar fotos?"},
+{it:"mappa",pt:"mapa",pr:"mápa",cat:"Cultura",ex_it:"Avete una mappa della città?",ex_pt:"Vocês têm um mapa da cidade?"},
+{it:"tradizione",pt:"tradição",pr:"traditzjóne",cat:"Cultura",ex_it:"È una tradizione molto antica.",ex_pt:"É uma tradição muito antiga."},
+{it:"festival",pt:"festival",pr:"festival",cat:"Cultura",ex_it:"C'è un festival questo weekend?",ex_pt:"Tem um festival este fim de semana?"},
+{it:"spettacolo",pt:"espetáculo",pr:"spetákolo",cat:"Cultura",ex_it:"A che ora inizia lo spettacolo?",ex_pt:"A que horas começa o espetáculo?"},
+{it:"audioguida",pt:"audioguia",pr:"audioguída",cat:"Cultura",ex_it:"Avete l'audioguida in portoghese?",ex_pt:"Vocês têm audioguia em português?"},
+{it:"prezzo ridotto",pt:"meia entrada",pr:"prétzo ridóto",cat:"Cultura",ex_it:"C'è il prezzo ridotto per studenti?",ex_pt:"Tem meia entrada para estudantes?"},
+{it:"orario di apertura",pt:"horário de funcionamento",pr:"orário di apértura",cat:"Cultura",ex_it:"Qual è l'orario di apertura?",ex_pt:"Qual é o horário de funcionamento?"},
+{it:"cappella",pt:"capela",pr:"kapéla",cat:"Cultura",ex_it:"La Cappella Sistina è straordinaria.",ex_pt:"A Capela Sistina é extraordinária."},
+// CLIMA (12)
+{it:"tempo",pt:"tempo (clima)",pr:"témpo",cat:"Clima",ex_it:"Che tempo fa oggi?",ex_pt:"Como está o tempo hoje?"},
+{it:"sole",pt:"sol",pr:"sóle",cat:"Clima",ex_it:"C'è il sole oggi!",ex_pt:"Está ensolarado hoje!"},
+{it:"pioggia",pt:"chuva",pr:"pjóddja",cat:"Clima",ex_it:"Porta un ombrello, c'è pioggia.",ex_pt:"Leva um guarda-chuva, vai chover."},
+{it:"vento",pt:"vento",pr:"vénto",cat:"Clima",ex_it:"C'è molto vento oggi.",ex_pt:"Está muito ventoso hoje."},
+{it:"neve",pt:"neve",pr:"néve",cat:"Clima",ex_it:"Nevica sulle Alpi.",ex_pt:"Neva nos Alpes."},
+{it:"caldo",pt:"calor",pr:"káldo",cat:"Clima",ex_it:"Fa un caldo terribile!",ex_pt:"Faz um calor terrível!"},
+{it:"freddo",pt:"frio (clima)",pr:"frêdo",cat:"Clima",ex_it:"Fa freddo di notte.",ex_pt:"Faz frio à noite."},
+{it:"ombrello",pt:"guarda-chuva",pr:"ombrélo",cat:"Clima",ex_it:"Ho dimenticato l'ombrello.",ex_pt:"Esqueci o guarda-chuva."},
+{it:"nuvola",pt:"nuvem",pr:"núvola",cat:"Clima",ex_it:"È nuvoloso oggi.",ex_pt:"Está nublado hoje."},
+{it:"tempesta",pt:"tempestade",pr:"tempésta",cat:"Clima",ex_it:"Arriva una tempesta stasera.",ex_pt:"Vem uma tempestade esta noite."},
+{it:"umidità",pt:"umidade",pr:"umidità",cat:"Clima",ex_it:"L'umidità è molto alta.",ex_pt:"A umidade está muito alta."},
+{it:"previsione",pt:"previsão",pr:"previzjóne",cat:"Clima",ex_it:"Qual è la previsione per domani?",ex_pt:"Qual é a previsão para amanhã?"},
+// CORES (12)
+{it:"rosso",pt:"vermelho",pr:"róso",cat:"Cor",ex_it:"Un vino rosso, per favore.",ex_pt:"Um vinho tinto, por favor."},
+{it:"blu",pt:"azul",pr:"blú",cat:"Cor",ex_it:"Il mare è di un blu intenso.",ex_pt:"O mar é de um azul intenso."},
+{it:"verde",pt:"verde",pr:"vérde",cat:"Cor",ex_it:"La campagna italiana è verde.",ex_pt:"O campo italiano é verde."},
+{it:"giallo",pt:"amarelo",pr:"djálo",cat:"Cor",ex_it:"Voglio la busta gialla.",ex_pt:"Quero a sacola amarela."},
+{it:"bianco",pt:"branco",pr:"bjánko",cat:"Cor",ex_it:"Un vino bianco secco.",ex_pt:"Um vinho branco seco."},
+{it:"nero",pt:"preto",pr:"néro",cat:"Cor",ex_it:"Un caffè nero, per favore.",ex_pt:"Um café preto, por favor."},
+{it:"rosa",pt:"rosa",pr:"róza",cat:"Cor",ex_it:"Una camicia rosa.",ex_pt:"Uma camisa rosa."},
+{it:"arancione",pt:"laranja",pr:"arantshóne",cat:"Cor",ex_it:"Un succo arancione.",ex_pt:"Um suco de laranja."},
+{it:"grigio",pt:"cinza",pr:"gridjo",cat:"Cor",ex_it:"Un vestito grigio elegante.",ex_pt:"Um vestido cinza elegante."},
+{it:"marrone",pt:"marrom",pr:"marróne",cat:"Cor",ex_it:"Le scarpe marroni sono belle.",ex_pt:"Os sapatos marrons são bonitos."},
+{it:"viola",pt:"roxo / violeta",pr:"vjóla",cat:"Cor",ex_it:"Il cielo è viola al tramonto.",ex_pt:"O céu é roxo ao pôr do sol."},
+{it:"azzurro",pt:"azul claro",pr:"adzúro",cat:"Cor",ex_it:"Il cielo è azzurro oggi.",ex_pt:"O céu está azul hoje."},
+// CORPO (10)
+{it:"testa",pt:"cabeça",pr:"tésta",cat:"Corpo",ex_it:"Ho un forte mal di testa.",ex_pt:"Tenho forte dor de cabeça."},
+{it:"mano",pt:"mão",pr:"máno",cat:"Corpo",ex_it:"Mi sono ferito alla mano.",ex_pt:"Me machuquei na mão."},
+{it:"piede",pt:"pé",pr:"pjéde",cat:"Corpo",ex_it:"Ho dolore al piede.",ex_pt:"Tenho dor no pé."},
+{it:"gamba",pt:"perna",pr:"gámba",cat:"Corpo",ex_it:"Mi fa male la gamba.",ex_pt:"Minha perna está doendo."},
+{it:"braccio",pt:"braço",pr:"brátcho",cat:"Corpo",ex_it:"Mi sono fatto male al braccio.",ex_pt:"Me machuquei no braço."},
+{it:"cuore",pt:"coração",pr:"kuóre",cat:"Corpo",ex_it:"Ho problemi al cuore.",ex_pt:"Tenho problemas no coração."},
+{it:"stomaco",pt:"estômago",pr:"stómaco",cat:"Corpo",ex_it:"Ho dolore allo stomaco.",ex_pt:"Tenho dor de estômago."},
+{it:"dente",pt:"dente",pr:"dénte",cat:"Corpo",ex_it:"Ho mal di denti.",ex_pt:"Tenho dor de dente."},
+{it:"occhio",pt:"olho",pr:"ókjo",cat:"Corpo",ex_it:"Ho qualcosa nell'occhio.",ex_pt:"Tenho algo no olho."},
+{it:"schiena",pt:"costas",pr:"skiéna",cat:"Corpo",ex_it:"Ho un forte mal di schiena.",ex_pt:"Tenho forte dor nas costas."},
+
+// PROFISSÕES (15)
+{it:"insegnante",pt:"professor/a",pr:"insenyánte",cat:"Profissão",ex_it:"L'insegnante spiega bene.",ex_pt:"O professor explica bem."},
+{it:"medico",pt:"médico",pr:"médiko",cat:"Profissão",ex_it:"Il medico arriva subito.",ex_pt:"O médico chega já."},
+{it:"infermiere",pt:"enfermeiro",pr:"infermiére",cat:"Profissão",ex_it:"L'infermiere è gentile.",ex_pt:"O enfermeiro é gentil."},
+{it:"avvocato",pt:"advogado",pr:"avokáto",cat:"Profissão",ex_it:"Devo parlare con un avvocato.",ex_pt:"Preciso falar com um advogado."},
+{it:"ingegnere",pt:"engenheiro",pr:"indjenyére",cat:"Profissão",ex_it:"L'ingegnere lavora al progetto.",ex_pt:"O engenheiro trabalha no projeto."},
+{it:"architetto",pt:"arquiteto",pr:"arkitéto",cat:"Profissão",ex_it:"L'architetto disegna la casa.",ex_pt:"O arquiteto desenha a casa."},
+{it:"cuoco",pt:"cozinheiro",pr:"kuóko",cat:"Profissão",ex_it:"Il cuoco prepara la pasta.",ex_pt:"O cozinheiro prepara a massa."},
+{it:"cameriere",pt:"garçom",pr:"kameriére",cat:"Profissão",ex_it:"Il cameriere porta il menu.",ex_pt:"O garçom traz o menu."},
+{it:"poliziotto",pt:"policial",pr:"politzióto",cat:"Profissão",ex_it:"Il poliziotto aiuta i turisti.",ex_pt:"O policial ajuda os turistas."},
+{it:"attore",pt:"ator",pr:"atóre",cat:"Profissão",ex_it:"L'attore è molto famoso.",ex_pt:"O ator é muito famoso."},
+{it:"cantante",pt:"cantor",pr:"kantánte",cat:"Profissão",ex_it:"Il cantante ha una bella voce.",ex_pt:"O cantor tem uma bela voz."},
+{it:"giornalista",pt:"jornalista",pr:"djornalísta",cat:"Profissão",ex_it:"Il giornalista scrive l'articolo.",ex_pt:"O jornalista escreve o artigo."},
+{it:"impiegato",pt:"funcionário",pr:"impiegáto",cat:"Profissão",ex_it:"L'impiegato lavora in ufficio.",ex_pt:"O funcionário trabalha no escritório."},
+{it:"operaio",pt:"operário",pr:"operáio",cat:"Profissão",ex_it:"L'operaio lavora in fabbrica.",ex_pt:"O operário trabalha na fábrica."},
+{it:"venditore",pt:"vendedor",pr:"venditóre",cat:"Profissão",ex_it:"Il venditore mostra il prodotto.",ex_pt:"O vendedor mostra o produto."},
+// NATUREZA E ANIMAIS (25)
+{it:"cane",pt:"cachorro",pr:"káne",cat:"Natureza",ex_it:"Il cane abbaia.",ex_pt:"O cachorro late."},
+{it:"gatto",pt:"gato",pr:"gáto",cat:"Natureza",ex_it:"Il gatto dorme.",ex_pt:"O gato dorme."},
+{it:"cavallo",pt:"cavalo",pr:"kaválo",cat:"Natureza",ex_it:"Il cavallo corre.",ex_pt:"O cavalo corre."},
+{it:"uccello",pt:"pássaro",pr:"utchélo",cat:"Natureza",ex_it:"L'uccello vola nel cielo.",ex_pt:"O pássaro voa no céu."},
+{it:"pesce",pt:"peixe",pr:"péshe",cat:"Natureza",ex_it:"Il pesce nuota nel mare.",ex_pt:"O peixe nada no mar."},
+{it:"albero",pt:"árvore",pr:"álbero",cat:"Natureza",ex_it:"L'albero è alto.",ex_pt:"A árvore é alta."},
+{it:"fiore",pt:"flor",pr:"fióre",cat:"Natureza",ex_it:"Il fiore è profumato.",ex_pt:"A flor é perfumada."},
+{it:"erba",pt:"grama / erva",pr:"érba",cat:"Natureza",ex_it:"L'erba è verde.",ex_pt:"A grama é verde."},
+{it:"foglia",pt:"folha",pr:"fólya",cat:"Natureza",ex_it:"La foglia cade in autunno.",ex_pt:"A folha cai no outono."},
+{it:"montagna",pt:"montanha",pr:"montánya",cat:"Natureza",ex_it:"La montagna è innevata.",ex_pt:"A montanha está nevada."},
+{it:"fiume",pt:"rio",pr:"fiúme",cat:"Natureza",ex_it:"Il fiume è profondo.",ex_pt:"O rio é profundo."},
+{it:"lago",pt:"lago",pr:"lágo",cat:"Natureza",ex_it:"Il lago è tranquillo.",ex_pt:"O lago é tranquilo."},
+{it:"mare",pt:"mar",pr:"máre",cat:"Natureza",ex_it:"Il mare è agitato.",ex_pt:"O mar está agitado."},
+{it:"spiaggia",pt:"praia",pr:"spiádja",cat:"Natureza",ex_it:"La spiaggia è affollata.",ex_pt:"A praia está cheia."},
+{it:"sabbia",pt:"areia",pr:"sábia",cat:"Natureza",ex_it:"La sabbia è calda.",ex_pt:"A areia está quente."},
+{it:"sole",pt:"sol",pr:"sóle",cat:"Natureza",ex_it:"Il sole splende.",ex_pt:"O sol brilha."},
+{it:"luna",pt:"lua",pr:"lúna",cat:"Natureza",ex_it:"La luna è piena.",ex_pt:"A lua está cheia."},
+{it:"stella",pt:"estrela",pr:"stéla",cat:"Natureza",ex_it:"La stella brilla.",ex_pt:"A estrela brilha."},
+{it:"cielo",pt:"céu",pr:"tchélo",cat:"Natureza",ex_it:"Il cielo è azzurro.",ex_pt:"O céu é azul."},
+{it:"nuvola",pt:"nuvem",pr:"núvola",cat:"Natureza",ex_it:"La nuvola è bianca.",ex_pt:"A nuvem é branca."},
+{it:"vento",pt:"vento",pr:"vénto",cat:"Natureza",ex_it:"Il vento soffia forte.",ex_pt:"O vento sopra forte."},
+{it:"pioggia",pt:"chuva",pr:"piódja",cat:"Natureza",ex_it:"La pioggia bagna la strada.",ex_pt:"A chuva molha a rua."},
+{it:"neve",pt:"neve",pr:"néve",cat:"Natureza",ex_it:"La neve copre la città.",ex_pt:"A neve cobre a cidade."},
+{it:"fuoco",pt:"fogo",pr:"fuóko",cat:"Natureza",ex_it:"Il fuoco scalda.",ex_pt:"O fogo aquece."},
+{it:"terra",pt:"terra",pr:"téra",cat:"Natureza",ex_it:"La terra è bagnata.",ex_pt:"A terra está molhada."},
+// CASA E DIA A DIA (17)
+{it:"casa",pt:"casa",pr:"káza",cat:"Casa",ex_it:"Vado a casa.",ex_pt:"Vou para casa."},
+{it:"porta",pt:"porta",pr:"pórta",cat:"Casa",ex_it:"Chiudi la porta.",ex_pt:"Feche a porta."},
+{it:"finestra",pt:"janela",pr:"finéstra",cat:"Casa",ex_it:"Apri la finestra.",ex_pt:"Abra a janela."},
+{it:"tavolo",pt:"mesa",pr:"távolo",cat:"Casa",ex_it:"Il pranzo è sul tavolo.",ex_pt:"O almoço está na mesa."},
+{it:"sedia",pt:"cadeira",pr:"sédia",cat:"Casa",ex_it:"Prendi una sedia.",ex_pt:"Pegue uma cadeira."},
+{it:"letto",pt:"cama",pr:"léto",cat:"Casa",ex_it:"Vado a letto.",ex_pt:"Vou para a cama."},
+{it:"bagno",pt:"banheiro",pr:"bányo",cat:"Casa",ex_it:"Dov'è il bagno?",ex_pt:"Onde é o banheiro?"},
+{it:"cucina",pt:"cozinha",pr:"kutshína",cat:"Casa",ex_it:"La mamma è in cucina.",ex_pt:"A mãe está na cozinha."},
+{it:"camera",pt:"quarto",pr:"kámera",cat:"Casa",ex_it:"La mia camera è grande.",ex_pt:"Meu quarto é grande."},
+{it:"salotto",pt:"sala de estar",pr:"salóto",cat:"Casa",ex_it:"Guardiamo la tv in salotto.",ex_pt:"Assistimos tv na sala."},
+{it:"divano",pt:"sofá",pr:"diváno",cat:"Casa",ex_it:"Il divano è comodo.",ex_pt:"O sofá é confortável."},
+{it:"televisione",pt:"televisão",pr:"televizióne",cat:"Casa",ex_it:"Accendi la televisione.",ex_pt:"Ligue a televisão."},
+{it:"telefono",pt:"telefone",pr:"teléfono",cat:"Casa",ex_it:"Il telefono squilla.",ex_pt:"O telefone toca."},
+{it:"chiave",pt:"chave",pr:"kiáve",cat:"Casa",ex_it:"Ho perso la chiave.",ex_pt:"Perdi a chave."},
+{it:"specchio",pt:"espelho",pr:"spékio",cat:"Casa",ex_it:"Mi guardo allo specchio.",ex_pt:"Me olho no espelho."},
+{it:"sapone",pt:"sabonete",pr:"sapóne",cat:"Casa",ex_it:"Mi lavo le mani col sapone.",ex_pt:"Lavo as mãos com sabonete."},
+{it:"asciugamano",pt:"toalha",pr:"ashugamáno",cat:"Casa",ex_it:"Prendi l'asciugamano.",ex_pt:"Pegue a toalha."},
+// SENTIMENTOS (14)
+{it:"felice",pt:"feliz",pr:"felítche",cat:"Sentimento",ex_it:"Sono molto felice.",ex_pt:"Estou muito feliz."},
+{it:"triste",pt:"triste",pr:"tríste",cat:"Sentimento",ex_it:"Oggi mi sento triste.",ex_pt:"Hoje me sinto triste."},
+{it:"arrabbiato",pt:"irritado / bravo",pr:"arabiáto",cat:"Sentimento",ex_it:"Lui è arrabbiato con me.",ex_pt:"Ele está irritado comigo."},
+{it:"stanco",pt:"cansado",pr:"stánko",cat:"Sentimento",ex_it:"Sono stanco dopo il lavoro.",ex_pt:"Estou cansado depois do trabalho."},
+{it:"annoiato",pt:"entediado",pr:"anoiáto",cat:"Sentimento",ex_it:"Il bambino è annoiato.",ex_pt:"A criança está entediada."},
+{it:"sorpreso",pt:"surpreso",pr:"sorprézo",cat:"Sentimento",ex_it:"Sono sorpreso dalla notizia.",ex_pt:"Estou surpreso com a notícia."},
+{it:"spaventato",pt:"assustado",pr:"spaventáto",cat:"Sentimento",ex_it:"Il cane è spaventato.",ex_pt:"O cachorro está assustado."},
+{it:"innamorato",pt:"apaixonado",pr:"inamoráto",cat:"Sentimento",ex_it:"Lui è innamorato di lei.",ex_pt:"Ele é apaixonado por ela."},
+{it:"preoccupato",pt:"preocupado",pr:"preokupáto",cat:"Sentimento",ex_it:"La madre è preoccupata.",ex_pt:"A mãe está preocupada."},
+{it:"calmo",pt:"calmo",pr:"kálmo",cat:"Sentimento",ex_it:"Resta calmo, per favore.",ex_pt:"Fique calmo, por favor."},
+{it:"nervoso",pt:"nervoso",pr:"nervózo",cat:"Sentimento",ex_it:"Sono nervoso per l'esame.",ex_pt:"Estou nervoso para o exame."},
+{it:"orgoglioso",pt:"orgulhoso",pr:"orgolyózo",cat:"Sentimento",ex_it:"Sono orgoglioso di te.",ex_pt:"Estou orgulhoso de você."},
+{it:"geloso",pt:"ciumento",pr:"djelózo",cat:"Sentimento",ex_it:"Il ragazzo è geloso.",ex_pt:"O rapaz é ciumento."},
+{it:"timido",pt:"tímido",pr:"tímido",cat:"Sentimento",ex_it:"Il bambino è timido.",ex_pt:"A criança é tímida."}
+];
+
+// ==================== DIALOGUES ====================
+const dialogues = [
+{emoji:"☕",title:"No bar / caffetteria",subtitle:"Pedindo café e lanche",
+tip:"<strong>Dica:</strong> Na Itália, toma-se café em pé no balcão (al banco) — é mais barato e autêntico!",
+lines:[
+{sp:"A",name:"Cliente",it:"Buongiorno! Vorrei un caffè, per favore.",pt:"Bom dia! Gostaria de um café, por favor."},
+{sp:"B",name:"Barista",it:"Subito! Lo vuole al banco o al tavolo?",pt:"Imediatamente! Quer no balcão ou na mesa?"},
+{sp:"A",name:"Cliente",it:"Al banco, grazie. Quant'è?",pt:"No balcão, obrigado. Quanto é?"},
+{sp:"B",name:"Barista",it:"Un euro e venti, grazie.",pt:"Um euro e vinte, obrigado."},
+{sp:"A",name:"Cliente",it:"Ecco a lei. Può darmi anche un cornetto?",pt:"Aqui está. Pode me dar também um croissant?"},
+{sp:"B",name:"Barista",it:"Certo! Con crema o vuoto?",pt:"Claro! Com creme ou simples?"},
+{sp:"A",name:"Cliente",it:"Con crema, per favore. Grazie mille!",pt:"Com creme, por favor. Muito obrigado!"},
+{sp:"B",name:"Barista",it:"Prego! Buona giornata!",pt:"De nada! Bom dia!"},
+]},
+{emoji:"🍕",title:"No restaurante",subtitle:"Da chegada à conta",
+tip:"<strong>Dica:</strong> O 'coperto' é uma taxa de cobertura cobrada por pessoa — é normal na Itália!",
+lines:[
+{sp:"A",name:"Cliente",it:"Buonasera! Avete un tavolo per due?",pt:"Boa noite! Vocês têm uma mesa para dois?"},
+{sp:"B",name:"Cameriere",it:"Buonasera! Sì, prego, accomodatevi qui.",pt:"Boa noite! Sim, por favor, sentem-se aqui."},
+{sp:"A",name:"Cliente",it:"Grazie. Possiamo vedere il menu?",pt:"Obrigado. Podemos ver o cardápio?"},
+{sp:"B",name:"Cameriere",it:"Ecco il menu. Volete dell'acqua intanto?",pt:"Aqui está o cardápio. Querem água enquanto isso?"},
+{sp:"A",name:"Cliente",it:"Sì, un'acqua naturale e una frizzante.",pt:"Sim, uma água sem gás e uma com gás."},
+{sp:"B",name:"Cameriere",it:"Pronti per ordinare?",pt:"Prontos para pedir?"},
+{sp:"A",name:"Cliente",it:"Sì. Prendo il risotto ai funghi e la bistecca.",pt:"Sim. Pego o risoto de cogumelos e o bife."},
+{sp:"B",name:"Cameriere",it:"Ottima scelta! La bistecca come la vuole?",pt:"Ótima escolha! O bife como quer?"},
+{sp:"A",name:"Cliente",it:"Ben cotta, grazie.",pt:"Bem passada, obrigado."},
+{sp:"B",name:"Cameriere",it:"Perfetto. Torno subito.",pt:"Perfeito. Volto já."},
+{sp:"A",name:"Cliente",it:"Scusi, il conto per favore.",pt:"Com licença, a conta por favor."},
+{sp:"B",name:"Cameriere",it:"Tutto bene? Era di suo gradimento?",pt:"Tudo bem? Foi de seu agrado?"},
+{sp:"A",name:"Cliente",it:"Sì, era tutto ottimo! Posso pagare con carta?",pt:"Sim, estava tudo ótimo! Posso pagar com cartão?"},
+{sp:"B",name:"Cameriere",it:"Certamente! Prego.",pt:"Certamente! Por favor."},
+]},
+{emoji:"🏨",title:"No hotel",subtitle:"Check-in e pedidos",
+tip:"<strong>Dica:</strong> Na Itália, é comum deixar o documento na recepção durante o check-in.",
+lines:[
+{sp:"A",name:"Hóspede",it:"Buongiorno, ho una prenotazione a nome Silva.",pt:"Bom dia, tenho uma reserva em nome de Silva."},
+{sp:"B",name:"Receptionist",it:"Benvenuto! Un momento, controllo…sì, camera doppia per tre notti.",pt:"Bem-vindo! Um momento, verifico… sim, quarto duplo por três noites."},
+{sp:"A",name:"Hóspede",it:"Esatto. La colazione è inclusa?",pt:"Exato. O café da manhã está incluído?"},
+{sp:"B",name:"Receptionist",it:"Sì, dalle sette alle dieci. Ecco la chiave, terzo piano.",pt:"Sim, das sete às dez. Aqui a chave, terceiro andar."},
+{sp:"A",name:"Hóspede",it:"Grazie. C'è il WiFi in camera?",pt:"Obrigado. Tem WiFi no quarto?"},
+{sp:"B",name:"Receptionist",it:"Sì! La password è sul cartellino in camera.",pt:"Sim! A senha está no cartão no quarto."},
+{sp:"A",name:"Hóspede",it:"Perfetto. A che ora è il check-out?",pt:"Perfeito. A que horas é o check-out?"},
+{sp:"B",name:"Receptionist",it:"Entro le undici. Buona permanenza!",pt:"Até as onze. Boa estadia!"},
+]},
+{emoji:"🗺️",title:"Pedindo direções",subtitle:"Orientação na cidade",
+tip:"<strong>Dica:</strong> 'Sempre dritto' (sempre em frente) é a frase que você mais vai ouvir nas ruas da Itália!",
+lines:[
+{sp:"A",name:"Turista",it:"Scusi, sa dov'è il Colosseo?",pt:"Com licença, sabe onde fica o Coliseu?"},
+{sp:"B",name:"Passante",it:"Sì! Vada dritto, poi giri a destra alla piazza.",pt:"Sim! Vá em frente, depois vire à direita na praça."},
+{sp:"A",name:"Turista",it:"È lontano a piedi?",pt:"É longe a pé?"},
+{sp:"B",name:"Passante",it:"No, circa quindici minuti.",pt:"Não, cerca de quinze minutos."},
+{sp:"A",name:"Turista",it:"Grazie mille! E il Foro Romano è vicino?",pt:"Muito obrigado! E o Foro Romano é perto?"},
+{sp:"B",name:"Passante",it:"Sì, è proprio accanto al Colosseo.",pt:"Sim, é exatamente ao lado do Coliseu."},
+{sp:"A",name:"Turista",it:"Perfetto! È aperto oggi?",pt:"Perfeito! Está aberto hoje?"},
+{sp:"B",name:"Passante",it:"Credo di sì. Buona visita!",pt:"Acho que sim. Boa visita!"},
+]},
+{emoji:"🛍️",title:"Nas compras",subtitle:"Mercado e lojas",
+tip:"<strong>Dica:</strong> Nos mercados ao ar livre, é comum e aceito pedir desconto (chiedere lo sconto)!",
+lines:[
+{sp:"A",name:"Cliente",it:"Buongiorno! Posso provare questa giacca?",pt:"Bom dia! Posso experimentar este casaco?"},
+{sp:"B",name:"Venditore",it:"Certo! Che taglia porta?",pt:"Claro! Qual tamanho você usa?"},
+{sp:"A",name:"Cliente",it:"Porto la media, credo.",pt:"Uso médio, acho."},
+{sp:"B",name:"Venditore",it:"Eccola! Il camerino è là a destra.",pt:"Aqui está! O provador é lá à direita."},
+{sp:"A",name:"Cliente",it:"Grazie. Quanto costa?",pt:"Obrigado. Quanto custa?"},
+{sp:"B",name:"Venditore",it:"Sessanta euro, ma c'è il venti percento di sconto.",pt:"Sessenta euros, mas tem vinte por cento de desconto."},
+{sp:"A",name:"Cliente",it:"Ottimo! La prendo. Accettate carta?",pt:"Ótimo! Vou levar. Aceitam cartão?"},
+{sp:"B",name:"Venditore",it:"Sì, certamente. Cassa là in fondo.",pt:"Sim, certamente. Caixa lá no fundo."},
+]},
+{emoji:"🚨",title:"Emergência",subtitle:"Pedindo ajuda urgente",
+tip:"<strong>Dica:</strong> Na Itália, o número de emergência único é <strong>112</strong>. Funciona para polícia, bombeiros e ambulância.",
+lines:[
+{sp:"A",name:"Turista",it:"Aiuto! Ho perso il mio portafoglio!",pt:"Socorro! Perdi minha carteira!"},
+{sp:"B",name:"Poliziotto",it:"Stia calmo! Dove e quando l'ha persa?",pt:"Fique calmo! Onde e quando a perdeu?"},
+{sp:"A",name:"Turista",it:"Non so esattamente. Forse in piazza.",pt:"Não sei exatamente. Talvez na praça."},
+{sp:"B",name:"Poliziotto",it:"C'erano i documenti?",pt:"Havia documentos?"},
+{sp:"A",name:"Turista",it:"Sì, il passaporto e la carta di credito.",pt:"Sim, o passaporte e o cartão de crédito."},
+{sp:"B",name:"Poliziotto",it:"Deve fare una denuncia. La accompagno io.",pt:"Você precisa fazer um boletim. Eu te acompanho."},
+{sp:"A",name:"Turista",it:"Devo chiamare la mia ambasciata?",pt:"Preciso ligar para minha embaixada?"},
+{sp:"B",name:"Poliziotto",it:"Sì, le darò il numero. Venga con me.",pt:"Sim, vou te dar o número. Venha comigo."},
+]},
+{emoji:"🚉",title:"Na estação de trem",subtitle:"Comprando passagem",
+tip:"<strong>Dica:</strong> Na Itália é obrigatório validar (timbrare) o bilhete antes de embarcar nos trens regionais!",
+lines:[
+{sp:"A",name:"Viajante",it:"Buongiorno! Un biglietto per Firenze, per favore.",pt:"Bom dia! Uma passagem para Florença, por favor."},
+{sp:"B",name:"Bigliettaio",it:"Andata e ritorno o solo andata?",pt:"Ida e volta ou somente ida?"},
+{sp:"A",name:"Viajante",it:"Solo andata. Per oggi?",pt:"Somente ida. Para hoje?"},
+{sp:"B",name:"Bigliettaio",it:"Per oggi c'è il treno alle quattordici.",pt:"Para hoje tem o trem às catorze horas."},
+{sp:"A",name:"Viajante",it:"Perfetto. Quant'è?",pt:"Perfeito. Quanto é?"},
+{sp:"B",name:"Bigliettaio",it:"Ventidue euro. Vuole il posto prenotato?",pt:"Vinte e dois euros. Quer assento reservado?"},
+{sp:"A",name:"Viajante",it:"Sì, grazie. Da che binario parte?",pt:"Sim, obrigado. De qual plataforma parte?"},
+{sp:"B",name:"Bigliettaio",it:"Binario sette. Ricordi di timbrare il biglietto!",pt:"Plataforma sete. Lembre de validar o bilhete!"},
+]},
+{emoji:"💊",title:"Na farmácia",subtitle:"Pedindo medicamentos",
+tip:"<strong>Dica:</strong> Farmacistas italianos podem recomendar remédios sem receita. A cruz verde identifica as farmácias.",
+lines:[
+{sp:"A",name:"Cliente",it:"Buongiorno, ho mal di testa fortissimo.",pt:"Bom dia, tenho uma dor de cabeça fortíssima."},
+{sp:"B",name:"Farmacista",it:"Da quanto tempo?",pt:"Há quanto tempo?"},
+{sp:"A",name:"Cliente",it:"Da stamattina. Ho anche un po' di febbre.",pt:"Desde esta manhã. Também tenho um pouco de febre."},
+{sp:"B",name:"Farmacista",it:"Le do una tachipirina. Ne prenda una ogni sei ore.",pt:"Vou te dar um paracetamol. Tome um a cada seis horas."},
+{sp:"A",name:"Cliente",it:"Sono allergico all'aspirina.",pt:"Sou alérgico à aspirina."},
+{sp:"B",name:"Farmacista",it:"Non c'è problema, questo è diverso.",pt:"Sem problema, este é diferente."},
+{sp:"A",name:"Cliente",it:"Posso prenderlo senza ricetta?",pt:"Posso tomar sem receita?"},
+{sp:"B",name:"Farmacista",it:"Sì, questo si vende senza ricetta. Costa cinque euro.",pt:"Sim, este se vende sem receita. Custa cinco euros."},
+]},
+{emoji:"🍦",title:"Numa gelateria",subtitle:"Pedindo gelato como um local",
+tip:"<strong>Dica:</strong> Peça 'un cono' (casquinha) ou 'una coppetta' (copinho). Escolha 1, 2 ou 3 gusti (sabores)!",
+lines:[
+{sp:"A",name:"Cliente",it:"Buonasera! Vorrei un cono con due gusti.",pt:"Boa noite! Gostaria de uma casquinha com dois sabores."},
+{sp:"B",name:"Gelatiere",it:"Certo! Quali gusti desidera?",pt:"Claro! Quais sabores deseja?"},
+{sp:"A",name:"Cliente",it:"Pistacchio e cioccolato fondente.",pt:"Pistache e chocolate amargo."},
+{sp:"B",name:"Gelatiere",it:"Ottima scelta! Grande o piccolo?",pt:"Ótima escolha! Grande ou pequeno?"},
+{sp:"A",name:"Cliente",it:"Medio, per favore. Quant'è?",pt:"Médio, por favor. Quanto é?"},
+{sp:"B",name:"Gelatiere",it:"Tre euro e cinquanta.",pt:"Três euros e cinquenta."},
+{sp:"A",name:"Cliente",it:"Ecco a lei. È artigianale?",pt:"Aqui está. É artesanal?"},
+{sp:"B",name:"Gelatiere",it:"Assolutamente! Tutto fatto in casa ogni mattina.",pt:"Absolutamente! Tudo feito em casa toda manhã."},
+]},
+{emoji:"📞",title:"Ligando para um número",subtitle:"Telefone e comunicação",
+tip:"<strong>Dica:</strong> Ao atender o telefone na Itália, diga 'Pronto?' — equivale ao nosso 'Alô?'.",
+lines:[
+{sp:"A",name:"Você",it:"Pronto? Buongiorno, parlo con l'Hotel Roma?",pt:"Alô? Bom dia, falo com o Hotel Roma?"},
+{sp:"B",name:"Hotel",it:"Sì, buongiorno! Come posso aiutarla?",pt:"Sim, bom dia! Como posso ajudá-lo?"},
+{sp:"A",name:"Você",it:"Vorrei prenotare una camera per due notti.",pt:"Gostaria de reservar um quarto por duas noites."},
+{sp:"B",name:"Hotel",it:"Certo. Per quali date?",pt:"Claro. Para quais datas?"},
+{sp:"A",name:"Você",it:"Dal quindici al diciassette giugno.",pt:"Do dia quinze ao dia dezessete de junho."},
+{sp:"B",name:"Hotel",it:"Un momento… sì, abbiamo disponibilità. Camera doppia o singola?",pt:"Um momento… sim, temos disponibilidade. Quarto duplo ou individual?"},
+{sp:"A",name:"Você",it:"Doppia, con colazione inclusa se possibile.",pt:"Duplo, com café da manhã incluído se possível."},
+{sp:"B",name:"Hotel",it:"Perfetto. Mi dà il suo nome, per favore?",pt:"Perfeito. Pode me dar o seu nome, por favor?"},
+]},
+{emoji:"🎭",title:"Visitando um museu",subtitle:"Ingressos e informações",
+tip:"<strong>Dica:</strong> Na Itália, menores de 18 anos e professores da UE geralmente têm acesso gratuito aos museus estatais!",
+lines:[
+{sp:"A",name:"Visitante",it:"Buongiorno! Quanto costa il biglietto?",pt:"Bom dia! Quanto custa o ingresso?"},
+{sp:"B",name:"Bigliettaio",it:"Intero dodici euro, ridotto otto.",pt:"Inteiro doze euros, reduzido oito."},
+{sp:"A",name:"Visitante",it:"C'è lo sconto per i turisti stranieri?",pt:"Tem desconto para turistas estrangeiros?"},
+{sp:"B",name:"Bigliettaio",it:"No, ma abbiamo l'audioguida inclusa.",pt:"Não, mas temos audioguia incluída."},
+{sp:"A",name:"Visitante",it:"Avete l'audioguida in portoghese?",pt:"Vocês têm audioguia em português?"},
+{sp:"B",name:"Bigliettaio",it:"Sì, abbiamo anche in portoghese.",pt:"Sim, temos também em português."},
+{sp:"A",name:"Visitante",it:"Perfetto! Due biglietti interi, per favore.",pt:"Perfeito! Dois ingressos inteiros, por favor."},
+{sp:"B",name:"Bigliettaio",it:"Ventiquattro euro. Buona visita!",pt:"Vinte e quatro euros. Boa visita!"},
+]},
+{emoji:"🏖️",title:"Na praia / litoral",subtitle:"Alugar cadeiras e aproveitar",
+tip:"<strong>Dica:</strong> Muitas praias italianas são 'stabilimenti balneari' — pagas. Procure 'spiaggia libera' para praia pública gratuita!",
+lines:[
+{sp:"A",name:"Turista",it:"Buongiorno! Volete noleggiare due lettini?",pt:"Bom dia! Queríamos alugar duas espreguiçadeiras?"},
+{sp:"B",name:"Bagnino",it:"Certo! Con o senza ombrellone?",pt:"Claro! Com ou sem guarda-sol?"},
+{sp:"A",name:"Turista",it:"Con ombrellone, per favore. Quanto costa?",pt:"Com guarda-sol, por favor. Quanto custa?"},
+{sp:"B",name:"Bagnino",it:"Trenta euro per la giornata intera.",pt:"Trinta euros para o dia inteiro."},
+{sp:"A",name:"Turista",it:"Va bene. C'è un bar qui vicino?",pt:"Tudo bem. Tem um bar aqui perto?"},
+{sp:"B",name:"Bagnino",it:"Sì, proprio lì in fondo. Fanno ottimi spritz!",pt:"Sim, exatamente lá no fundo. Fazem ótimos spritz!"},
+{sp:"A",name:"Turista",it:"Benissimo! Si può fare snorkeling qui?",pt:"Ótimo! Pode-se fazer snorkeling aqui?"},
+{sp:"B",name:"Bagnino",it:"Sì, l'acqua è molto chiara.",pt:"Sim, a água é muito clara."},
+]},
+
+{emoji:"📸",title:"Tirando fotos",subtitle:"Pedindo para tirar uma foto",
+tip:"<strong>Dica:</strong> Em pontos turísticos, é muito comum pedir a outro turista para tirar sua foto.",
+lines:[
+{sp:"A",name:"Turista",it:"Scusi, può farci una foto per favore?",pt:"Com licença, pode tirar uma foto nossa por favor?"},
+{sp:"B",name:"Pessoa",it:"Certamente! Mettetevi lì davanti.",pt:"Certamente! Fiquem ali na frente."},
+{sp:"A",name:"Turista",it:"Così va bene?",pt:"Assim está bom?"},
+{sp:"B",name:"Pessoa",it:"Sì, sorridete! Uno, due, tre... fatto!",pt:"Sim, sorriam! Um, dois, três... pronto!"},
+{sp:"A",name:"Turista",it:"Grazie! Vuole che ne faccia una a lei?",pt:"Obrigado! Quer que eu tire uma sua?"},
+{sp:"B",name:"Pessoa",it:"Sì, grazie, molto gentile.",pt:"Sim, obrigado, muito gentil."},
+]},
+{emoji:"🍷",title:"Brindando com amigos",subtitle:"Um aperitivo italiano",
+tip:"<strong>Dica:</strong> Na Itália, diz-se 'Cin cin' (Tim tim) ou 'Salute' ao brindar, e deve-se olhar nos olhos!",
+lines:[
+{sp:"A",name:"Amigo 1",it:"Che bello essere qui a Roma!",pt:"Que bom estar aqui em Roma!"},
+{sp:"B",name:"Amigo 2",it:"Sì, finalmente vacanza. Cosa prendiamo?",pt:"Sim, finalmente férias. O que vamos pedir?"},
+{sp:"A",name:"Amigo 1",it:"Io prendo uno Spritz Aperol. E tu?",pt:"Eu vou pedir um Spritz Aperol. E você?"},
+{sp:"B",name:"Amigo 2",it:"Io un bicchiere di Prosecco.",pt:"Eu uma taça de Prosecco."},
+{sp:"A",name:"Amigo 1",it:"Ecco i nostri drink. Cin cin!",pt:"Aqui estão nossos drinks. Tim tim!"},
+{sp:"B",name:"Amigo 2",it:"Salute! Alla nostra vacanza!",pt:"Saúde! À nossa viagem!"},
+]},
+];
+
+// ==================== GRAMMAR DATA ====================
+const grammar = [
+{icon:"🔤",title:"Pronúncia Básica",sections:[
+{h:"Regras de ouro",content:`
+<p>O italiano é quase <strong>fonético</strong> — lê-se quase como escreve. Diferente do inglês!</p>
+<div class="grammar-rule">
+  <h4>Letras com som diferente do português</h4>
+  <table class="grammar-table">
+    <tr><th>Letra / Combo</th><th>Som</th><th>Exemplo</th></tr>
+    <tr><td><strong>c + e/i</strong></td><td>como "tch"</td><td>ciao → "tcháo"</td></tr>
+    <tr><td><strong>c + a/o/u</strong></td><td>como "k"</td><td>casa → "káza"</td></tr>
+    <tr><td><strong>g + e/i</strong></td><td>como "dj"</td><td>gelato → "djeláto"</td></tr>
+    <tr><td><strong>g + a/o/u</strong></td><td>como "g" de gato</td><td>gatto → "gáto"</td></tr>
+    <tr><td><strong>gl</strong></td><td>como "lh"</td><td>figlio → "fílho"</td></tr>
+    <tr><td><strong>gn</strong></td><td>como "nh"</td><td>signore → "sinhóre"</td></tr>
+    <tr><td><strong>sc + e/i</strong></td><td>como "sh"</td><td>scusi → "shúzi"</td></tr>
+    <tr><td><strong>z</strong></td><td>"ts" ou "dz"</td><td>pizza → "pítsa"</td></tr>
+    <tr><td><strong>h</strong></td><td>mudo</td><td>hotel → "otél"</td></tr>
+  </table>
+</div>
+<div class="grammar-tip-box">💡 <strong>Acento:</strong> Geralmente cai na penúltima sílaba. Ex: mangiare = man-GIA-re. Palavras com acento gráfico (è, à, ò) têm acento na última sílaba.</div>
+`}
+]},
+{icon:"👥",title:"Artigos (o, a, um, uma)",sections:[
+{h:"Artigos definidos",content:`
+<p>No italiano, os substantivos têm <strong>gênero</strong> (masculino ou feminino) e os artigos concordam com isso.</p>
+<div class="grammar-rule">
+  <table class="grammar-table">
+    <tr><th>Tipo</th><th>Masculino</th><th>Feminino</th></tr>
+    <tr><td>Singular definido (o/a)</td><td>il / lo / l'</td><td>la / l'</td></tr>
+    <tr><td>Plural definido (os/as)</td><td>i / gli</td><td>le</td></tr>
+    <tr><td>Singular indefinido (um/uma)</td><td>un / uno</td><td>una / un'</td></tr>
+  </table>
+  <div class="grammar-example">
+    <div class="it">il caffè → o café | la pizza → a pizza</div>
+    <div class="pt">l'aeroporto → o aeroporto | un'acqua → uma água</div>
+  </div>
+</div>
+<div class="grammar-tip-box">💡 <strong>Dica prática:</strong> Para viagem, não se preocupe muito com artigos. "Caffè, per favore" funciona igual a "Il caffè, per favore"!</div>
+`}
+]},
+{icon:"🔢",title:"Verbos Essenciais",sections:[
+{h:"Essere (ser/estar) e Avere (ter)",content:`
+<p>Os dois verbos mais importantes do italiano:</p>
+<div class="grammar-rule">
+  <table class="grammar-table">
+    <tr><th>Pronome</th><th>Essere</th><th>Avere</th><th>Trad. Essere</th><th>Trad. Avere</th></tr>
+    <tr><td>io (eu)</td><td><strong>sono</strong></td><td><strong>ho</strong></td><td>sou/estou</td><td>tenho</td></tr>
+    <tr><td>tu (você)</td><td>sei</td><td>hai</td><td>és/está</td><td>tens</td></tr>
+    <tr><td>lui/lei</td><td>è</td><td>ha</td><td>é/está</td><td>tem</td></tr>
+    <tr><td>noi (nós)</td><td>siamo</td><td>abbiamo</td><td>somos/estamos</td><td>temos</td></tr>
+    <tr><td>voi (vocês)</td><td>siete</td><td>avete</td><td>são/estão</td><td>têm</td></tr>
+    <tr><td>loro (eles)</td><td>sono</td><td>hanno</td><td>são/estão</td><td>têm</td></tr>
+  </table>
+</div>
+<div class="grammar-example">
+  <div class="it">Sono brasiliano. Ho fame. Sei gentile!</div>
+  <div class="pt">Sou brasileiro. Estou com fome. Você é gentil!</div>
+</div>
+<div class="grammar-tip-box">💡 "Avere" é usado para dizer que você está com fome (ho fame), com frio (ho freddo), com sede (ho sete) — diferente do português!</div>
+`}
+]},
+{icon:"🗣️",title:"Frases de Sobrevivência",sections:[
+{h:"Fórmulas mágicas",content:`
+<div class="grammar-rule">
+  <h4>"Vorrei…" — Eu gostaria de…</h4>
+  <p>A forma mais educada de pedir qualquer coisa:</p>
+  <div class="grammar-example"><div class="it">Vorrei un caffè. / Vorrei prenotare. / Vorrei la camera.</div><div class="pt">Gostaria de um café. / Gostaria de reservar. / Gostaria do quarto.</div></div>
+</div>
+<div class="grammar-rule">
+  <h4>"C'è…?" / "Ci sono…?" — Tem…? / Existem…?</h4>
+  <div class="grammar-example"><div class="it">C'è un ristorante vicino? / Ci sono camere disponibili?</div><div class="pt">Tem um restaurante perto? / Tem quartos disponíveis?</div></div>
+</div>
+<div class="grammar-rule">
+  <h4>"Posso…?" — Posso…?</h4>
+  <div class="grammar-example"><div class="it">Posso pagare con carta? / Posso vedere il menu?</div><div class="pt">Posso pagar com cartão? / Posso ver o cardápio?</div></div>
+</div>
+<div class="grammar-rule">
+  <h4>"Mi può…?" — O senhor/a pode me…?</h4>
+  <div class="grammar-example"><div class="it">Mi può aiutare? / Mi può dire dov'è la stazione?</div><div class="pt">Pode me ajudar? / Pode me dizer onde é a estação?</div></div>
+</div>
+<div class="grammar-tip-box">💡 <strong>Segredo:</strong> Essas 4 estruturas cobrem 80% das situações de viagem. Memorize-as!</div>
+`}
+]},
+{icon:"🔢",title:"Números e Horas",sections:[
+{h:"Como dizer as horas",content:`
+<div class="grammar-rule">
+  <h4>Perguntando e respondendo</h4>
+  <div class="grammar-example"><div class="it">Che ora è? / Sono le tre. / È l'una. / Sono le dodici e mezza.</div><div class="pt">Que horas são? / São três horas. / É uma hora. / São doze e meia.</div></div>
+</div>
+<div class="grammar-rule">
+  <h4>Expressões de hora</h4>
+  <table class="grammar-table">
+    <tr><th>Italiano</th><th>Português</th></tr>
+    <tr><td>di mattina</td><td>de manhã</td></tr>
+    <tr><td>di pomeriggio</td><td>à tarde</td></tr>
+    <tr><td>di sera</td><td>à noite</td></tr>
+    <tr><td>a mezzogiorno</td><td>ao meio-dia</td></tr>
+    <tr><td>a mezzanotte</td><td>à meia-noite</td></tr>
+    <tr><td>e un quarto</td><td>e quinze (e um quarto)</td></tr>
+    <tr><td>e mezza</td><td>e meia</td></tr>
+    <tr><td>meno un quarto</td><td>menos quinze</td></tr>
+  </table>
+</div>
+<div class="grammar-tip-box">💡 A Itália usa o sistema de 24h em horários oficiais (trens, museus). "Il treno delle 14" = trem das 14h.</div>
+`}
+]},
+{icon:"🤝",title:"Tratamento Formal e Informal",sections:[
+{h:"Quando usar tu vs Lei",content:`
+<div class="grammar-rule">
+  <h4>Tu (informal) — use com:</h4>
+  <p>Amigos, crianças, jovens, colegas, situações casuais.</p>
+  <div class="grammar-example"><div class="it">Come stai? / Sei brasiliano?</div><div class="pt">Como vai? / Você é brasileiro?</div></div>
+</div>
+<div class="grammar-rule">
+  <h4>Lei (formal) — use com:</h4>
+  <p>Desconhecidos, idosos, funcionários de hotel/restaurante, situações profissionais.</p>
+  <div class="grammar-example"><div class="it">Come sta? / Lei è brasiliano?</div><div class="pt">Como vai o senhor? / O senhor é brasileiro?</div></div>
+</div>
+<div class="grammar-tip-box">💡 <strong>Regra prática:</strong> Se a pessoa usa 'Scusi' com você, use 'Lei'. Se usar 'Scusa', use 'tu'.</div>
+`}
+]},
+{icon:"🍕",title:"Falsos Cognatos",sections:[
+{h:"Palavras que parecem português mas não são!",content:`
+<div class="grammar-rule">
+  <table class="grammar-table">
+    <tr><th>Italiano</th><th>Parece ser…</th><th>Na verdade é…</th></tr>
+    <tr><td><strong>burro</strong></td><td>burro (animal)</td><td>manteiga</td></tr>
+    <tr><td><strong>preservativo</strong></td><td>preservativo</td><td>conservante (de comida)</td></tr>
+    <tr><td><strong>stampa</strong></td><td>estampa</td><td>imprensa / jornal</td></tr>
+    <tr><td><strong>caldo</strong></td><td>caldo (de cozinha)</td><td>quente</td></tr>
+    <tr><td><strong>bravo</strong></td><td>bravo (corajoso)</td><td>bom / habilidoso</td></tr>
+    <tr><td><strong>firma</strong></td><td>firma (empresa)</td><td>assinatura</td></tr>
+    <tr><td><strong>sensibile</strong></td><td>sensível</td><td>sensato / racional</td></tr>
+    <tr><td><strong>libreria</strong></td><td>biblioteca</td><td>livraria</td></tr>
+  </table>
+</div>
+<div class="grammar-tip-box">💡 <strong>Atenção especial:</strong> "Ho caldo" = Estou com calor (NÃO "tenho caldo")! "Ho freddo" = Estou com frio.</div>
+`}
+]},
+];
+
+// ==================== STATE ====================
+let favorites = new Set();
+let wrongWords = new Set();
+let studiedWords = new Set();
+let quizScore = {correct:0, wrong:0, total:0};
+let quizTotalScore = {sessions:0, correct:0, total:0}; // persisted across sessions
+let quizMode = 'flash';
+let quizCat = 'Todas';
+let quizWords = [];
+let quizIndex = 0;
+let fcFlipped = false;
+let currentMCWord = null;
+let chatHistory = []; // Gemini format: [{role:'user'|'model', parts:[{text}]}]
+let chatMode = 'free';
+let chatStarted = false;
+let showFavsOnly = false;
+
+function saveChatHistory() {
+  try {
+    const key = 'it-chat-' + chatMode;
+    const trimmed = chatHistory.slice(-40);
+    localStorage.setItem(key, JSON.stringify(trimmed));
+    localStorage.setItem('it-chat-mode', chatMode);
+    // Sync chat for this mode to cloud
+    if (currentUser && sb) {
+      sb.from('chat_history').upsert(
+        { user_id: currentUser.id, mode: chatMode, messages: trimmed },
+        { onConflict: 'user_id,mode' }
+      ).then(() => setSyncStatus('done')).catch(() => {});
+    }
+  } catch(e) {}
+}
+
+function loadChatHistory() {
+  try {
+    const savedMode = localStorage.getItem('it-chat-mode') || 'free';
+    chatMode = savedMode;
+    const saved = localStorage.getItem('it-chat-' + chatMode);
+    chatHistory = saved ? JSON.parse(saved) : [];
+    return chatHistory.length > 0;
+  } catch(e) { chatHistory = []; return false; }
+}
+
+// ==================== INIT ====================
+async function init() {
+  const savedFavs = await storageGet('it-favorites');
+  if(savedFavs) favorites = new Set(savedFavs);
+  const savedWrong = await storageGet('it-wrong');
+  if(savedWrong) wrongWords = new Set(savedWrong);
+  const savedStudied = await storageGet('it-studied');
+  if(savedStudied) studiedWords = new Set(savedStudied);
+  // Restore quiz total score from persistence
+  const savedScore = await storageGet('it-quiz-total');
+  if(savedScore) quizTotalScore = savedScore;
+  // Track daily streak
+  updateStreak();
+  // Restore any saved generated phrases for current session display
+  renderCats();
+  filterWords();
+  renderDialogues();
+  renderGrammar();
+  renderProgress();
+}
+
+// ==================== STREAK ====================
+function updateStreak() {
+  const today = new Date().toDateString();
+  const lastVisit = localStorage.getItem('it-last-visit');
+  let streak = parseInt(localStorage.getItem('it-streak') || '0');
+  const visitDays = JSON.parse(localStorage.getItem('it-visit-days') || '[]');
+
+  if (lastVisit !== today) {
+    // Check if yesterday was visited for consecutive streak
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if (lastVisit === yesterday.toDateString()) {
+      streak++;
+    } else if (!lastVisit) {
+      streak = 1;
+    } else {
+      streak = 1; // reset streak
+    }
+    localStorage.setItem('it-streak', streak);
+    localStorage.setItem('it-last-visit', today);
+    // Track day of week visited
+    const dayNum = new Date().getDay();
+    if (!visitDays.includes(dayNum)) {
+      visitDays.push(dayNum);
+      localStorage.setItem('it-visit-days', JSON.stringify(visitDays));
+    }
+  }
+  return { streak, visitDays };
+}
+
+function getStreak() {
+  return {
+    streak: parseInt(localStorage.getItem('it-streak') || '0'),
+    visitDays: JSON.parse(localStorage.getItem('it-visit-days') || '[]')
+  };
+}
+
+// ==================== NAV ====================
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(name === 'chat' && !chatStarted) { chatStarted = true; startChat(); }
+  if(name === 'progress') renderProgress();
+  if(name === 'quiz') renderQuizCats();
+}
+
+// ==================== SPEAK ====================
+function speak(text, btn, lang='it-IT') {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang; u.rate = 0.82;
+  if(btn) {
+    btn.classList.add('spinning');
+    u.onend = () => btn.classList.remove('spinning');
+    u.onerror = () => btn.classList.remove('spinning');
+  }
+  window.speechSynthesis.speak(u);
+}
+
+// ==================== VOCABULARY ====================
+let currentCat = 'Todas';
+const allCats = ['Todas', ...new Set(words.map(w => w.cat))];
+
+function renderCats() {
+  document.getElementById('cats').innerHTML = allCats.map(c =>
+    `<button class="cat-btn ${c===currentCat?'active':''}" onclick="selectCat('${c}')">${c}</button>`
+  ).join('');
+}
+
+function selectCat(cat) { currentCat = cat; renderCats(); filterWords(); }
+
+function filterWords() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const clearBtn = document.getElementById('search-clear');
+  clearBtn.classList.toggle('show', q.length > 0);
+  let filtered = words.filter(w =>
+    (currentCat==='Todas' || w.cat===currentCat) &&
+    (!q || w.it.toLowerCase().includes(q) || w.pt.toLowerCase().includes(q))
+  );
+  if(showFavsOnly) filtered = filtered.filter((_,i) => favorites.has(words.indexOf(_) !== -1 ? words.indexOf(_) : i));
+  if(showFavsOnly) {
+    const favIdxs = [...favorites];
+    filtered = words.filter((w,i) => {
+      const matchCat = currentCat==='Todas' || w.cat===currentCat;
+      const matchQ = !q || w.it.toLowerCase().includes(q) || w.pt.toLowerCase().includes(q);
+      return favIdxs.includes(i) && matchCat && matchQ;
+    });
+  }
+  document.getElementById('countBar').textContent = `${filtered.length} palavra${filtered.length!==1?'s':''}`;
+  document.getElementById('fav-toggle').classList.toggle('active', showFavsOnly);
+  renderCards(filtered);
+}
+
+function clearSearch() { document.getElementById('search').value = ''; filterWords(); }
+
+function toggleFavFilter() { showFavsOnly = !showFavsOnly; filterWords(); }
+
+function renderCards(list) {
+  const grid = document.getElementById('grid');
+  if(!list.length) {
+    grid.innerHTML = `<div class="no-results"><span>🤌</span>${showFavsOnly?'Nenhum favorito nessa categoria':'Nenhuma palavra encontrada'}</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(w => {
+    const idx = words.indexOf(w);
+    const isFav = favorites.has(idx);
+    const s = (t) => t.replace(/'/g,"\\'");
+    return `<div class="card ${isFav?'favorited':''}" id="wcard-${idx}">
+      <div class="card-header">
+        <div class="card-header-left">
+          <span class="cat-tag">${w.cat}</span>
+        </div>
+        <div class="card-actions">
+          <button class="fav-btn ${isFav?'active':''}" id="favbtn-${idx}" onclick="toggleFav(${idx})" title="${isFav?'Remover':'Favoritar'}">⭐</button>
+          <button class="audio-btn" id="abtn-${idx}" onclick="speak('${s(w.it)}',document.getElementById('abtn-${idx}'))">🔊</button>
+        </div>
+      </div>
+      <div class="word-it">${w.it}</div>
+      <div class="word-pt">${w.pt}</div>
+      <div class="pronun">[${w.pr}]</div>
+      <button class="expand-btn" onclick="toggleEx(${idx})">▸ exemplo</button>
+      <div class="example" id="ex-${idx}">
+        <div class="ex-it" id="exit-${idx}">${w.ex_it}</div>
+        <div class="ex-pt">${w.ex_pt}</div>
+        <div class="gen-result" id="gen-${idx}" style="display:none"></div>
+        <div class="ex-actions">
+          <button class="ex-btn audio" onclick="speak('${s(w.ex_it)}',this)">🔊 ouvir</button>
+          <button class="ex-btn gen" id="genbtn-${idx}" onclick="generatePhrase(${idx},'${s(w.it)}','${s(w.pt)}')">✨ nova frase</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleEx(i) {
+  const ex = document.getElementById(`ex-${i}`);
+  const btn = ex.previousElementSibling;
+  const open = ex.classList.toggle('open');
+  btn.textContent = open ? '▾ fechar' : '▸ exemplo';
+  if(open) { studiedWords.add(i); storageSet('it-studied',[...studiedWords]); }
+}
+
+async function toggleFav(idx) {
+  if(favorites.has(idx)) { favorites.delete(idx); showToast('Removido dos favoritos'); }
+  else { favorites.add(idx); showToast('⭐ Adicionado aos favoritos!'); }
+  await storageSet('it-favorites', [...favorites]);
+  const card = document.getElementById(`wcard-${idx}`);
+  const btn = document.getElementById(`favbtn-${idx}`);
+  if(card) card.classList.toggle('favorited', favorites.has(idx));
+  if(btn) btn.classList.toggle('active', favorites.has(idx));
+  if(showFavsOnly) filterWords();
+}
+
+
+async function generatePhrase(i, wordIt, wordPt) {
+  const btn = document.getElementById(`genbtn-${i}`);
+  const genDiv = document.getElementById(`gen-${i}`);
+  btn.disabled = true; btn.textContent = '⏳…';
+  genDiv.style.display = 'block';
+  genDiv.innerHTML = `<div class="gen-loading">Gerando com Gemini ✨…</div>`;
+  try {
+    const res = await fetch('/api/gemini', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          role: 'user',
+          parts: [{ text: `Crie UMA frase útil em italiano usando a palavra "${wordIt}" (${wordPt}). Contexto: turista brasileiro na Itália. Nível iniciante. Responda APENAS com JSON puro (sem markdown): {"it":"frase italiana","pt":"tradução portuguesa"}` }]
+        }],
+        generationConfig: { maxOutputTokens: 200, temperature: 0.8 }
+      })
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
+    const parsed = JSON.parse(data.text.replace(/```json|```/g,'').trim());
+    // Persist generated phrase
+    const savedPhrases = JSON.parse(localStorage.getItem('it-gen-phrases') || '{}');
+    savedPhrases[i] = parsed;
+    localStorage.setItem('it-gen-phrases', JSON.stringify(savedPhrases));
+    const s = parsed.it.replace(/'/g,"\\'");
+    genDiv.innerHTML = `<div class="gen-it">${parsed.it}</div><div class="gen-pt">${parsed.pt}</div>
+      <button class="ex-btn audio" style="margin-top:0.3rem" onclick="speak('${s}',this)">🔊 ouvir</button>`;
+  } catch(e) {
+    genDiv.innerHTML = `<div class="gen-loading" style="color:var(--vermelho)">Erro: ${e.message||'Tente novamente.'}</div>`;
+  }
+  btn.disabled = false; btn.textContent = '✨ nova frase';
+}
+
+// ==================== PROGRESS ====================
+function renderProgress() {
+  const total = words.length;
+  const favCount = favorites.size;
+  const studiedCount = studiedWords.size;
+  const wrongCount = wrongWords.size;
+  const pct = Math.round((studiedCount/total)*100);
+  const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const dayLetters = ['D','S','T','Q','Q','S','S'];
+  const todayNum = new Date().getDay();
+  const { streak: streakCount, visitDays } = getStreak();
+  const dayDots = days.map((d,i) => {
+    let cls = 'streak-day';
+    if(visitDays.includes(i)) cls += ' done';
+    if(i === todayNum) cls += ' today';
+    return `<div class="${cls}" title="${d}"><span>${dayLetters[i]}</span></div>`;
+  }).join('');
+  const catData = [...new Set(words.map(w=>w.cat))].map(cat => {
+    const catWords = words.filter(w=>w.cat===cat);
+    const studied = catWords.filter((_,i)=>{
+      const globalIdx = words.indexOf(catWords[i]);
+      return studiedWords.has(globalIdx);
+    }).length;
+    return {cat, total:catWords.length, studied};
+  }).sort((a,b) => b.studied-a.studied).slice(0,6);
+  const favWordsHTML = favCount === 0
+    ? `<div class="prog-empty"><span>⭐</span>Nenhum favorito ainda.<br>Marque palavras com ⭐ no vocabulário!</div>`
+    : [...favorites].slice(0,8).map(idx => {
+        const w = words[idx];
+        if(!w) return '';
+        const s = w.it.replace(/'/g,"\\'");
+        return `<div class="fav-item">
+          <div><div class="fav-item-word">${w.it}</div><div class="fav-item-pt">${w.pt}</div></div>
+          <div class="fav-item-actions">
+            <button class="fav-mini-btn" onclick="speak('${s}',this)" title="Ouvir">🔊</button>
+            <button class="fav-mini-btn" onclick="toggleFav(${idx})" title="Remover">✕</button>
+          </div>
+        </div>`;
+      }).join('');
+  document.getElementById('progress-content').innerHTML = `
+    <div class="prog-hero">
+      <h2>📊 Meu Progresso</h2>
+      <p>Continue estudando — sua viagem está chegando!</p>
+      <div class="prog-stats">
+        <div class="prog-stat"><div class="prog-stat-num">${studiedCount}</div><div class="prog-stat-label">Palavras vistas</div></div>
+        <div class="prog-stat"><div class="prog-stat-num">${favCount}</div><div class="prog-stat-label">Favoritas</div></div>
+        <div class="prog-stat"><div class="prog-stat-num">${pct}%</div><div class="prog-stat-label">Progresso</div></div>
+      </div>
+    </div>
+    <div class="streak-section">
+      <div class="streak-row">
+        <div class="streak-icon">🔥</div>
+        <div class="streak-info"><h3>${streakCount} dia${streakCount !== 1 ? 's' : ''} seguido${streakCount !== 1 ? 's' : ''}!</h3><p>Consistência é o segredo para aprender idiomas</p></div>
+      </div>
+      <div class="streak-days">${dayDots}</div>
+    </div>
+    <div class="prog-bar-section">
+      <h3>Progresso total — ${studiedCount} de ${total} palavras</h3>
+      <div class="prog-bar-row">
+        <div class="prog-bar-label"><span>Geral</span><span>${pct}%</span></div>
+        <div class="prog-bar-track"><div class="prog-bar-fill" style="width:${pct}%"></div></div>
+      </div>
+      ${catData.map(c => {
+        const p = Math.round((c.studied/c.total)*100);
+        return `<div class="prog-bar-row">
+          <div class="prog-bar-label"><span>${c.cat}</span><span>${c.studied}/${c.total}</span></div>
+          <div class="prog-bar-track"><div class="prog-bar-fill" style="width:${p}%"></div></div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="prog-actions">
+      <button class="prog-action-btn" onclick="showPage('quiz',document.querySelectorAll('.nav-tab')[2])">
+        <span class="icon">🃏</span><div class="label">Fazer Quiz</div><div class="sublabel">${wrongCount} para revisar</div>
+      </button>
+      <button class="prog-action-btn" onclick="showPage('vocab',document.querySelectorAll('.nav-tab')[0]);showFavsOnly=true;filterWords()">
+        <span class="icon">⭐</span><div class="label">Ver Favoritos</div><div class="sublabel">${favCount} palavras</div>
+      </button>
+      <button class="prog-action-btn" onclick="showPage('dialogues',document.querySelectorAll('.nav-tab')[3])">
+        <span class="icon">💬</span><div class="label">Praticar Diálogos</div><div class="sublabel">${dialogues.length} conversas</div>
+      </button>
+      <button class="prog-action-btn" onclick="showPage('chat',document.querySelectorAll('.nav-tab')[5])">
+        <span class="icon">🤖</span><div class="label">Chat com IA</div><div class="sublabel">Conversa livre</div>
+      </button>
+    </div>
+    <div class="prog-fav-section">
+      <h3>⭐ Minhas Palavras Favoritas</h3>
+      <div class="fav-list">${favWordsHTML}</div>
+    </div>
+    ${quizTotalScore.sessions > 0 ? `
+    <div class="prog-bar-section" style="margin-top:0.8rem">
+      <h3>🏆 Histórico de Quizzes</h3>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.5rem">
+        <div style="text-align:center;flex:1;min-width:70px">
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--verde)">${quizTotalScore.sessions}</div>
+          <div style="font-size:0.68rem;color:var(--cinza)">Sessões</div>
+        </div>
+        <div style="text-align:center;flex:1;min-width:70px">
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#2d9e5e">${quizTotalScore.correct}</div>
+          <div style="font-size:0.68rem;color:var(--cinza)">Acertos</div>
+        </div>
+        <div style="text-align:center;flex:1;min-width:70px">
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ouro)">${quizTotalScore.total > 0 ? Math.round((quizTotalScore.correct/quizTotalScore.total)*100) : 0}%</div>
+          <div style="font-size:0.68rem;color:var(--cinza)">Precisão</div>
+        </div>
+      </div>
+    </div>` : ''}
+    <div style="text-align:center;padding:1rem 0 0.5rem">
+      <button onclick="resetAllData()" style="background:none;border:1px solid #ddd;border-radius:8px;padding:0.4rem 1rem;font-size:0.72rem;color:var(--cinza);cursor:pointer;font-family:'DM Sans',sans-serif">🗑️ Apagar todos os dados</button>
+    </div>
+  `;
+}
+
+// ==================== QUIZ ====================
+function renderQuizCats() {
+  const cats = ['Todas', ...new Set(words.map(w=>w.cat))];
+  document.getElementById('quiz-cat-pills').innerHTML = cats.map(c =>
+    `<button class="qcat-pill ${c===quizCat?'active':''}" onclick="selectQCat('${c}',this)">${c}</button>`
+  ).join('');
+}
+
+function selectQCat(cat, btn) {
+  quizCat = cat;
+  document.querySelectorAll('.qcat-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function selectQuizMode(mode) {
+  quizMode = mode;
+  document.querySelectorAll('.quiz-mode-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('qm-'+mode).classList.add('selected');
+}
+
+function getQuizWords() {
+  let pool;
+  if(quizMode === 'fav') pool = [...favorites].map(i=>words[i]).filter(Boolean);
+  else if(quizMode === 'wrong') pool = [...wrongWords].map(i=>words[i]).filter(Boolean);
+  else pool = quizCat==='Todas' ? [...words] : words.filter(w=>w.cat===quizCat);
+  if(!pool.length) pool = [...words];
+  return pool.sort(()=>Math.random()-0.5).slice(0,20);
+}
+
+function startQuiz() {
+  quizWords = getQuizWords();
+  quizIndex = 0;
+  quizScore = {correct:0, wrong:0, total:quizWords.length};
+  document.getElementById('quiz-menu').style.display = 'none';
+  document.getElementById('quiz-result').classList.remove('show');
+  if(quizMode === 'mc') {
+    document.getElementById('quiz-flash').classList.remove('active');
+    document.getElementById('quiz-mc').classList.add('active');
+    loadMC();
+  } else {
+    document.getElementById('quiz-mc').classList.remove('active');
+    document.getElementById('quiz-flash').classList.add('active');
+    loadFC();
+  }
+}
+
+function backToQuizMenu() {
+  document.getElementById('quiz-menu').style.display = 'block';
+  document.getElementById('quiz-flash').classList.remove('active');
+  document.getElementById('quiz-mc').classList.remove('active');
+  document.getElementById('quiz-result').classList.remove('show');
+}
+
+// FLASHCARD
+function loadFC() {
+  if(quizIndex >= quizWords.length) { showQuizResult(); return; }
+  const w = quizWords[quizIndex];
+  const remaining = quizWords.length - quizIndex;
+  const pct = (quizIndex/quizWords.length)*100;
+  document.getElementById('fc-pbar').style.width = pct+'%';
+  document.getElementById('fc-ptext').textContent = `${quizIndex+1} / ${quizWords.length}`;
+  document.getElementById('fc-correct').textContent = quizScore.correct;
+  document.getElementById('fc-wrong').textContent = quizScore.wrong;
+  document.getElementById('fc-remain').textContent = remaining;
+  document.getElementById('fc-word').textContent = w.it;
+  document.getElementById('fc-cat').textContent = w.cat;
+  document.getElementById('fc-translation').textContent = w.pt;
+  document.getElementById('fc-pronun').textContent = '['+w.pr+']';
+  document.getElementById('fc-example').textContent = w.ex_it;
+  document.getElementById('fc-ex-pt').textContent = w.ex_pt;
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped');
+  fcFlipped = false;
+}
+
+function flipCard() {
+  const card = document.getElementById('flashcard');
+  card.classList.toggle('flipped');
+  fcFlipped = !fcFlipped;
+}
+
+function speakFC() { const w = quizWords[quizIndex]; if(w) speak(w.it, null); }
+
+async function fcAnswer(correct) {
+  const w = quizWords[quizIndex];
+  const idx = words.indexOf(w);
+  if(correct) { quizScore.correct++; wrongWords.delete(idx); }
+  else { quizScore.wrong++; wrongWords.add(idx); }
+  await storageSet('it-wrong', [...wrongWords]);
+  quizIndex++;
+  loadFC();
+}
+
+function fcSkip() { quizIndex++; loadFC(); }
+
+// MULTIPLE CHOICE
+function loadMC() {
+  if(quizIndex >= quizWords.length) { showQuizResult(); return; }
+  const w = quizWords[quizIndex];
+  const pct = (quizIndex/quizWords.length)*100;
+  document.getElementById('mc-pbar').style.width = pct+'%';
+  document.getElementById('mc-ptext').textContent = `${quizIndex+1} / ${quizWords.length}`;
+  document.getElementById('mc-correct').textContent = quizScore.correct;
+  document.getElementById('mc-wrong').textContent = quizScore.wrong;
+  document.getElementById('mc-remain').textContent = quizWords.length-quizIndex;
+  document.getElementById('mc-word').textContent = w.it;
+  document.getElementById('mc-pr').textContent = '['+w.pr+']';
+  document.getElementById('mc-ex').textContent = w.ex_it;
+  document.getElementById('mc-feedback').classList.remove('show','correct','wrong');
+  document.getElementById('mc-next').classList.remove('show');
+  currentMCWord = w;
+  // Build 4 options
+  const correct = w.pt;
+  const others = words.filter(x=>x.pt!==correct).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.pt);
+  const options = [correct,...others].sort(()=>Math.random()-0.5);
+  document.getElementById('mc-options').innerHTML = options.map(opt =>
+    `<button class="mc-option" onclick="mcAnswer(this,'${opt.replace(/'/g,"\\'")}','${correct.replace(/'/g,"\\'")}')">
+      ${opt}
+    </button>`
+  ).join('');
+}
+
+function speakMC() { if(currentMCWord) speak(currentMCWord.it, null); }
+
+async function mcAnswer(btn, chosen, correct) {
+  document.querySelectorAll('.mc-option').forEach(b=>b.disabled=true);
+  const w = quizWords[quizIndex];
+  const idx = words.indexOf(w);
+  const isCorrect = chosen === correct;
+  if(isCorrect) {
+    btn.classList.add('correct');
+    quizScore.correct++;
+    wrongWords.delete(idx);
+    const fb = document.getElementById('mc-feedback');
+    fb.textContent = '✓ Correto! ' + w.it + ' = ' + w.pt;
+    fb.className = 'mc-feedback show correct';
+  } else {
+    btn.classList.add('wrong');
+    quizScore.wrong++;
+    wrongWords.add(idx);
+    document.querySelectorAll('.mc-option').forEach(b => { if(b.textContent.trim()===correct) b.classList.add('reveal'); });
+    const fb = document.getElementById('mc-feedback');
+    fb.textContent = '✗ Era: ' + correct;
+    fb.className = 'mc-feedback show wrong';
+  }
+  await storageSet('it-wrong', [...wrongWords]);
+  document.getElementById('mc-next').classList.add('show');
+}
+
+function mcNext() { quizIndex++; loadMC(); }
+
+function showQuizResult() {
+  document.getElementById('quiz-flash').classList.remove('active');
+  document.getElementById('quiz-mc').classList.remove('active');
+  const pct = Math.round((quizScore.correct/quizScore.total)*100);
+  const emoji = pct>=80?'🏆':pct>=60?'👍':pct>=40?'📚':'💪';
+  const title = pct>=80?'Ottimo!':pct>=60?'Muito bem!':pct>=40?'Continue praticando!':'Não desista!';
+  document.getElementById('quiz-result-emoji').textContent = emoji;
+  document.getElementById('quiz-result-title').textContent = title;
+  document.getElementById('quiz-result-score').textContent = pct+'%';
+  document.getElementById('quiz-result-detail').textContent = `${quizScore.correct} acertos de ${quizScore.total}`;
+  document.getElementById('quiz-result').classList.add('show');
+  // Persist cumulative quiz score
+  quizTotalScore.sessions = (quizTotalScore.sessions || 0) + 1;
+  quizTotalScore.correct = (quizTotalScore.correct || 0) + quizScore.correct;
+  quizTotalScore.total = (quizTotalScore.total || 0) + quizScore.total;
+  storageSet('it-quiz-total', quizTotalScore);
+}
+
+// ==================== DIALOGUES ====================
+const transState = {};
+function renderDialogues() {
+  document.getElementById('dial-cards').innerHTML = dialogues.map((d,di) => `
+    <div class="dial-card">
+      <div class="dial-header" onclick="toggleDial(${di})">
+        <span class="dial-emoji">${d.emoji}</span>
+        <div class="dial-title-wrap">
+          <div class="dial-title">${d.title}</div>
+          <div class="dial-subtitle">${d.subtitle}</div>
+        </div>
+        <span class="dial-arrow" id="darrow-${di}">▼</span>
+      </div>
+      <div class="dial-body" id="dbody-${di}">
+        <div class="dial-controls">
+          <button class="dial-play-btn" onclick="playDialogue(${di})">▶ Ouvir tudo</button>
+          <button class="trans-toggle" id="dtrans-${di}" onclick="toggleTrans(${di})">🇧🇷 Tradução</button>
+          <button class="practice-toggle" onclick="togglePractice(${di})">✍️ Praticar</button>
+        </div>
+        <div class="dial-lines">
+          ${d.lines.map((l,li) => `
+            <div class="dial-line ${l.sp==='B'?'b':''} speaker-${l.sp==='A'?'a':'b'}">
+              <div class="speaker-avatar">${l.sp==='A'?'👤':'🧑‍💼'}</div>
+              <div class="bubble">
+                <div class="speaker-name">${l.name}</div>
+                <div class="bubble-it" onclick="speak('${l.it.replace(/'/g,"\\'")}',null)">${l.it}</div>
+                <div class="bubble-pt" id="bpt-${di}-${li}">${l.pt}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+        <div class="dial-tip">${d.tip}</div>
+        <div class="practice-mode-area" id="prac-${di}">
+          <div style="font-size:0.78rem;font-weight:600;color:var(--verde);margin-bottom:0.5rem">✍️ Pratique digitando a tradução</div>
+          ${d.lines.filter(l=>l.sp==='A').slice(0,3).map((l,li) => `
+            <div class="practice-prompt">
+              <div class="practice-pt">${l.pt}</div>
+            </div>
+            <div class="practice-input-row">
+              <input class="practice-input" placeholder="Escreva em italiano…" id="pinput-${di}-${li}">
+              <button class="practice-check-btn" onclick="checkPractice(${di},${li},'${l.it.replace(/'/g,"\\'")}')">✓</button>
+            </div>
+            <div class="practice-feedback" id="pfb-${di}-${li}"></div>
+          `).join('')}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleDial(di) {
+  const body = document.getElementById(`dbody-${di}`);
+  const arrow = document.getElementById(`darrow-${di}`);
+  const open = body.classList.toggle('open');
+  arrow.classList.toggle('open', open);
+}
+
+function toggleTrans(di) {
+  transState[di] = !transState[di];
+  const btn = document.getElementById(`dtrans-${di}`);
+  btn.classList.toggle('on', transState[di]);
+  btn.textContent = transState[di] ? '✅ Tradução' : '🇧🇷 Tradução';
+  dialogues[di].lines.forEach((_,li) => {
+    const el = document.getElementById(`bpt-${di}-${li}`);
+    if(el) el.classList.toggle('show', transState[di]);
+  });
+}
+
+function togglePractice(di) {
+  document.getElementById(`prac-${di}`).classList.toggle('open');
+}
+
+function checkPractice(di, li, correct) {
+  const input = document.getElementById(`pinput-${di}-${li}`);
+  const fb = document.getElementById(`pfb-${di}-${li}`);
+  const val = input.value.trim().toLowerCase();
+  const exp = correct.toLowerCase().replace(/[.!?]/g,'').trim();
+  const isClose = val === exp || val.includes(exp.split(' ').slice(0,3).join(' '));
+  fb.className = `practice-feedback show ${isClose?'ok':'err'}`;
+  fb.textContent = isClose ? '✓ Molto bene! ' + correct : '✗ A resposta correta: ' + correct;
+}
+
+let dialPlayTimer = null;
+function playDialogue(di) {
+  if(dialPlayTimer) { clearTimeout(dialPlayTimer); window.speechSynthesis.cancel(); }
+  const lines = dialogues[di].lines;
+  let i = 0;
+  function next() {
+    if(i >= lines.length) return;
+    speak(lines[i].it, null);
+    const dur = lines[i].it.length * 70 + 800;
+    i++;
+    dialPlayTimer = setTimeout(next, dur);
+  }
+  next();
+}
+
+// ==================== GRAMMAR ====================
+function renderGrammar() {
+  document.getElementById('grammar-content').innerHTML = `
+    <div class="grammar-hero">
+      <h2>📖 Gramática para Viagem</h2>
+      <p>Regras essenciais — sem complicação, só o que você precisa saber</p>
+    </div>
+    ${grammar.map((sec,i) => `
+      <div class="grammar-section">
+        <div class="grammar-sec-header" onclick="toggleGram(${i})">
+          <h3>${sec.icon} ${sec.title}</h3>
+          <span id="garrow-${i}">▼</span>
+        </div>
+        <div class="grammar-sec-body" id="gbody-${i}">
+          ${sec.sections.map(s => `<div class="grammar-rule"><h4>${s.h}</h4>${s.content}</div>`).join('')}
+        </div>
+      </div>`).join('')}`;
+}
+
+function toggleGram(i) {
+  const body = document.getElementById(`gbody-${i}`);
+  const arrow = document.getElementById(`garrow-${i}`);
+  const open = body.classList.toggle('open');
+  arrow.textContent = open ? '▲' : '▼';
+}
+
+// ==================== CHAT ====================
+const chatModes = {
+  free:{ label:'Conversa livre', system:`Você é Sofia, professora italiana simpática. O usuário é brasileiro preparando viagem à Itália em 15 dias. Responda SEMPRE em italiano, com tradução em português entre parênteses. Corrija erros sutilmente. Respostas curtas (2-3 frases). Se o usuário errar, corrija gentilmente incluindo a forma correta.` },
+  restaurant:{ label:'No restaurante', system:`Você é um garçom italiano num restaurante em Roma. Simule situações reais: receber cliente, apresentar menu, tirar pedido, trazer conta. Responda em italiano com tradução entre parênteses.` },
+  hotel:{ label:'No hotel', system:`Você é recepcionista de hotel em Roma. Simule check-in, perguntas sobre serviços, pedidos. Responda em italiano com tradução entre parênteses. Use tratamento formal.` },
+  tourist:{ label:'Turismo', system:`Você é um guia turístico romano entusiasmado. Ajude com direções, monumentos, horários, ingressos. Responda em italiano com tradução entre parênteses.` },
+  shopping:{ label:'Compras', system:`Você é vendedor em loja italiana. Simule: tamanhos, preços, descontos, pagamentos. Responda em italiano com tradução entre parênteses.` },
+  emergency:{ label:'Emergência', system:`Você é um policial/auxiliar italiano. Simule situações de emergência de forma calma. Responda em italiano com tradução entre parênteses.` },
+};
+
+const suggestions = {
+  free:['Ciao! Come stai?','Mi chiamo…','Non capisco','Parla più piano?','Grazie mille!','Sono brasiliano/a'],
+  restaurant:['Avete un tavolo?','Il menu, per favore','Vorrei ordinare…','Il conto, per favore','È delizioso!','Sono allergico a…'],
+  hotel:['Ho una prenotazione','Dov\'è la camera?','C\'è il WiFi?','Colazione inclusa?','Check-out a che ora?','Ho perso la chiave'],
+  tourist:['Dov\'è il Colosseo?','È lontano?','Quanto costa?','A che ora apre?','Posso fare foto?','C\'è una guida?'],
+  shopping:['Quanto costa?','Ho una taglia media','Avete sconti?','Posso provarlo?','Pago con carta','È troppo caro'],
+  emergency:['Ho perso il passaporto','Non mi sento bene','Ho bisogno di aiuto','Chiamate un medico','Dov\'è l\'ambasciata?','Ho subito un furto'],
+};
+
+function setMode(btn, mode) {
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  chatMode = mode;
+  chatHistory = [];
+  document.getElementById('chat-messages').innerHTML = '';
+  renderSuggestions(mode);
+  startChat();
+}
+
+function renderSuggestions(mode) {
+  document.getElementById('chat-suggestions').innerHTML = (suggestions[mode]||[]).map(s =>
+    `<button class="sugg-btn" onclick="useSugg('${s.replace(/'/g,"\\'")}')">${s}</button>`
+  ).join('');
+}
+
+function useSugg(text) { document.getElementById('chat-input').value = text; sendChat(); }
+
+async function startChat() {
+  const hasHistory = loadChatHistory();
+  // Sync mode button UI
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + chatMode + "'"));
+  });
+  renderSuggestions(chatMode);
+  if (hasHistory && chatHistory.length > 0) {
+    // Restore saved messages from localStorage
+    chatHistory.forEach(msg => {
+      const role = msg.role === 'model' ? 'bot' : 'user';
+      const text = msg.parts?.[0]?.text || '';
+      const formatted = text.replace(/\(([^)]+)\)/g,'<span class="translation">$1</span>').replace(/\n/g,'<br>');
+      const ttsText = role === 'bot' ? text.replace(/\([^)]*\)/g,'').replace(/<[^>]*>/g,'').trim() : null;
+      addMsg(role, role === 'bot' ? formatted : text, ttsText);
+    });
+    addMsg('bot', `<small style="opacity:0.6">— Conversa restaurada. Modo: ${chatModes[chatMode].label} —</small>`);
+  } else {
+    addMsg('bot', `Ciao! Sono Sofia 🇮🇹<br><small style="opacity:0.7">Modo: ${chatModes[chatMode].label}</small>`);
+  }
+}
+
+function addMsg(role, html, ttsText) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = role==='bot'?'🤌':'👤';
+  let audioBtn = '';
+  if(ttsText && role==='bot') {
+    const s = ttsText.replace(/'/g,"\\'").replace(/"/g,"&quot;");
+    audioBtn = `<button class="msg-audio-btn" onclick="speak('${s}',this)" title="Ouvir">🔊</button>`;
+  }
+  div.innerHTML = `<div class="msg-avatar">${avatar}</div><div><div class="msg-bubble">${html}</div>${audioBtn}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg bot'; div.id = 'typing-ind';
+  div.innerHTML = `<div class="msg-avatar">🤌</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping() { const e = document.getElementById('typing-ind'); if(e) e.remove(); }
+
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if(!text) return;
+  input.value = ''; input.style.height = 'auto';
+  document.getElementById('chat-send').disabled = true;
+  addMsg('user', text);
+  chatHistory.push({ role: 'user', parts: [{ text }] });
+  showTyping();
+  try {
+    const res = await fetch('/api/gemini', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        systemInstruction: chatModes[chatMode].system,
+        contents: chatHistory,
+        generationConfig: { maxOutputTokens: 500, temperature: 0.85 }
+      })
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
+    const reply = data.text;
+    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+    // Persist chat history
+    saveChatHistory();
+    removeTyping();
+    const itText = reply.replace(/\([^)]*\)/g,'').replace(/<[^>]*>/g,'').trim();
+    const formatted = reply.replace(/\(([^)]+)\)/g,'<span class="translation">$1</span>').replace(/\n/g,'<br>');
+    addMsg('bot', formatted, itText);
+  } catch(e) {
+    removeTyping();
+    addMsg('bot',`Ops! Erro: ${e.message||'Tente novamente.'} <span class="translation">Errore di connessione.</span>`);
+  }
+  document.getElementById('chat-send').disabled = false;
+}
+
+function chatKeydown(e) { if(e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); } }
+
+function clearChatHistory() {
+  if(!confirm('Apagar todo o histórico deste modo de conversa?')) return;
+  chatHistory = [];
+  localStorage.removeItem('it-chat-' + chatMode);
+  document.getElementById('chat-messages').innerHTML = '';
+  startChat();
+  showToast('Histórico apagado');
+}
+
+function resetAllData() {
+  if(!confirm('Apagar TODO o progresso, favoritos e histórico? Esta ação não pode ser desfeita.')) return;
+  const keys = ['it-favorites','it-wrong','it-studied','it-quiz-total','it-streak','it-last-visit','it-visit-days','it-chat-mode','it-gen-phrases'];
+  const chatKeys = ['it-chat-free','it-chat-restaurant','it-chat-hotel','it-chat-tourist','it-chat-shopping','it-chat-emergency'];
+  [...keys, ...chatKeys].forEach(k => localStorage.removeItem(k));
+  favorites = new Set(); wrongWords = new Set(); studiedWords = new Set();
+  quizTotalScore = {sessions:0, correct:0, total:0};
+  chatHistory = [];
+  renderCats(); filterWords(); renderProgress();
+  showToast('Dados apagados com sucesso');
+}
+function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
+
+// ==================== TOAST ====================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+// ==================== BOOT ====================
+init();
+setupAuth();
+</script>
+</body>
+</html>
