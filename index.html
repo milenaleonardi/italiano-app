@@ -1881,6 +1881,7 @@ function clearSearch() { document.getElementById('search').value = ''; filterWor
 function toggleFavFilter() { showFavsOnly = !showFavsOnly; filterWords(); }
 
 function renderCards(list) {
+  const savedPhrases = JSON.parse(localStorage.getItem('it-gen-phrases') || '{}');
   const grid = document.getElementById('grid');
   if(!list.length) {
     grid.innerHTML = `<div class="no-results"><span>🤌</span>${showFavsOnly?'Nenhum favorito nessa categoria':'Nenhuma palavra encontrada'}</div>`;
@@ -1907,7 +1908,9 @@ function renderCards(list) {
       <div class="example" id="ex-${idx}">
         <div class="ex-it" id="exit-${idx}">${w.ex_it}</div>
         <div class="ex-pt">${w.ex_pt}</div>
-        <div class="gen-result" id="gen-${idx}" style="display:none"></div>
+        <div class="gen-result" id="gen-${idx}" style="${savedPhrases[idx]?'display:block':'display:none'}">
+          ${savedPhrases[idx] ? `<div class="gen-it">${savedPhrases[idx].it}</div><div class="gen-pt">${savedPhrases[idx].pt}</div><button class="ex-btn audio" style="margin-top:0.3rem" onclick="speak('${s(savedPhrases[idx].it)}',this)">🔊 ouvir</button>` : ''}
+        </div>
         <div class="ex-actions">
           <button class="ex-btn audio" onclick="speak('${s(w.ex_it)}',this)">🔊 ouvir</button>
           <button class="ex-btn gen" id="genbtn-${idx}" onclick="generatePhrase(${idx},'${s(w.it)}','${s(w.pt)}')">✨ nova frase</button>
@@ -1950,9 +1953,9 @@ async function generatePhrase(i, wordIt, wordPt) {
       body: JSON.stringify({
         contents: [{
           role: 'user',
-          parts: [{ text: `Frase curta italiano + tradução pt para "${wordIt}" (${wordPt}). Turista na Itália. JSON: {"it":"...","pt":"..."}` }]
+          parts: [{ text: `Responda APENAS com JSON. Crie uma frase CURTA, SIMPLES e de uso cotidiano para a palavra "${wordIt}" (${wordPt}). Use linguagem de rua ou turismo. Máximo 10 palavras. Formato: {"it":"...","pt":"..."}` }]
         }],
-        generationConfig: { maxOutputTokens: 150, temperature: 0.7 }
+        generationConfig: { maxOutputTokens: 150, temperature: 0.9 }
       })
     });
     const data = await res.json();
@@ -1960,7 +1963,13 @@ async function generatePhrase(i, wordIt, wordPt) {
       if(data.error.includes('quota') || data.error.includes('limit')) throw new Error('Limite gratuito atingido. Tente em 1 min.');
       throw new Error(data.error);
     }
-    const parsed = JSON.parse(data.text.replace(/```json|```/g,'').trim());
+    let jsonText = data.text.trim();
+    // Extrai apenas o que está entre { e } caso a IA mande texto extra
+    const start = jsonText.indexOf('{');
+    const end = jsonText.lastIndexOf('}');
+    if (start !== -1 && end !== -1) jsonText = jsonText.substring(start, end + 1);
+    
+    const parsed = JSON.parse(jsonText);
     const savedPhrases = JSON.parse(localStorage.getItem('it-gen-phrases') || '{}');
     savedPhrases[i] = parsed;
     localStorage.setItem('it-gen-phrases', JSON.stringify(savedPhrases));
@@ -2494,7 +2503,9 @@ async function sendChat() {
     addMsg('bot', formatted, itText);
   } catch(e) {
     removeTyping();
-    addMsg('bot',`Ops! ${e.message} <span class="translation">Limite di quota superato.</span>`);
+    const isConnError = e.message.toLowerCase().includes('fetch') || e.message.toLowerCase().includes('network');
+    const displayMsg = isConnError ? 'Erro de conexão com o servidor local (npx vercel dev)' : e.message;
+    addMsg('bot', `Ops! ${displayMsg}`);
   }
   document.getElementById('chat-send').disabled = false;
 }

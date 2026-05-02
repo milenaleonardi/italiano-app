@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     }
 
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -39,8 +39,11 @@ export default async function handler(req, res) {
     );
 
     const data = await geminiRes.json();
+    console.log("Gemini API Status:", geminiRes.status);
+    console.log("Gemini API Response Data:", JSON.stringify(data));
 
     if (!geminiRes.ok) {
+      console.error("Gemini API Error Detail:", JSON.stringify(data));
       return res.status(geminiRes.status).json({ error: data.error?.message || 'Gemini API error' });
     }
 
