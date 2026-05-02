@@ -1933,7 +1933,7 @@ async function generatePhrase(i, wordIt, wordPt) {
   const genDiv = document.getElementById(`gen-${i}`);
   btn.disabled = true; btn.textContent = '⏳…';
   genDiv.style.display = 'block';
-  genDiv.innerHTML = `<div class="gen-loading">Gerando com Gemini ✨…</div>`;
+  genDiv.innerHTML = `<div class="gen-loading">Gerando ✨…</div>`;
   try {
     const res = await fetch('/api/gemini', {
       method: 'POST',
@@ -1941,15 +1941,17 @@ async function generatePhrase(i, wordIt, wordPt) {
       body: JSON.stringify({
         contents: [{
           role: 'user',
-          parts: [{ text: `Crie UMA frase útil em italiano usando a palavra "${wordIt}" (${wordPt}). Contexto: turista brasileiro na Itália. Nível iniciante. Responda APENAS com JSON puro (sem markdown): {"it":"frase italiana","pt":"tradução portuguesa"}` }]
+          parts: [{ text: `Frase curta italiano + tradução pt para "${wordIt}" (${wordPt}). Turista na Itália. JSON: {"it":"...","pt":"..."}` }]
         }],
-        generationConfig: { maxOutputTokens: 200, temperature: 0.8 }
+        generationConfig: { maxOutputTokens: 150, temperature: 0.7 }
       })
     });
     const data = await res.json();
-    if(data.error) throw new Error(data.error);
+    if(data.error) {
+      if(data.error.includes('quota') || data.error.includes('limit')) throw new Error('Limite gratuito atingido. Tente em 1 min.');
+      throw new Error(data.error);
+    }
     const parsed = JSON.parse(data.text.replace(/```json|```/g,'').trim());
-    // Persist generated phrase
     const savedPhrases = JSON.parse(localStorage.getItem('it-gen-phrases') || '{}');
     savedPhrases[i] = parsed;
     localStorage.setItem('it-gen-phrases', JSON.stringify(savedPhrases));
@@ -1957,7 +1959,7 @@ async function generatePhrase(i, wordIt, wordPt) {
     genDiv.innerHTML = `<div class="gen-it">${parsed.it}</div><div class="gen-pt">${parsed.pt}</div>
       <button class="ex-btn audio" style="margin-top:0.3rem" onclick="speak('${s}',this)">🔊 ouvir</button>`;
   } catch(e) {
-    genDiv.innerHTML = `<div class="gen-loading" style="color:var(--vermelho)">Erro: ${e.message||'Tente novamente.'}</div>`;
+    genDiv.innerHTML = `<div class="gen-loading" style="color:var(--vermelho)">${e.message}</div>`;
   }
   btn.disabled = false; btn.textContent = '✨ nova frase';
 }
@@ -2366,12 +2368,12 @@ function toggleGram(i) {
 
 // ==================== CHAT ====================
 const chatModes = {
-  free:{ label:'Conversa livre', system:`Você é Sofia, professora italiana simpática. O usuário é brasileiro preparando viagem à Itália em 15 dias. Responda SEMPRE em italiano, com tradução em português entre parênteses. Corrija erros sutilmente. Respostas curtas (2-3 frases). Se o usuário errar, corrija gentilmente incluindo a forma correta.` },
-  restaurant:{ label:'No restaurante', system:`Você é um garçom italiano num restaurante em Roma. Simule situações reais: receber cliente, apresentar menu, tirar pedido, trazer conta. Responda em italiano com tradução entre parênteses.` },
-  hotel:{ label:'No hotel', system:`Você é recepcionista de hotel em Roma. Simule check-in, perguntas sobre serviços, pedidos. Responda em italiano com tradução entre parênteses. Use tratamento formal.` },
-  tourist:{ label:'Turismo', system:`Você é um guia turístico romano entusiasmado. Ajude com direções, monumentos, horários, ingressos. Responda em italiano com tradução entre parênteses.` },
-  shopping:{ label:'Compras', system:`Você é vendedor em loja italiana. Simule: tamanhos, preços, descontos, pagamentos. Responda em italiano com tradução entre parênteses.` },
-  emergency:{ label:'Emergência', system:`Você é um policial/auxiliar italiano. Simule situações de emergência de forma calma. Responda em italiano com tradução entre parênteses.` },
+  free:{ label:'Conversa livre', system:`Você é Sofia, professora italiana. Usuário: brasileiro em viagem. Responda em italiano + (português). Curto (2 frases). Corrija erros sutilmente.` },
+  restaurant:{ label:'No restaurante', system:`Você é garçom em Roma. Simule situações de restaurante. Responda em italiano + (português).` },
+  hotel:{ label:'No hotel', system:`Você é recepcionista em Roma. Check-in/serviços. Responda em italiano + (português). Formal.` },
+  tourist:{ label:'Turismo', system:`Você é guia em Roma. Direções/monumentos. Responda em italiano + (português).` },
+  shopping:{ label:'Compras', system:`Você é vendedor na Itália. Tamanhos/preços. Responda em italiano + (português).` },
+  emergency:{ label:'Emergência', system:`Você é policial/médico. Calmo. Responda em italiano + (português).` },
 };
 
 const suggestions = {
@@ -2463,15 +2465,19 @@ async function sendChat() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         systemInstruction: chatModes[chatMode].system,
-        contents: chatHistory,
-        generationConfig: { maxOutputTokens: 500, temperature: 0.85 }
+        contents: chatHistory.slice(-10), // Limit history for free tier tokens
+        generationConfig: { maxOutputTokens: 400, temperature: 0.8 }
       })
     });
     const data = await res.json();
-    if(data.error) throw new Error(data.error);
+    if(data.error) {
+      if(data.error.includes('quota') || data.error.includes('limit')) {
+        throw new Error('Limite gratuito atingido (15/min ou 1500/dia). Tente em instantes.');
+      }
+      throw new Error(data.error);
+    }
     const reply = data.text;
     chatHistory.push({ role: 'model', parts: [{ text: reply }] });
-    // Persist chat history
     saveChatHistory();
     removeTyping();
     const itText = reply.replace(/\([^)]*\)/g,'').replace(/<[^>]*>/g,'').trim();
@@ -2479,7 +2485,7 @@ async function sendChat() {
     addMsg('bot', formatted, itText);
   } catch(e) {
     removeTyping();
-    addMsg('bot',`Ops! Erro: ${e.message||'Tente novamente.'} <span class="translation">Errore di connessione.</span>`);
+    addMsg('bot',`Ops! ${e.message} <span class="translation">Limite di quota superato.</span>`);
   }
   document.getElementById('chat-send').disabled = false;
 }
